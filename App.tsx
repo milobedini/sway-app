@@ -2,6 +2,7 @@ import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
+import { FontsContainer } from './components/fonts-container';
 import { AppNavigator, AppNavigatorParamList } from './navigators/app';
 
 const prefix = Linking.createURL('/');
@@ -87,7 +88,9 @@ const App = (props: AppProps): JSX.Element => {
         translucent
       />
       <NavigationContainer linking={linking}>
-        <AppNavigator />
+        <FontsContainer>
+          <AppNavigator />
+        </FontsContainer>
       </NavigationContainer>
     </>
   );

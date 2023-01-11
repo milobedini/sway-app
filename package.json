@@ -6,7 +6,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
   },
   "dependencies": {
     "@expo-google-fonts/open-sans": "^0.2.2",
@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@babel/eslint-parser": "^7.17.0",
+    "@babel/eslint-parser": "^7.19.1",
     "@badeball/cypress-cucumber-preprocessor": "^12.0.1",
     "@expo/webpack-config": "^0.17.2",
     "@fluffy-spoon/substitute": "^1.208.0",
@@ -85,7 +85,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react": "^7.32.0",
     "eslint-watch": "^8.0.0",
     "expo-cli": "^6.0.5",
     "node-fetch": "^2.0.0",

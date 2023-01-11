@@ -27,20 +27,19 @@ export const WelcomeNavigator = (): JSX.Element => {
 
   return (
     <Stack.Navigator>
-      {Platform.OS !== 'web' && (
-        <>
-          <Stack.Screen
-            name="ready"
-            component={ReadyScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Group
-            screenOptions={{ headerTransparent: true, headerTitle: '' }}
-          >
-            <Stack.Screen name="headlines" component={HeadlinesScreen} />
-          </Stack.Group>
-        </>
-      )}
+      {/* {Platform.OS !== 'web' && ( */}
+      <>
+        <Stack.Screen
+          name="ready"
+          component={ReadyScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Group
+          screenOptions={{ headerTransparent: true, headerTitle: '' }}
+        >
+          <Stack.Screen name="headlines" component={HeadlinesScreen} />
+        </Stack.Group>
+      </>
     </Stack.Navigator>
   );
 };
