@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "alexkrechik.cucumberautocomplete",
+    "Arjun.swagger-viewer",
+    "cschleiden.vscode-github-actions",
+    "dbaeumer.vscode-eslint",
+    "mikehanson.auto-barrel",
+    "Orta.vscode-jest",
+    "Shelex.vscode-cy-helper",
+    "spmeesseman.vscode-taskexplorer",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

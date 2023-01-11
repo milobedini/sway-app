@@ -1,20 +1,96 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
+import { useEffect, useState } from 'react';
+import { StatusBar } from 'react-native';
+import { AppNavigator, AppNavigatorParamList } from './navigators/app';
 
-export default function App() {
+const prefix = Linking.createURL('/');
+
+export type AppProps = LaunchArguments;
+
+const App = (props: AppProps): JSX.Element => {
+  const [init, setInit] = useState(true);
+
+  useEffect(() => {
+    if (!init) return;
+
+    if (props.reset) {
+      console.log('Resetting');
+      // clear all settings
+    }
+    setInit(false);
+  }, [init]);
+
+  const linking: LinkingOptions<AppNavigatorParamList> = {
+    prefixes: [prefix],
+    config: {
+      screens: {
+        app: {
+          path: 'app',
+          screens: {
+            welcome: {
+              path: 'welcome'
+              // screens: {
+              //   signInMagic: {
+              //     path: 'sign-in-magic'
+              //   }
+              // }
+            }
+            // main: {
+            //   screens: {
+            //     home: {
+            //       screens: {
+            //         homepage: {
+            //           path: 'home'
+            //         }
+            //       }
+            //     },
+            //     planner: {
+            //       path: 'plan',
+            //       screens: {
+            //         plan: ':date',
+            //         addRecipe: {
+            //           path: ':date/add-recipe'
+            //         }
+            //       }
+            //     },
+            //     recipes: {
+            //       screens: {
+            //         show: {
+            //           path: 'recipes/:recipeId'
+            //         },
+            //         list: {
+            //           path: 'recipes'
+            //         }
+            //       }
+            //     },
+            //     'shopping-list': 'shopping-list',
+            //     'more-info': {
+            //       path: 'more-info',
+            //       screens: {
+            //         index: '',
+            //         'delete-account': 'delete-account'
+            //       }
+            //     }
+            //   }
+            // }
+          }
+        }
+      }
+    }
+  };
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar
+        backgroundColor={'blue'}
+        barStyle="light-content"
+        translucent
+      />
+      <NavigationContainer linking={linking}>
+        <AppNavigator />
+      </NavigationContainer>
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

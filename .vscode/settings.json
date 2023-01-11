@@ -1,0 +1,82 @@
+{
+  "autoBarrel.ignoreFilePathContainingAnyOf": ".spec,.test,.stories",
+  "cucumberautocomplete.steps": [
+    "cypress/support/step_definitions/**/*.ts"
+  ],
+  "cucumberautocomplete.syncfeatures": true,
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "cucumberautocomplete.strictGherkinValidation": true,
+  "cucumberautocomplete.smartSnippets": true,
+  "cucumberautocomplete.stepsInvariants": true,
+  "cucumberautocomplete.customParameters": [
+    {
+      "parameter": "{ab}",
+      "value": "(a|b)"
+    }
+  ],
+  "cucumberautocomplete.skipDocStringsFormat": true,
+  "cucumberautocomplete.formatConfOverride": {
+    "And": 3,
+    "But": "relative"
+  },
+  "cucumberautocomplete.onTypeFormat": true,
+  "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\(",
+  "cucumberautocomplete.stepRegExSymbol": "'",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.rulers": [
+    80
+  ],
+  "eslint.lintTask.enable": true,
+  "eslint.validate": [
+    "typescript"
+  ],
+  "files.exclude": {
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.referencesCodeLens.enabled": true,
+  "cSpell.language": "en-GB",
+  "cSpell.words": [
+    "appium",
+    "Authorised",
+    "badeball",
+    "collapsable",
+    "colour",
+    "Colours",
+    "Formik",
+    "fractionify",
+    "initialising",
+    "MMKV",
+    "nameof",
+    "netinfo",
+    "newarchitecture",
+    "normaliser",
+    "Normalisers",
+    "Pressable",
+    "showme",
+    "showmefit",
+    "templating",
+    "testflight",
+    "testid",
+    "ttsc",
+    "ttypescript",
+    "unmock",
+    "upsert",
+    "webdriverio",
+    "xcpretty",
+    "xdate"
+  ],
+  "[feature]": {
+    "editor.formatOnSave": true
+  }
+}
