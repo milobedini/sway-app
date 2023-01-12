@@ -5,7 +5,7 @@ import { Colours } from '../../../../colours'
 import { textStyles } from '../../../../components/text'
 
 import { WelcomeNavigatorParamsList } from '../../WelcomeNavigatorParamsList'
-import logo from '../../../../assets/logo.png'
+import logo from '../../../../assets/logo_black.png'
 
 export type ReadyScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colours.white.$,
+    backgroundColor: Colours.dark.$,
   },
   image: {
     width: '100%',
