@@ -7,6 +7,8 @@ export class Colours {
 
   static readonly black = new Colours('000000')
 
+  static readonly errorDark = new Colours('F14040')
+
   private constructor(
     private readonly rgb: string,
     private readonly opacity: number = 1
