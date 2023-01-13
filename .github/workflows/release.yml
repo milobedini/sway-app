@@ -20,6 +20,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Install Expo CLI
+      run: npm install -g expo-cli  
+
     - name: Publish to Expo
       run: expo publish
       env:
