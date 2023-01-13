@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: Fonts.OpenSans_700Bold,
     fontSize: 14,
-    color: Colours.bright.$,
+    color: Colours.dark.$,
     lineHeight: 16,
   },
 })
