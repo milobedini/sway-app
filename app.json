@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sway-app",
-    "slug": "sway-app",
+    "name": "Sway",
+    "slug": "Sway",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
