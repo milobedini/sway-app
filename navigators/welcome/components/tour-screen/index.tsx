@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.lightGrey.$,
   },
   title: {
-    color: Colours.bright.$,
+    color: Colours.dark.$,
     textAlign: 'center',
   },
   body: {
-    color: Colours.lightGrey.$,
+    color: Colours.dark.$,
     textAlign: 'center',
   },
   card: {

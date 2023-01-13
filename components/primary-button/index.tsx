@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 15,
   },
+
   destructive: {
     backgroundColor: Colours.errorDark.$,
     color: Colours.white.$,
@@ -26,6 +27,9 @@ const styles = StyleSheet.create({
     color: Colours.dark.$,
     lineHeight: 24,
   },
+  darkTitle: {
+    color: Colours.bright.$,
+  },
   icon: {
     marginLeft: 12,
   },
@@ -35,12 +39,14 @@ export type PrimaryButtonProps = TouchableHighlightProps & {
   title: string
   titleStyle?: TextProps['style']
   destructive?: boolean
+  dark?: boolean
 }
 export const PrimaryButton = ({
   title,
   titleStyle,
   style: styleProp,
   destructive = false,
+  dark = false,
   ...props
 }: PrimaryButtonProps): JSX.Element => (
   <Pressable
@@ -48,7 +54,14 @@ export const PrimaryButton = ({
     style={[styles.container, destructive && styles.destructive, styleProp]}
     {...props}
   >
-    <Text style={[styles.title, destructive && styles.destructive, titleStyle]}>
+    <Text
+      style={[
+        styles.title,
+        dark && styles.darkTitle,
+        destructive && styles.destructive,
+        titleStyle,
+      ]}
+    >
       {title}
     </Text>
   </Pressable>

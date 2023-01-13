@@ -7,7 +7,6 @@ import { textStyles } from '../../../../components/text'
 import { WelcomeNavigatorParamsList } from '../../WelcomeNavigatorParamsList'
 import logo from '../../../../assets/logo_black.png'
 import { PrimaryButton } from '../../../../components/primary-button'
-import { useCallback } from 'react'
 
 export type ReadyScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
 
 export const ReadyScreen = ({ navigation }: ReadyScreenProps): JSX.Element => {
   const onGetStarted = () => {
-    navigation.push('headlines'), [navigation]
+    navigation.push('breathe'), [navigation]
   }
   return (
     <SafeAreaView style={styles.container}>

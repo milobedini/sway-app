@@ -4,7 +4,8 @@ import { PrimaryButton } from '../../../../components/primary-button'
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colours.bright.$,
+    backgroundColor: Colours.dark.$,
+    color: Colours.brightGrey,
   },
 })
 
@@ -17,5 +18,10 @@ export const NextButton = ({
   onNext,
   title = 'Next',
 }: NextButtonProps): JSX.Element => (
-  <PrimaryButton title={title} style={styles.button} onPress={onNext} />
+  <PrimaryButton
+    title={title}
+    dark={true}
+    style={styles.button}
+    onPress={onNext}
+  />
 )
