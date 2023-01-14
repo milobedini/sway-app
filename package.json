@@ -53,7 +53,8 @@
     "ts-array-extensions": "^2.0.0",
     "uuid": "^9.0.0",
     "xdate": "^0.8.2",
-    "yargs": "^17.5.1"
+    "yargs": "^17.5.1",
+    "expo-updates": "~0.13.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

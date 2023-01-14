@@ -48,11 +48,17 @@ export const SignInScreen = ({
     console.log('LOGGING IN')
   }
 
+  const toHome = () => {
+    navigation.getParent()?.navigate('main')
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       <SafeAreaView style={styles.content}>
-        <Text style={[textStyles.title, styles.title]}>Sign In</Text>
+        <Text style={[textStyles.title, styles.title]} onPress={toHome}>
+          Sign In
+        </Text>
         <LoginForm style={styles.form} onSuccess={onNext} />
         <Image source={logo} style={styles.image} />
       </SafeAreaView>

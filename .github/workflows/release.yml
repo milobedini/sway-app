@@ -1,0 +1,551 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Expo CLI
+      run: npm install -g expo-cli  
+
+    - name: Publish to Expo
+      run: expo publish
+      env:
+        # EXPO_CLI_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
+        # EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+        EXPO_CLI_USERNAME: milobedini64@gmail.com
+        EXPO_CLI_PASSWORD: Dolphin64
+
+  # semantic_release:
+  #   name: Semantic Release
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+  #     new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+  #     new_release_git_tag: ${{ steps.semantic.outputs.new_release_git_tag }}
+  #     new_release_notes: ${{ steps.semantic.outputs.new_release_notes }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v1
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '16'
+  #     - name: Semantic Release
+  #       id: semantic
+  #       uses: cycjimmy/semantic-release-action@v3.2.0
+  #       with:
+  #         extra_plugins: |
+  #           @semantic-release/changelog
+  #           @semantic-release/exec
+  #           @semantic-release/git
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+  # android_build:
+  #   name: Android build
+  #   runs-on: ubuntu-latest
+  #   needs: [semantic_release]
+  #   if: needs.semantic_release.outputs.new_release_published == 'true'
+
+  #   env:
+  #     VERSION: ${{ needs.semantic_release.outputs.new_release_version }}
+  #     TAG: ${{ needs.semantic_release.outputs.new_release_git_tag }}
+
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+
+  #   - name: Compute build number
+  #     run: |
+  #       echo "BUILD_NUMBER=$((GITHUB_RUN_NUMBER+3000))" >> $GITHUB_ENV
+
+  #   - name: Load secrets
+  #     run: |
+  #       ./secrets-decrypt.sh ${{ secrets.GPG_PASSPHRASE }}
+  #       cat secrets/.env >> $GITHUB_ENV
+        
+  #   - name: Configure NodeJS
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: '16'
+  #       scope: '@showme-fit'
+  #       registry-url: https://npm.pkg.github.com
+  #       cache: npm
+
+  #   - name: Setup JDK 11
+  #     uses: actions/setup-java@v2
+  #     with:
+  #       distribution: "zulu"
+  #       java-version: 11
+
+  #   - name: Setup Android SDK
+  #     uses: android-actions/setup-android@v2
+
+  #   - name: Node modules
+  #     run: npm ci
+  #     env:
+  #       NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
+
+  #   - name: Gradle cache
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: |
+  #         ~/.gradle/caches
+  #         ~/.gradle/wrapper
+  #       key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+  #       restore-keys: |
+  #         ${{ runner.os }}-gradle-
+
+  #   - name: Build
+  #     run: |
+  #       cd android && \
+  #       ./gradlew bundleRelease && \
+  #       cd ..
+
+  #   - name: Gradle stop
+  #     run: ./android/gradlew --stop
+
+  #   - name: Zips for release
+  #     run: |
+  #       mv android/app/build/outputs/bundle/release/app-release.aab \
+  #         app-release.aab
+
+  #       pushd android/app/build/intermediates/merged_native_libs/release/out/lib && \
+  #         zip -vr native-debug-symbols.zip . && \
+  #         popd
+
+  #       mv android/app/build/intermediates/merged_native_libs/release/out/lib/native-debug-symbols.zip \
+  #         native-debug-symbols.zip
+
+  #       zip -vr android.zip \
+  #         app-release.aab \
+  #         mapping.txt \
+  #         native-debug-symbols.zip
+
+  #   - name: Attach to release
+  #     uses: ncipollo/release-action@v1
+  #     with:
+  #       allowUpdates: true
+  #       artifacts: android.zip
+  #       name: ${{ env.TAG }}
+  #       omitBodyDuringUpdate: true
+  #       replacesArtifacts: true
+  #       tag: ${{ env.TAG  }}
+  #       token: ${{ secrets.GPR_TOKEN }}
+
+  # android_distribute:
+  #   name: Distribute to Play Store
+  #   needs: [semantic_release, android_build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+        
+  #   - name: Setup Android SDK
+  #     uses: android-actions/setup-android@v2
+
+  #   - name: Download release
+  #     uses: dsaltares/fetch-gh-release-asset@1.0.0
+  #     with:
+  #       file: android.zip
+  #       version: "tags/${{ needs.semantic_release.outputs.new_release_git_tag }}"
+
+  #   - name: Unzip release
+  #     run: unzip android.zip
+
+  #   - name: Make whats new markdown file
+  #     run: |
+  #       mkdir whatsNew
+  #       cat <<EOF > release-notes.md
+  #       ${{ needs.semantic_release.outputs.new_release_notes }}
+  #       EOF
+
+  #   - name: Convert md > html
+  #     uses: docker://pandoc/core:2.9
+  #     with:
+  #       args: >-
+  #         -f markdown
+  #         -t plain
+  #         --output=whatsNew/whatsnew-en-GB
+  #         release-notes.md
+
+  #   - name: Deploy to Play Console
+  #     uses: r0adkll/upload-google-play@v1.0.19
+  #     with:
+  #       serviceAccountJsonPlainText: ${{ secrets.GCP_PLAY_STORE_PRIVATE_KEY }}
+  #       packageName: fit.showme.smf
+  #       releaseFiles: app-release.aab
+  #       track: internal
+  #       status: completed
+  #       debugSymbols: native-debug-symbols.zip
+  #       whatsNewDirectory: whatsNew
+
+  # ios_app_store_build:
+  #   name: iOS App Store build
+  #   runs-on: macos-12
+  #   needs: [semantic_release]
+  #   if: needs.semantic_release.outputs.new_release_published == 'true'
+
+  #   env:
+  #     VERSION: ${{ needs.semantic_release.outputs.new_release_version }}
+  #     TAG: ${{ needs.semantic_release.outputs.new_release_git_tag }}
+      
+  #   steps:
+  #   - name: Setup Xcode version
+  #     uses: maxim-lobanov/setup-xcode@v1.4.1
+  #     with:
+  #       xcode-version: 13.4.1
+
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+
+  #   - name: Compute build number
+  #     run: |
+  #       echo "BUILD_NUMBER=$((GITHUB_RUN_NUMBER+3000))" >> $GITHUB_ENV
+
+  #   - name: Load secrets
+  #     run: |
+  #       ./secrets-decrypt.sh ${{ secrets.GPG_PASSPHRASE }}
+  #       cat secrets/.env >> $GITHUB_ENV
+
+  #   - name: Set up xcodebuild variables
+  #     run: |
+  #       echo "ARCHIVE_PATH=ios/build/archive/$APP_NAME.xcarchive" >> $GITHUB_ENV
+    
+  #   - name: Configure NodeJS
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: '16'
+  #       scope: '@showme-fit'
+  #       registry-url: https://npm.pkg.github.com
+  #       cache: npm
+
+  #   - name: Node modules
+  #     run: npm ci
+  #     env:
+  #       NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
+
+  #   - name: CocoaPods cache
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: ios/Pods
+  #       key: pods-${{ hashFiles('**/Podfile.lock') }}
+  #       restore-keys: |
+  #         pods-
+
+  #   - name: CocoaPods install
+  #     run: |
+  #       cd ios && pod install
+
+  #   - name: Build cache
+  #     uses: mikehardy/buildcache-action@v2.1.0
+  #     with:
+  #       cache_key: app-store
+
+  #   - name: Set version
+  #     run: |
+  #       /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "ios/$APP_NAME/Info.plist"
+  #       /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "ios/$APP_NAME/Info.plist"
+
+  #   - name: Install the Apple certificate and provisioning profile
+  #     env:
+  #       KEYCHAIN_PASSWORD: anyvalue
+  #     run: |
+  #       # create variables
+  #       KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+  #       # create temporary keychain
+  #       security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+  #       security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+  #       security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+  #       # import certificate to keychain
+  #       security import secrets/ios/Certificates.p12  -P "$CERTIFICATES_PASSKEY" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+  #       security list-keychain -d user -s $KEYCHAIN_PATH
+
+  #       # apply provisioning profile
+  #       mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+  #       cp secrets/ios/Profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles
+
+  #       PROVISIONING_UUID=`/usr/libexec/PlistBuddy -c 'Print UUID' /dev/stdin <<< $(security cms -D -i secrets/ios/Profile.mobileprovision)`
+  #       echo "PROVISIONING_UUID=$PROVISIONING_UUID" >> $GITHUB_ENV
+
+  #   - name: App store archive
+  #     run: |
+  #       xcodebuild \
+  #         CC=clang \
+  #         CPLUSPLUS=clang++ \
+  #         LD=clang \
+  #         LDPLUSPLUS=clang++ \
+  #         -workspace ios/$APP_NAME.xcworkspace \
+  #         -scheme $APP_NAME \
+  #         -archivePath $ARCHIVE_PATH \
+  #         archive \
+  #         CODE_SIGN_STYLE=Manual \
+  #         PROVISIONING_PROFILE="$PROVISIONING_UUID" \
+  #         CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
+  #         | xcpretty && exit ${PIPESTATUS[0]}
+
+  #   - name: App store export
+  #     run: |
+  #       /usr/libexec/PlistBuddy -c Clear XcodeExportOptions.plist
+  #       /usr/libexec/PlistBuddy -c "Add method string app-store" XcodeExportOptions.plist
+  #       /usr/libexec/PlistBuddy -c "Add signingStyle string manual" XcodeExportOptions.plist
+  #       /usr/libexec/PlistBuddy -c "Add provisioningProfiles dict" XcodeExportOptions.plist
+  #       /usr/libexec/PlistBuddy -c "Add provisioningProfiles:fit.showme.smf string $DISTRIBUTION_PROFILE_NAME" XcodeExportOptions.plist
+  #       xcodebuild \
+  #         -exportArchive \
+  #         -archivePath $ARCHIVE_PATH \
+  #         -exportPath ios/build/ipa \
+  #         -exportOptionsPlist XcodeExportOptions.plist \
+  #         | xcpretty && exit ${PIPESTATUS[0]}
+
+  #   - name: Zips for release
+  #     run: |
+  #       mv ios/build/ipa/$APP_NAME.ipa \
+  #         $APP_NAME.ipa
+
+  #       mv ios/build/archive/$APP_NAME.xcarchive/dSYMs/$APP_NAME.app.dSYM \
+  #         $APP_NAME.ipa.dSYM
+
+  #       zip -vr ios_app_store.zip \
+  #         $APP_NAME.ipa \
+  #         $APP_NAME.ipa.dSYM
+
+  #   - name: Attach to release
+  #     uses: ncipollo/release-action@v1
+  #     with:
+  #       allowUpdates: true
+  #       artifacts: ios_app_store.zip
+  #       name: ${{ env.TAG }}
+  #       omitBodyDuringUpdate: true
+  #       replacesArtifacts: true
+  #       tag: ${{ env.TAG }}
+  #       token: ${{ secrets.GPR_TOKEN }}
+ 
+  # ios_app_store_distribute:
+  #   name: Distribute to App Store
+  #   needs: [semantic_release, ios_app_store_build]
+  #   runs-on: macos-12
+  #   steps:
+  #   - name: Setup Xcode version
+  #     uses: maxim-lobanov/setup-xcode@v1.4.1
+  #     with:
+  #       xcode-version: 13.4.1
+        
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+
+  #   - name: Load secrets
+  #     run: |
+  #       ./secrets-decrypt.sh ${{ secrets.GPG_PASSPHRASE }}
+  #       cat secrets/.env >> $GITHUB_ENV
+
+  #   - name: Download release
+  #     uses: dsaltares/fetch-gh-release-asset@1.0.0
+  #     with:
+  #       file: 'ios_app_store.zip'
+  #       version: "tags/${{ needs.semantic_release.outputs.new_release_git_tag }}"
+
+  #   - name: Unzip release
+  #     run: |
+  #       unzip ios_app_store.zip
+    
+  #   - name: Upload app to TestFlight
+  #     run: |
+  #       mkdir ~/private_keys
+  #       cp ./secrets/ios/AuthKey.p8 ~/private_keys/AuthKey_${{ env.APPSTORE_API_KEY_ID }}.p8
+  #       /usr/bin/xcrun altool --output-format xml --upload-app --file Showmefit.ipa --type ios --apiKey ${{ env.APPSTORE_API_KEY_ID }} --apiIssuer ${{ env.APPSTORE_ISSUER_ID }}
+
+  # web_build:
+  #   name: Web build
+  #   needs: [semantic_release]
+  #   if: needs.semantic_release.outputs.new_release_published == 'true'
+  #   runs-on: ubuntu-latest
+
+  #   env:
+  #     TAG: ${{ needs.semantic_release.outputs.new_release_git_tag }}
+
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+    
+  #   - name: Configure NodeJS
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: '16'
+  #       scope: '@showme-fit'
+  #       registry-url: https://npm.pkg.github.com
+  #       cache: npm
+
+  #   - name: Node modules
+  #     run: npm ci
+  #     env:
+  #       NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
+
+  #   - name: Build
+  #     run: npm run web:export
+
+  #   - name: Configure AWS
+  #     uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.ECR_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.ECR_SECRET_ACCESS_KEY }}
+  #       aws-region: eu-west-2
+
+  #   - name: Login to ECR
+  #     id: login-ecr
+  #     uses: aws-actions/amazon-ecr-login@v1
+      
+  #   - name: Build, tag and push image to ECR
+  #     env:
+  #       ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #       ECR_REPOSITORY: ${{ github.event.repository.name }}
+  #       IMAGE_TAG: ${{ env.TAG }}
+  #     run: |
+  #       docker build \
+  #         --build-arg GPR_TOKEN=${{ secrets.GPR_TOKEN }} \
+  #         -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+  #         -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+  #       docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+
+  # web_distribute:
+  #   name: Web distribute
+  #   needs: [web_build]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Configure AWS Dev account
+  #     uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.APPRUNNER_DEV_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.APPRUNNER_DEV_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ secrets.APPRUNNER_DEV_REGION }}
+
+  #   - name: Deploy image to AWS App Runner
+  #     env:
+  #       SERVICE_NAME: ${{ github.event.repository.name }}
+  #     run: |       
+  #       SERVICE_ARN=$(aws apprunner list-services --query \
+  #         "ServiceSummaryList[?ServiceName=='$SERVICE_NAME'].ServiceArn | [0]" --output text)
+  #       aws apprunner start-deployment --service-arn $SERVICE_ARN   
+
+  ## DISABLED UNTIL NEEDED
+  ## was chewing all the minutes
+  ##
+  # ios_simulator_build:
+  #   name: iOS simulator build
+  #   needs: [semantic_release]
+  #   if: needs.semantic_release.outputs.new_release_published == 'true'
+  #   runs-on: macos-12
+
+  #   env:
+  #     VERSION: ${{ needs.semantic_release.outputs.new_release_version }}
+  #     TAG: ${{ needs.semantic_release.outputs.new_release_git_tag }}
+
+  #   steps:
+  #   - name: Setup Xcode version
+  #     uses: maxim-lobanov/setup-xcode@v1.4.1
+  #     with:
+  #       xcode-version: 13.4.1
+
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+
+  #   - name: Compute build number
+  #     run: |
+  #       echo "BUILD_NUMBER=$((GITHUB_RUN_NUMBER+3000))" >> $GITHUB_ENV
+
+  #   - name: Load secrets
+  #     run: |
+  #       ./secrets-decrypt.sh ${{ secrets.GPG_PASSPHRASE }}
+  #       cat secrets/.env >> $GITHUB_ENV
+    
+  #   - name: Configure NodeJS
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: '16'
+  #       scope: '@showme-fit'
+  #       registry-url: https://npm.pkg.github.com
+  #       cache: npm
+
+  #   - name: Node modules
+  #     run: npm ci
+  #     env:
+  #       NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
+
+  #   - name: CocoaPods cache
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: ios/Pods
+  #       key: pods-${{ hashFiles('**/Podfile.lock') }}
+  #       restore-keys: |
+  #         pods-
+
+  #   - name: CocoaPods install
+  #     run: |
+  #       cd ios && pod install
+
+  #   - name: Build cache
+  #     uses: mikehardy/buildcache-action@v2.1.0
+  #     with:
+  #       cache_key: simulator
+
+  #   - name: Set version
+  #     run: |
+  #       /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "ios/$APP_NAME/Info.plist"
+  #       /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "ios/$APP_NAME/Info.plist"
+
+  #   - name: Simulator build
+  #     run: |
+  #       xcodebuild \
+  #         CC=clang \
+  #         CPLUSPLUS=clang++ \
+  #         LD=clang \
+  #         LDPLUSPLUS=clang++ \
+  #         -workspace ios/$APP_NAME.xcworkspace \
+  #         -scheme $APP_NAME \
+  #         -sdk iphonesimulator \
+  #         -derivedDataPath ios/build \
+  #         -configuration Release \
+  #         build \
+  #         | xcpretty
+
+  #   - name: Zips for release
+  #     run: |
+  #       mv ios/build/Build/Products/Release-iphonesimulator/$APP_NAME.app \
+  #         $APP_NAME.app
+
+  #       mv ios/build/Build/Products/Release-iphonesimulator/$APP_NAME.app.dSYM \
+  #         $APP_NAME.app.dSYM
+
+  #       zip -vr ios_simulator.zip \
+  #         $APP_NAME.app \
+  #         $APP_NAME.app.dSYM
+
+  #   - name: Attach to release
+  #     uses: ncipollo/release-action@v1
+  #     with:
+  #       allowUpdates: true
+  #       artifacts: ios_simulator.zip
+  #       name: ${{ env.TAG }}
+  #       omitBodyDuringUpdate: true
+  #       replacesArtifacts: true
+  #       tag: ${{ env.TAG }}
+  #       token: ${{ secrets.GPR_TOKEN }}

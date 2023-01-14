@@ -62,6 +62,10 @@ export const LoginForm = ({
 
   const { width } = useWindowDimensions()
 
+  const toHome = () => {
+    console.log('CONTINUE')
+  }
+
   return (
     <View style={[style, styles.root]} {...rest}>
       <Formik
@@ -89,7 +93,7 @@ export const LoginForm = ({
                 returnKeyType="send"
                 style={(styles.field, { width: width - 50 })}
                 onSubmitEditing={() => handleSubmit()}
-                errorMessage={error() ?? undefined}
+                // errorMessage={error() ?? undefined}
               />
             </View>
           </>

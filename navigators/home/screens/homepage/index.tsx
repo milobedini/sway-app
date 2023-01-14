@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { Colours } from "../../../../colours";
@@ -16,6 +17,7 @@ import notesImage from "./cloud.png";
 import timerImage from "./timer.png";
 import progressImage from "./progress.png";
 import backgroundImage from "./background.png";
+import backgroundWeb from "./background_web.png";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -29,7 +31,6 @@ const styles = StyleSheet.create({
   },
   background: {
     width: "100%",
-    height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -57,9 +58,13 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
+  const { width, height } = useWindowDimensions();
   return (
     <View>
-      <ImageBackground style={styles.background} source={backgroundImage}>
+      <ImageBackground
+        style={[styles.background, { height: height }]}
+        source={width > 480 ? backgroundWeb : backgroundImage}
+      >
         <View>
           <View style={styles.content}>
             <View style={styles.row}>

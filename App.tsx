@@ -38,44 +38,44 @@ const App = (props: AppProps): JSX.Element => {
               //   }
               // }
             },
-            // main: {
-            //   screens: {
-            //     home: {
-            //       screens: {
-            //         homepage: {
-            //           path: 'home'
-            //         }
-            //       }
-            //     },
-            //     planner: {
-            //       path: 'plan',
-            //       screens: {
-            //         plan: ':date',
-            //         addRecipe: {
-            //           path: ':date/add-recipe'
-            //         }
-            //       }
-            //     },
-            //     recipes: {
-            //       screens: {
-            //         show: {
-            //           path: 'recipes/:recipeId'
-            //         },
-            //         list: {
-            //           path: 'recipes'
-            //         }
-            //       }
-            //     },
-            //     'shopping-list': 'shopping-list',
-            //     'more-info': {
-            //       path: 'more-info',
-            //       screens: {
-            //         index: '',
-            //         'delete-account': 'delete-account'
-            //       }
-            //     }
-            //   }
-            // }
+            main: {
+              screens: {
+                home: {
+                  screens: {
+                    homepage: {
+                      path: 'home',
+                    },
+                  },
+                },
+                // planner: {
+                //   path: 'plan',
+                //   screens: {
+                //     plan: ':date',
+                //     addRecipe: {
+                //       path: ':date/add-recipe'
+                //     }
+                //   }
+                // },
+                // recipes: {
+                //   screens: {
+                //     show: {
+                //       path: 'recipes/:recipeId'
+                //     },
+                //     list: {
+                //       path: 'recipes'
+                //     }
+                //   }
+                // },
+                // 'shopping-list': 'shopping-list',
+                // 'more-info': {
+                //   path: 'more-info',
+                //   screens: {
+                //     index: '',
+                //     'delete-account': 'delete-account'
+                //   }
+                // }
+              },
+            },
           },
         },
       },
