@@ -1,21 +1,13 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import {
-  Image,
   ImageBackground,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
 import { Colours } from "../../../../colours";
-import { textStyles } from "../../../../components/text";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
-import meditateImage from "./med.png";
-import communityImage from "./book.png";
-import notesImage from "./cloud.png";
-import timerImage from "./timer.png";
-import progressImage from "./progress.png";
+
 import backgroundImage from "./background.png";
 import backgroundWeb from "./background_web.png";
 export type HomeScreenProps = StackScreenProps<

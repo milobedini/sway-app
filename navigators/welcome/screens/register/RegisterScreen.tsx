@@ -5,12 +5,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
-import { LoginForm } from "./components";
+import { RegisterForm } from "./components";
 import logo from "../../../../assets/logo_black.png";
 
-export type SignInScreenProps = StackScreenProps<
+export type RegisterScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,
-  "signIn"
+  "register"
 >;
 
 const styles = StyleSheet.create({
@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
 
   content: {
     flex: 1,
-    alignItems: "stretch",
-    padding: 26,
   },
   title: {
     textAlign: "center",
@@ -41,22 +39,21 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 });
-export const SignInScreen = ({
+export const RegisterScreen = ({
   navigation,
-}: SignInScreenProps): JSX.Element => {
-  const toHome = () => {
-    navigation.getParent()?.navigate("main");
+}: RegisterScreenProps): JSX.Element => {
+  const onNext = () => {
+    navigation.navigate("signIn");
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       <SafeAreaView style={styles.content}>
-        <Text style={[textStyles.title, styles.title]} onPress={toHome}>
-          Sign In
+        <Text style={[textStyles.title, styles.title]} onPress={onNext}>
+          Sign Up
         </Text>
-        <LoginForm style={styles.form} />
-        <Image source={logo} style={styles.image} />
+        <RegisterForm style={styles.form} onSuccess={onNext} />
       </SafeAreaView>
     </View>
   );

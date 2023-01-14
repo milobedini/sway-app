@@ -1,33 +1,35 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { useEffect, useState } from 'react'
-import { Platform } from 'react-native'
-import { HeaderBackButton } from './components/header-back-button'
-import { HeaderSkipButton } from './components/header-skip-button'
-import { BreatheScreen, ReadyScreen } from './screens'
-import { GrowScreen } from './screens/grow'
-import { SignInScreen } from './screens/sign-in'
-import { SitScreen } from './screens/sit'
-import { WelcomeNavigatorParamsList } from './WelcomeNavigatorParamsList'
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useEffect, useState } from "react";
+import { Platform } from "react-native";
+import { HeaderBackButton } from "./components/header-back-button";
+import { HeaderSkipButton } from "./components/header-skip-button";
+import { BreatheScreen, ReadyScreen } from "./screens";
+import { GrowScreen } from "./screens/grow";
+import { RegisterScreen } from "./screens/register";
+import { SignInScreen } from "./screens/sign-in";
+import { SitScreen } from "./screens/sit";
+import { WelcomeNavigatorParamsList } from "./WelcomeNavigatorParamsList";
 
-const Stack = createStackNavigator<WelcomeNavigatorParamsList>()
+const Stack = createStackNavigator<WelcomeNavigatorParamsList>();
 export const WelcomeNavigator = (): JSX.Element => {
-  const [init, setInit] = useState(true)
+  const [init, setInit] = useState(true);
   //   change below to global settings
-  const [tourComplete, setTourComplete] = useState(false)
+  const [tourComplete, setTourComplete] = useState(false);
 
-  const navigation = useNavigation<NavigationProp<WelcomeNavigatorParamsList>>()
+  const navigation =
+    useNavigation<NavigationProp<WelcomeNavigatorParamsList>>();
 
   useEffect(() => {
     if (!init) {
-      return
+      return;
     }
     if (tourComplete) {
-      console.log('navigate as Tour complete')
+      console.log("navigate as Tour complete");
       //   navigate to sign in
     }
-    setInit(false)
-  }, [init])
+    setInit(false);
+  }, [init]);
 
   return (
     <Stack.Navigator>
@@ -41,7 +43,7 @@ export const WelcomeNavigator = (): JSX.Element => {
         <Stack.Group
           screenOptions={{
             headerTransparent: true,
-            headerTitle: '',
+            headerTitle: "",
             headerLeft: HeaderBackButton,
             headerRight: HeaderSkipButton,
           }}
@@ -53,13 +55,14 @@ export const WelcomeNavigator = (): JSX.Element => {
         <Stack.Group
           screenOptions={{
             headerTransparent: true,
-            headerTitle: '',
+            headerTitle: "",
             headerLeft: HeaderBackButton,
           }}
         >
+          <Stack.Screen name="register" component={RegisterScreen} />
           <Stack.Screen name="signIn" component={SignInScreen} />
         </Stack.Group>
       </>
     </Stack.Navigator>
-  )
-}
+  );
+};
