@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
@@ -12,8 +14,28 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ProfileScreen = (): JSX.Element => (
-  <View style={styles.container}>
-    <Text style={textStyles.title}>Profile Screen</Text>
-  </View>
-);
+export const ProfileScreen = (): JSX.Element => {
+  const [testValue, setTestValue] = useState("");
+  useEffect(() => {
+    const getTestData = async () => {
+      try {
+        // returns data or null
+        const value = await AsyncStorage.getItem("testValue");
+        if (value !== null) {
+          console.log("Test value is ", value);
+          setTestValue(value);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getTestData();
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={textStyles.title}>Profile Screen</Text>
+      <Text style={textStyles.body}>{testValue}</Text>
+    </View>
+  );
+};
