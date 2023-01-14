@@ -1,4 +1,4 @@
-import { StackScreenProps } from '@react-navigation/stack'
+import { StackScreenProps } from "@react-navigation/stack";
 import {
   Image,
   ImageBackground,
@@ -7,42 +7,42 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
-} from 'react-native'
-import { Colours } from '../../../../colours'
-import { textStyles } from '../../../../components/text'
-import { HomeNavigatorParamsList } from '../../HomeNavigatorParamsList'
-import meditateImage from './med.png'
-import communityImage from './book.png'
-import notesImage from './cloud.png'
-import timerImage from './timer.png'
-import progressImage from './progress.png'
-import backgroundImage from './background.png'
-import backgroundWeb from './background_web.png'
+} from "react-native";
+import { Colours } from "../../../../colours";
+import { textStyles } from "../../../../components/text";
+import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
+import meditateImage from "./med.png";
+import communityImage from "./book.png";
+import notesImage from "./cloud.png";
+import timerImage from "./timer.png";
+import progressImage from "./progress.png";
+import backgroundImage from "./background.png";
+import backgroundWeb from "./background_web.png";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
-  'homepage'
->
+  "homepage"
+>;
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   background: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     margin: 10,
     paddingHorizontal: 8,
   },
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
   },
   imageTitle: {
     marginTop: 10,
-    textAlign: 'center',
+    textAlign: "center",
     color: Colours.lightGrey.$,
   },
-})
+});
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
-  const { width, height } = useWindowDimensions()
+  const { width, height } = useWindowDimensions();
   return (
     <View>
       <ImageBackground
@@ -68,7 +68,13 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
         <View>
           <View style={styles.content}>
             <View style={styles.row}>
-              <TouchableOpacity onPress={() => console.log('navigating')}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation
+                    .getParent()
+                    ?.navigate("meditate", { screen: "list", params: {} })
+                }
+              >
                 <View style={styles.imageContainer}>
                   <Image source={meditateImage} style={styles.image} />
                   <Text style={[textStyles.body, styles.imageTitle]}>
@@ -76,7 +82,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                   </Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log('navigating')}>
+              <TouchableOpacity onPress={() => console.log("navigating")}>
                 <View style={styles.imageContainer}>
                   <Image source={communityImage} style={styles.image} />
                   <Text style={[textStyles.body, styles.imageTitle]}>
@@ -86,7 +92,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
               </TouchableOpacity>
             </View>
             <View style={styles.row}>
-              <TouchableOpacity onPress={() => console.log('navigating')}>
+              <TouchableOpacity onPress={() => console.log("navigating")}>
                 <View style={styles.imageContainer}>
                   <Image source={notesImage} style={styles.image} />
                   <Text style={[textStyles.body, styles.imageTitle]}>
@@ -94,7 +100,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                   </Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log('navigating')}>
+              <TouchableOpacity onPress={() => console.log("navigating")}>
                 <View style={styles.imageContainer}>
                   <Image source={timerImage} style={styles.image} />
                   <Text style={[textStyles.body, styles.imageTitle]}>
@@ -102,7 +108,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                   </Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log('navigating')}>
+              <TouchableOpacity onPress={() => console.log("navigating")}>
                 <View style={styles.imageContainer}>
                   <Image source={progressImage} style={styles.image} />
                   <Text style={[textStyles.body, styles.imageTitle]}>
@@ -115,5 +121,5 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
         </View>
       </ImageBackground>
     </View>
-  )
-}
+  );
+};

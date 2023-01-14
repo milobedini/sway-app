@@ -1,23 +1,23 @@
-import { ComponentType } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { SvgProps } from 'react-native-svg'
-import { Colours } from '../../../../colours'
+import { ComponentType } from "react";
+import { StyleSheet, View } from "react-native";
+import { SvgProps } from "react-native-svg";
+import { Colours } from "../../../../colours";
 
 const styles = StyleSheet.create({
   container: {},
   active: {},
-})
+});
 
 export type TabBarButtonProps = {
-  icon: ComponentType<SvgProps>
-  focussed: boolean
-}
+  icon: ComponentType<SvgProps>;
+  focussed: boolean;
+};
 
 export const TabBarButton = ({
   icon: Icon,
   focussed,
 }: TabBarButtonProps): JSX.Element => (
   <View style={[styles.container, focussed && styles.active]}>
-    <Icon fill={focussed ? Colours.dark.$ : Colours.lightGrey.$} />
+    <Icon fill={focussed ? Colours.white.$ : Colours.dark.$} />
   </View>
-)
+);
