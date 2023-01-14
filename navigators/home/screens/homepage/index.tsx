@@ -68,7 +68,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
         <View>
           <View style={styles.content}>
             <View style={styles.row}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() =>
                   navigation
                     .getParent()
@@ -115,7 +115,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                     Profile
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </View>

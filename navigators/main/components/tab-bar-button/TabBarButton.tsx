@@ -18,6 +18,6 @@ export const TabBarButton = ({
   focussed,
 }: TabBarButtonProps): JSX.Element => (
   <View style={[styles.container, focussed && styles.active]}>
-    <Icon fill={focussed ? Colours.white.$ : Colours.dark.$} />
+    <Icon fill={focussed ? Colours.bright.$ : Colours.lightGrey.$} />
   </View>
 );

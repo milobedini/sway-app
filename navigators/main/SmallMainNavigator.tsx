@@ -2,9 +2,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colours } from "../../colours";
 import { HomeIcon } from "../../components/icons/HomeIcon";
+import { LearnIcon } from "../../components/icons/LearnIcon";
 import { MediateIcon } from "../../components/icons/MeditateIcon";
+import { MoreInfoIcon } from "../../components/icons/MoreInfoIcon";
+import { TimerIcon } from "../../components/icons/TimerIcon";
 import { HomeNavigator } from "../home";
+import { LearnNavigator } from "../learn";
 import { MeditateNavigator } from "../meditate";
+import { MoreInfoNavigator } from "../more-info";
+import { TimerNavigator } from "../timer";
 import { TabBarButton } from "./components";
 import { MainNavigatorParamList } from "./MainNavigatorParamsList";
 
@@ -19,13 +25,14 @@ export const SmallMainNavigator = (): JSX.Element => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: Colours.bright.$,
+          backgroundColor: Colours.dark.$,
+          borderTopColor: Colours.bright.$,
           paddingTop: 4,
           paddingBottom: bottom ? bottom / 2 : 8,
           height: 76 + bottom / 2,
-          borderTopWidth: 0,
+          borderTopWidth: 2,
           shadowOpacity: 0.3,
-          shadowColor: Colours.bright.$,
+          shadowColor: Colours.white.$,
           shadowRadius: 36,
           shadowOffset: { width: 0, height: 6 },
         },
@@ -51,8 +58,35 @@ export const SmallMainNavigator = (): JSX.Element => {
         }}
       />
       {/* Timer */}
-      {/* Notes, Articles & Community */}
-      {/* Show More - Progress, Help, Logout */}
+      <Tab.Screen
+        name="timer"
+        component={TimerNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarButton icon={TimerIcon} focussed={focused} />
+          ),
+        }}
+      />
+      {/* Notes, Articles & Community aka Learn */}
+      <Tab.Screen
+        name="learn"
+        component={LearnNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarButton icon={LearnIcon} focussed={focused} />
+          ),
+        }}
+      />
+      {/* Show More - Progress, Help, Logout aka More*/}
+      <Tab.Screen
+        name="more-info"
+        component={MoreInfoNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarButton icon={MoreInfoIcon} focussed={focused} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
