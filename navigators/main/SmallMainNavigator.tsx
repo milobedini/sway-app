@@ -2,7 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colours } from "../../colours";
 import { HomeIcon } from "../../components/icons/HomeIcon";
+import { MediateIcon } from "../../components/icons/MeditateIcon";
 import { HomeNavigator } from "../home";
+import { MeditateNavigator } from "../meditate";
 import { TabBarButton } from "./components";
 import { MainNavigatorParamList } from "./MainNavigatorParamsList";
 
@@ -39,6 +41,15 @@ export const SmallMainNavigator = (): JSX.Element => {
         }}
       />
       {/* Meditate */}
+      <Tab.Screen
+        name="meditate"
+        component={MeditateNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarButton icon={MediateIcon} focussed={focused} />
+          ),
+        }}
+      />
       {/* Timer */}
       {/* Notes, Articles & Community */}
       {/* Show More - Progress, Help, Logout */}

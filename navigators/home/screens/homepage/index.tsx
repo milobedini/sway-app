@@ -63,7 +63,13 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
         <View>
           <View style={styles.content}>
             <View style={styles.row}>
-              <TouchableOpacity onPress={() => console.log("navigating")}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation
+                    .getParent()
+                    ?.navigate("meditate", { screen: "list", params: {} })
+                }
+              >
                 <View style={styles.imageContainer}>
                   <Image source={meditateImage} style={styles.image} />
                   <Text style={[textStyles.body, styles.imageTitle]}>
