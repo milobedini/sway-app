@@ -70,3 +70,13 @@ export const removeUserId = async () => {
     return err;
   }
 };
+
+export const signOut = async () => {
+  try {
+    await removeUsername();
+    await removeToken();
+    await removeUserId();
+  } catch (err) {
+    return err;
+  }
+};
