@@ -1,6 +1,7 @@
-import { StyleSheet, Text, TextProps } from 'react-native'
-import { Colours } from '../../colours'
-import { Fonts } from '../../fonts'
+import { StyleSheet, Text, TextProps } from "react-native";
+
+import { Colours } from "../../colours";
+import { Fonts } from "../../fonts";
 
 const styles = StyleSheet.create({
   root: {
@@ -8,8 +9,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: Fonts.OpenSans_700Bold,
   },
-})
+});
 
 export const Error = ({ style, ...rest }: TextProps): JSX.Element => (
   <Text style={[styles.root, style]} {...rest} />
-)
+);

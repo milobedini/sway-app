@@ -1,12 +1,12 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
 import { RegisterForm } from "./components";
-import logo from "../../../../assets/logo_black.png";
 
 export type RegisterScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,

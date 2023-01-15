@@ -2,6 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";

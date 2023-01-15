@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { LearnNavigatorParamsList } from "./LearnNavigatorParamsList";
 import { LearnHomeScreen } from "./screens/learn-home/LearnHomeScreen";
 

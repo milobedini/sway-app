@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { HomeNavigatorParamsList } from "./HomeNavigatorParamsList";
 import { HomeScreen } from "./screens";
 

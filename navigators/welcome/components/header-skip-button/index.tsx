@@ -2,6 +2,7 @@ import { HeaderButtonProps } from "@react-navigation/elements";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
 import { StyleSheet } from "react-native";
+
 import { Colours } from "../../../../colours";
 import { MiniButton } from "../../../../components/mini-button";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";

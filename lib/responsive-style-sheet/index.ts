@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-namespace */
-import { useMemo } from 'react';
-import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
-import { useMediaQuery } from 'react-responsive';
+import { useMemo } from "react";
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { useMediaQuery } from "react-responsive";
 
 type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
 
@@ -28,7 +28,7 @@ export namespace ResponsiveStyleSheet {
       allStyles.push({ sizeClass, styles: other });
       return {
         styles: allStyles,
-        override
+        override,
       };
     };
 
@@ -39,26 +39,26 @@ export namespace ResponsiveStyleSheet {
   }
 }
 
-export const useSizeClass = (): 'small' | 'medium' | 'large' => {
+export const useSizeClass = (): "small" | "medium" | "large" => {
   const isLarge = useMediaQuery({ minWidth: 1224 });
   const isMedium = useMediaQuery({ minWidth: 900 });
 
   const size = useMemo(() => {
     if (isLarge) {
-      return 'large';
+      return "large";
     }
 
     if (isMedium) {
-      return 'medium';
+      return "medium";
     }
 
-    return 'small';
+    return "small";
   }, [isLarge, isMedium]);
   return size;
 };
 
 export const useResponsiveStyleSheet = <T extends NamedStyles<T>>({
-  styles
+  styles,
 }: ResponsiveStyleSheets<T>): T => {
   const size = useSizeClass();
 
@@ -85,15 +85,15 @@ export const useResponsiveStyleSheet = <T extends NamedStyles<T>>({
     const others = styles.filter(({ sizeClass }) => sizeClass[size]);
 
     const keys = others
-      .map(o => Object.keys(o.styles))
+      .map((o) => Object.keys(o.styles))
       .flat()
       .distinct() as (keyof T)[];
 
     const p = keys.toRecord(
-      k => k,
-      k =>
+      (k) => k,
+      (k) =>
         others
-          .map(o => o.styles[k])
+          .map((o) => o.styles[k])
           .flat()
           .compact()
     );

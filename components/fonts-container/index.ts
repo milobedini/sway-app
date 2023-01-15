@@ -1,1 +1,1 @@
-export * from './FontsContainer'
+export * from "./FontsContainer";

@@ -4,13 +4,14 @@ import {
   Text,
   TextProps,
   TouchableHighlightProps,
-} from 'react-native'
-import { Colours } from '../../colours'
-import { Fonts } from '../../fonts'
+} from "react-native";
+
+import { Colours } from "../../colours";
+import { Fonts } from "../../fonts";
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: Colours.bright.$,
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -33,14 +34,14 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 12,
   },
-})
+});
 
 export type PrimaryButtonProps = TouchableHighlightProps & {
-  title: string
-  titleStyle?: TextProps['style']
-  destructive?: boolean
-  dark?: boolean
-}
+  title: string;
+  titleStyle?: TextProps["style"];
+  destructive?: boolean;
+  dark?: boolean;
+};
 export const PrimaryButton = ({
   title,
   titleStyle,
@@ -65,4 +66,4 @@ export const PrimaryButton = ({
       {title}
     </Text>
   </Pressable>
-)
+);

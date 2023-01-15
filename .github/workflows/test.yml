@@ -1,6 +1,6 @@
-name: Test
+name: Release
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -20,8 +20,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
+
+      - name: Publish to Expo
+        run: expo publish
+        env:
+          # EXPO_CLI_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
+          # EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+          EXPO_CLI_USERNAME: milobedini64@gmail.com
+          EXPO_CLI_PASSWORD: Dolphin64
 
   # semantic_release:
   #   name: Semantic Release

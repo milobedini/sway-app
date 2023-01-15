@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { Colours } from "../../colours";
 import { Fonts } from "../../fonts";
 import { MoreInfoNavigatorParamsList } from "./MoreInfoNavigatorParamsList";

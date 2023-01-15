@@ -1,7 +1,7 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
-import { Platform } from "react-native";
+
 import { HeaderBackButton } from "./components/header-back-button";
 import { HeaderSkipButton } from "./components/header-skip-button";
 import { BreatheScreen, ReadyScreen } from "./screens";
@@ -13,53 +13,68 @@ import { WelcomeNavigatorParamsList } from "./WelcomeNavigatorParamsList";
 
 const Stack = createStackNavigator<WelcomeNavigatorParamsList>();
 export const WelcomeNavigator = (): JSX.Element => {
-  const [init, setInit] = useState(true);
-  //   change below to global settings
-  const [tourComplete, setTourComplete] = useState(false);
+  const [onboarded, setOnboarded] = useState(false);
 
-  const navigation =
-    useNavigation<NavigationProp<WelcomeNavigatorParamsList>>();
+  // const navigation =
+  //   useNavigation<NavigationProp<WelcomeNavigatorParamsList>>();
 
   useEffect(() => {
-    if (!init) {
-      return;
-    }
-    if (tourComplete) {
-      console.log("navigate as Tour complete");
-      //   navigate to sign in
-    }
-    setInit(false);
-  }, [init]);
+    const checkOnboarded = async () => {
+      try {
+        const value = await AsyncStorage.getItem("onboarding");
+        if (value === "true") {
+          setOnboarded(true);
+        }
+      } catch (err) {
+        return err;
+      }
+    };
+    checkOnboarded();
+  }, []);
 
   return (
     <Stack.Navigator>
       {/* {Platform.OS !== 'web' && ( */}
+      {/* If not onboarded */}
       <>
-        <Stack.Screen
-          name="ready"
-          component={ReadyScreen}
-          options={{ headerShown: false }}
-        />
+        {!onboarded ? (
+          <>
+            <Stack.Screen
+              name="ready"
+              component={ReadyScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Group
+              screenOptions={{
+                headerTransparent: true,
+                headerTitle: "",
+                headerLeft: HeaderBackButton,
+                headerRight: HeaderSkipButton,
+              }}
+            >
+              <Stack.Screen name="breathe" component={BreatheScreen} />
+              <Stack.Screen name="sit" component={SitScreen} />
+              <Stack.Screen name="grow" component={GrowScreen} />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                headerTransparent: true,
+                headerTitle: "",
+                headerLeft: HeaderBackButton,
+              }}
+            >
+              <Stack.Screen name="register" component={RegisterScreen} />
+            </Stack.Group>
+          </>
+        ) : null}
         <Stack.Group
           screenOptions={{
             headerTransparent: true,
             headerTitle: "",
             headerLeft: HeaderBackButton,
-            headerRight: HeaderSkipButton,
           }}
         >
-          <Stack.Screen name="breathe" component={BreatheScreen} />
-          <Stack.Screen name="sit" component={SitScreen} />
-          <Stack.Screen name="grow" component={GrowScreen} />
-        </Stack.Group>
-        <Stack.Group
-          screenOptions={{
-            headerTransparent: true,
-            headerTitle: "",
-            headerLeft: HeaderBackButton,
-          }}
-        >
-          <Stack.Screen name="register" component={RegisterScreen} />
+          {/* <Stack.Screen name="register" component={RegisterScreen} /> */}
           <Stack.Screen name="signIn" component={SignInScreen} />
         </Stack.Group>
       </>

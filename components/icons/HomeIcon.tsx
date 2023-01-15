@@ -1,4 +1,4 @@
-import Svg, { Path, SvgProps } from 'react-native-svg'
+import Svg, { Path, SvgProps } from "react-native-svg";
 
 export const HomeIcon = ({ fill, ...rest }: SvgProps) => (
   <Svg width={24} height={24} viewBox="0 0 20 17" fill="none" {...rest}>
@@ -7,4 +7,4 @@ export const HomeIcon = ({ fill, ...rest }: SvgProps) => (
       fill={fill}
     />
   </Svg>
-)
+);

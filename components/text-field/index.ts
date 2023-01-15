@@ -1,3 +1,3 @@
-import * as Normalisers from './normalisers'
-export * from './TextField'
-export { Normalisers }
+import * as Normalisers from "./normalisers";
+export * from "./TextField";
+export { Normalisers };

@@ -5,9 +5,9 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+
 import { Colours } from "../../../../colours";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
-
 import backgroundImage from "./background.png";
 import backgroundWeb from "./background_web.png";
 export type HomeScreenProps = StackScreenProps<
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     color: Colours.lightGrey.$,
   },
 });
-
+// eslint-disable-next-line
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
   return (

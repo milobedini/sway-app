@@ -1,6 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
+
 import { TimerNavigatorParamsList } from "../../TimerNavigatorParamsList";
 
 export type TimerShowScreenProps = StackScreenProps<
@@ -8,12 +9,10 @@ export type TimerShowScreenProps = StackScreenProps<
   "show"
 >;
 
-const styles = StyleSheet.create({
-  container: {},
-});
-
 export const TimerShowScreen = ({
+  // eslint-disable-next-line
   navigation,
+  // eslint-disable-next-line
   route: { params },
 }: TimerShowScreenProps): JSX.Element => (
   <>

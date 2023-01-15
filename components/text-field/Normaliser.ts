@@ -1,1 +1,1 @@
-export type Normaliser = (value: string) => string
+export type Normaliser = (value: string) => string;

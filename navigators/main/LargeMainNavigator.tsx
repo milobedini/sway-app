@@ -1,5 +1,6 @@
 import { createDrawerNavigator, DrawerContent } from "@react-navigation/drawer";
 import { useWindowDimensions } from "react-native";
+
 import { Colours } from "../../colours";
 import { HomeIcon } from "../../components/icons";
 import { HomeNavigator } from "../home";

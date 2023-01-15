@@ -1,6 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
+
 import { LearnNavigatorParamsList } from "../../LearnNavigatorParamsList";
 
 export type LearnHomeScreenProps = StackScreenProps<
@@ -8,12 +9,10 @@ export type LearnHomeScreenProps = StackScreenProps<
   "home"
 >;
 
-const styles = StyleSheet.create({
-  container: {},
-});
-
 export const LearnHomeScreen = ({
+  // eslint-disable-next-line
   navigation,
+  // eslint-disable-next-line
   route: { params },
 }: LearnHomeScreenProps): JSX.Element => (
   <>

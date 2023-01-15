@@ -1,2 +1,2 @@
 // auto-barrel ignore
-export * from './HomeNavigator'
+export * from "./HomeNavigator";

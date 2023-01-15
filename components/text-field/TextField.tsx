@@ -1,26 +1,33 @@
-import { useFormikContext } from 'formik'
-import { forwardRef, useState } from 'react'
-import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native'
-import { Colours } from '../../colours'
-import { Fonts } from '../../fonts'
-import { Error } from '../error'
-import { useForwardRef } from '../use-forward-ref'
-import { normalise } from './normalise'
-import { Normaliser } from './Normaliser'
+import { useFormikContext } from "formik";
+import { forwardRef, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native";
 
-export type TextFieldProps = Omit<TextInputProps, 'value'> & {
-  errorMessage?: string
-  hideErrorMessage?: boolean
-  name: string
-  normaliser?: Normaliser | Normaliser[]
-}
+import { Colours } from "../../colours";
+import { Fonts } from "../../fonts";
+import { Error } from "../error";
+import { useForwardRef } from "../use-forward-ref";
+import { normalise } from "./normalise";
+import { Normaliser } from "./Normaliser";
+
+export type TextFieldProps = Omit<TextInputProps, "value"> & {
+  errorMessage?: string;
+  hideErrorMessage?: boolean;
+  name: string;
+  normaliser?: Normaliser | Normaliser[];
+};
 
 const styles = StyleSheet.create({
   input: {
     backgroundColor: Colours.dark.$,
     borderColor: Colours.bright.$,
     borderRadius: 15,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderWidth: 2,
     color: Colours.bright.$,
     fontFamily: Fonts.OpenSans_700Bold,
@@ -37,7 +44,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSans_700Bold,
     fontSize: 12,
     left: 24,
-    position: 'absolute',
+    position: "absolute",
     top: 9,
   },
   focussed: {
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 22,
     marginVertical: 4,
   },
-})
+});
 
 export const TextField = forwardRef<TextInput, TextFieldProps>(
   (
@@ -68,14 +75,14 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
     },
     parentRef
   ): JSX.Element => {
-    const [focussed, setFocussed] = useState(false)
+    const [focussed, setFocussed] = useState(false);
 
     const { setFieldValue, values, errors, setFieldTouched } =
-      useFormikContext<Record<string, string>>()
+      useFormikContext<Record<string, string>>();
 
-    const internalRef = useForwardRef(parentRef)
-    const showTitle = !!values[name]
-    const showError = (!!errors[name] || !errorMessage) && !hideErrorMessage
+    const internalRef = useForwardRef(parentRef);
+    const showTitle = !!values[name];
+    const showError = (!!errors[name] || !errorMessage) && !hideErrorMessage;
 
     return (
       <View style={style}>
@@ -88,17 +95,17 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
             showTitle && styles.inputWithTitle,
           ]}
           onFocus={(e) => {
-            setFocussed(true)
-            onFocus?.(e)
+            setFocussed(true);
+            onFocus?.(e);
           }}
           onBlur={(e) => {
-            setFocussed(false)
-            onBlur?.(e)
-            setFieldTouched(name)
+            setFocussed(false);
+            onBlur?.(e);
+            setFieldTouched(name);
           }}
           onChangeText={(e) => {
-            onChangeText?.(e)
-            setFieldValue(name, normalise(e, normaliser))
+            onChangeText?.(e);
+            setFieldValue(name, normalise(e, normaliser));
           }}
           placeholder={placeholder}
           placeholderTextColor={Colours.bright.$}
@@ -112,6 +119,6 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
           </Error>
         )}
       </View>
-    )
+    );
   }
-)
+);

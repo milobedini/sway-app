@@ -1,3 +1,3 @@
-import { Normaliser } from '../Normaliser'
+import { Normaliser } from "../Normaliser";
 
-export const trim: Normaliser = (v) => v.trim()
+export const trim: Normaliser = (v) => v.trim();
