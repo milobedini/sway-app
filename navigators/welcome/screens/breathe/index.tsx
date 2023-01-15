@@ -1,20 +1,21 @@
-import { StackScreenProps } from '@react-navigation/stack'
-import { NextButton } from '../../components/next-button'
-import { TourScreen } from '../../components/tour-screen'
-import { WelcomeNavigatorParamsList } from '../../WelcomeNavigatorParamsList'
-import imageSource from '../../../../assets/hero_mob.png'
+import { StackScreenProps } from "@react-navigation/stack";
+
+import { NextButton } from "../../components/next-button";
+import { TourScreen } from "../../components/tour-screen";
+import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
+import imageSource from "../../../../assets/hero_mob.png";
 
 export type BreatheScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,
-  'breathe'
->
+  "breathe"
+>;
 
 export const BreatheScreen = ({
   navigation,
 }: BreatheScreenProps): JSX.Element => {
   const onNext = () => {
-    navigation.push('sit'), [navigation]
-  }
+    navigation.push("sit"), [navigation];
+  };
 
   return (
     <TourScreen
@@ -26,5 +27,5 @@ export const BreatheScreen = ({
     >
       <NextButton onNext={onNext} />
     </TourScreen>
-  )
-}
+  );
+};

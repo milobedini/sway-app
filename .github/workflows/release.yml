@@ -9,27 +9,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Install Expo CLI
-      run: npm install -g expo-cli  
+      - name: Lint
+        run: npm run lint
 
-    - name: Publish to Expo
-      run: expo publish
-      env:
-        # EXPO_CLI_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
-        # EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
-        EXPO_CLI_USERNAME: milobedini64@gmail.com
-        EXPO_CLI_PASSWORD: Dolphin64
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
+
+      - name: Publish to Expo
+        run: expo publish
+        env:
+          # EXPO_CLI_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
+          # EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+          EXPO_CLI_USERNAME: milobedini64@gmail.com
+          EXPO_CLI_PASSWORD: Dolphin64
 
   # semantic_release:
   #   name: Semantic Release
@@ -79,7 +82,7 @@ jobs:
   #     run: |
   #       ./secrets-decrypt.sh ${{ secrets.GPG_PASSPHRASE }}
   #       cat secrets/.env >> $GITHUB_ENV
-        
+
   #   - name: Configure NodeJS
   #     uses: actions/setup-node@v3
   #     with:
@@ -156,7 +159,7 @@ jobs:
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v3
-        
+
   #   - name: Setup Android SDK
   #     uses: android-actions/setup-android@v2
 
@@ -205,7 +208,7 @@ jobs:
   #   env:
   #     VERSION: ${{ needs.semantic_release.outputs.new_release_version }}
   #     TAG: ${{ needs.semantic_release.outputs.new_release_git_tag }}
-      
+
   #   steps:
   #   - name: Setup Xcode version
   #     uses: maxim-lobanov/setup-xcode@v1.4.1
@@ -227,7 +230,7 @@ jobs:
   #   - name: Set up xcodebuild variables
   #     run: |
   #       echo "ARCHIVE_PATH=ios/build/archive/$APP_NAME.xcarchive" >> $GITHUB_ENV
-    
+
   #   - name: Configure NodeJS
   #     uses: actions/setup-node@v3
   #     with:
@@ -338,7 +341,7 @@ jobs:
   #       replacesArtifacts: true
   #       tag: ${{ env.TAG }}
   #       token: ${{ secrets.GPR_TOKEN }}
- 
+
   # ios_app_store_distribute:
   #   name: Distribute to App Store
   #   needs: [semantic_release, ios_app_store_build]
@@ -348,7 +351,7 @@ jobs:
   #     uses: maxim-lobanov/setup-xcode@v1.4.1
   #     with:
   #       xcode-version: 13.4.1
-        
+
   #   - name: Checkout
   #     uses: actions/checkout@v3
 
@@ -366,7 +369,7 @@ jobs:
   #   - name: Unzip release
   #     run: |
   #       unzip ios_app_store.zip
-    
+
   #   - name: Upload app to TestFlight
   #     run: |
   #       mkdir ~/private_keys
@@ -385,7 +388,7 @@ jobs:
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v3
-    
+
   #   - name: Configure NodeJS
   #     uses: actions/setup-node@v3
   #     with:
@@ -412,7 +415,7 @@ jobs:
   #   - name: Login to ECR
   #     id: login-ecr
   #     uses: aws-actions/amazon-ecr-login@v1
-      
+
   #   - name: Build, tag and push image to ECR
   #     env:
   #       ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -441,10 +444,10 @@ jobs:
   #   - name: Deploy image to AWS App Runner
   #     env:
   #       SERVICE_NAME: ${{ github.event.repository.name }}
-  #     run: |       
+  #     run: |
   #       SERVICE_ARN=$(aws apprunner list-services --query \
   #         "ServiceSummaryList[?ServiceName=='$SERVICE_NAME'].ServiceArn | [0]" --output text)
-  #       aws apprunner start-deployment --service-arn $SERVICE_ARN   
+  #       aws apprunner start-deployment --service-arn $SERVICE_ARN
 
   ## DISABLED UNTIL NEEDED
   ## was chewing all the minutes
@@ -476,7 +479,7 @@ jobs:
   #     run: |
   #       ./secrets-decrypt.sh ${{ secrets.GPG_PASSPHRASE }}
   #       cat secrets/.env >> $GITHUB_ENV
-    
+
   #   - name: Configure NodeJS
   #     uses: actions/setup-node@v3
   #     with:

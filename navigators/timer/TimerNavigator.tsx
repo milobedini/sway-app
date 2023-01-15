@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { TimerShowScreen } from "./screens";
 import { TimerNavigatorParamsList } from "./TimerNavigatorParamsList";
 

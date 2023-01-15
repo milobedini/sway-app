@@ -1,3 +1,3 @@
-import { Normaliser } from '../Normaliser'
+import { Normaliser } from "../Normaliser";
 
-export const lowercase: Normaliser = (v) => v.toLocaleLowerCase()
+export const lowercase: Normaliser = (v) => v.toLocaleLowerCase();

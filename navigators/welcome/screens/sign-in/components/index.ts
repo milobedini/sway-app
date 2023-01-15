@@ -1,3 +1,3 @@
 // auto-barrel ignore
 
-export * from './login-form'
+export * from "./login-form";

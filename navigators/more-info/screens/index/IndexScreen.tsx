@@ -2,6 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+
 import { Colours } from "../../../../colours";
 import { Fonts } from "../../../../fonts";
 import { MoreInfoNavigatorParamsList } from "../../MoreInfoNavigatorParamsList";

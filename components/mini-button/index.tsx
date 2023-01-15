@@ -1,24 +1,25 @@
-import { ComponentType } from 'react'
+import { ComponentType } from "react";
 import {
   Pressable,
   StyleSheet,
   Text,
   TouchableHighlightProps,
-} from 'react-native'
-import { Colours } from '../../colours'
-import { Fonts } from '../../fonts'
+} from "react-native";
+
+import { Colours } from "../../colours";
+import { Fonts } from "../../fonts";
 
 export type MiniButtonProps = TouchableHighlightProps &
   (
     | {
-        title: string
+        title: string;
       }
     | { component: ComponentType }
-  )
+  );
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: Colours.white.$,
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     color: Colours.dark.$,
     lineHeight: 16,
   },
-})
+});
 
 export const MiniButton = ({
   style: styleProp,
@@ -42,11 +43,11 @@ export const MiniButton = ({
       style={[styles.container, styleProp]}
       {...props}
     >
-      {'title' in props ? (
+      {"title" in props ? (
         <Text style={styles.title}>{props.title}</Text>
       ) : (
         props.component
       )}
     </Pressable>
-  )
-}
+  );
+};

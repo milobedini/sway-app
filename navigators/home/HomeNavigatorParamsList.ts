@@ -1,3 +1,3 @@
 export type HomeNavigatorParamsList = {
-  homepage: undefined
-}
+  homepage: undefined;
+};

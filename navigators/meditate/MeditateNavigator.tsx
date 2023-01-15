@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { MeditateNavigatorParamsList } from "./MeditateNavigatorParamsList";
 import { MeditateListScreen } from "./screens";
 

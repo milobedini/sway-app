@@ -1,37 +1,34 @@
-import 'react-native-gesture-handler'
-import { LinkingOptions, NavigationContainer } from '@react-navigation/native'
-import * as Linking from 'expo-linking'
-import { useEffect, useState } from 'react'
-import { StatusBar } from 'react-native'
-import { FontsContainer } from './components/fonts-container'
-import { AppNavigator, AppNavigatorParamList } from './navigators/app'
+import "react-native-gesture-handler";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import * as Linking from "expo-linking";
+import { StatusBar } from "react-native";
 
-const prefix = Linking.createURL('/')
+import { FontsContainer } from "./components/fonts-container";
+import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
 
-export type AppProps = LaunchArguments
+const prefix = Linking.createURL("/");
 
-const App = (props: AppProps): JSX.Element => {
-  const [init, setInit] = useState(true)
+const App = (): JSX.Element => {
+  // const [init, setInit] = useState(true);
 
-  useEffect(() => {
-    if (!init) return
+  // useEffect(() => {
+  //   if (!init) return;
 
-    if (props.reset) {
-      console.log('Resetting')
-      // clear all settings
-    }
-    setInit(false)
-  }, [init])
+  //   if (props.reset) {
+  //     // clear all settings
+  //   }
+  //   setInit(false);
+  // }, [init]);
 
   const linking: LinkingOptions<AppNavigatorParamList> = {
     prefixes: [prefix],
     config: {
       screens: {
         app: {
-          path: 'app',
+          path: "app",
           screens: {
             welcome: {
-              path: 'welcome',
+              path: "welcome",
               // screens: {
               //   signInMagic: {
               //     path: 'sign-in-magic'
@@ -43,7 +40,7 @@ const App = (props: AppProps): JSX.Element => {
                 home: {
                   screens: {
                     homepage: {
-                      path: 'home',
+                      path: "home",
                     },
                   },
                 },
@@ -80,11 +77,11 @@ const App = (props: AppProps): JSX.Element => {
         },
       },
     },
-  }
+  };
   return (
     <>
       <StatusBar
-        backgroundColor={'blue'}
+        backgroundColor={"blue"}
         barStyle="light-content"
         translucent
       />
@@ -94,7 +91,7 @@ const App = (props: AppProps): JSX.Element => {
         </FontsContainer>
       </NavigationContainer>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

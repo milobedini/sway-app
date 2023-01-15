@@ -1,15 +1,19 @@
-import { StackScreenProps } from '@react-navigation/stack'
-import { TourScreen } from '../../components/tour-screen'
-import { WelcomeNavigatorParamsList } from '../../WelcomeNavigatorParamsList'
-import imageSource from '../../../../assets/hero_mob_3.png'
-import { NextButton } from '../../components/next-button'
+import { StackScreenProps } from "@react-navigation/stack";
 
-export type SitScreenProps = StackScreenProps<WelcomeNavigatorParamsList, 'sit'>
+import { TourScreen } from "../../components/tour-screen";
+import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
+import imageSource from "../../../../assets/hero_mob_3.png";
+import { NextButton } from "../../components/next-button";
+
+export type SitScreenProps = StackScreenProps<
+  WelcomeNavigatorParamsList,
+  "sit"
+>;
 
 export const SitScreen = ({ navigation }: SitScreenProps): JSX.Element => {
   const onNext = () => {
-    navigation.push('grow'), [navigation]
-  }
+    navigation.push("grow"), [navigation];
+  };
 
   return (
     <TourScreen
@@ -20,5 +24,5 @@ export const SitScreen = ({ navigation }: SitScreenProps): JSX.Element => {
     >
       <NextButton onNext={onNext} />
     </TourScreen>
-  )
-}
+  );
+};

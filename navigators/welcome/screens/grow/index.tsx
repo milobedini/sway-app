@@ -1,4 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
+
 import { NextButton } from "../../components/next-button";
 import { TourScreen } from "../../components/tour-screen";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";

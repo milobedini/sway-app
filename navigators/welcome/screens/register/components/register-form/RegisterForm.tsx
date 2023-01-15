@@ -1,25 +1,26 @@
 import {
-  Button,
   ImageBackground,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
   ViewProps,
 } from "react-native";
-import { Colours } from "../../../../../../colours";
 import { Formik } from "formik";
+import { useState } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { Colours } from "../../../../../../colours";
 import { validate } from "./validate";
 import {
   Normalisers,
   TextField,
 } from "../../../../../../components/text-field";
 import { nameof } from "../../../../components/name-of";
-import { useState } from "react";
 import { RegisterFormValues } from "./RegisterFormValues";
 import logo from "../../../../../../assets/logo_black.png";
-import axios from "axios";
 import { baseUrl } from "../../../../../../lib/api/api";
+
 
 const styles = StyleSheet.create({
   root: {
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   field: {
-    marginVertical: 36,
+    marginVertical: 8,
   },
   error: {
     paddingHorizontal: 20,
@@ -65,13 +66,14 @@ export const RegisterForm = ({
     password_confirmation: "",
   };
 
+  // eslint-disable-next-line
   const [inProgress, setInProgress] = useState(false);
 
   const error = () => {
     return "There was a problem registering you";
   };
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <View style={[style, styles.root]} {...rest}>
@@ -82,19 +84,27 @@ export const RegisterForm = ({
         <Formik
           initialValues={initialValues}
           onSubmit={async (values) => {
-            console.log("SUBMITTING", values);
             try {
-              const res = await axios.post(`${baseUrl}/auth/register/`, values);
+              // const res = await axios.post(`${baseUrl}/auth/register/`, values);
+              await axios.post(`${baseUrl}/auth/register/`, values);
+              const completeOnboarding = async () => {
+                try {
+                  await AsyncStorage.setItem("onboarding", "true");
+                } catch (e) {
+                  return e;
+                }
+              };
+              completeOnboarding();
               onSuccess(values.email);
             } catch (err) {
-              console.log(err);
+              return err;
             }
           }}
           validate={validate}
           validateOnBlur={false}
           validateOnChange={false}
         >
-          {({ handleSubmit, values, ...formProps }) => (
+          {({ handleSubmit, ...formProps }) => (
             <>
               <View style={styles.fields}>
                 {/* <Text style={[textStyles.body, styles.body]}></Text> */}
@@ -110,9 +120,9 @@ export const RegisterForm = ({
                   normaliser={[Normalisers.trim, Normalisers.lowercase]}
                   placeholder="Email Address"
                   returnKeyType="send"
-                  style={(styles.field, { width: width - 50 })}
+                  style={[styles.field, { width: width - 50 }]}
                   onSubmitEditing={() => handleSubmit()}
-                  // errorMessage={error() ?? undefined}
+                  errorMessage={error() ?? undefined}
                 />
                 {/* <Text style={[textStyles.body, styles.body]}></Text> */}
                 <TextField
@@ -127,9 +137,9 @@ export const RegisterForm = ({
                   normaliser={[Normalisers.trim, Normalisers.lowercase]}
                   placeholder="Username"
                   returnKeyType="send"
-                  style={(styles.field, { width: width - 50 })}
+                  style={[styles.field, { width: width - 50 }]}
                   onSubmitEditing={() => handleSubmit()}
-                  // errorMessage={error() ?? undefined}
+                  errorMessage={error() ?? undefined}
                 />
                 <TextField
                   {...formProps}
@@ -143,9 +153,9 @@ export const RegisterForm = ({
                   normaliser={[Normalisers.trim, Normalisers.lowercase]}
                   placeholder="Password"
                   returnKeyType="send"
-                  style={(styles.field, { width: width - 50 })}
+                  style={[styles.field, { width: width - 50 }]}
                   onSubmitEditing={() => handleSubmit()}
-                  // errorMessage={error() ?? undefined}
+                  errorMessage={error() ?? undefined}
                 />
                 <TextField
                   {...formProps}
@@ -159,9 +169,9 @@ export const RegisterForm = ({
                   normaliser={[Normalisers.trim, Normalisers.lowercase]}
                   placeholder="Password Again"
                   returnKeyType="send"
-                  style={(styles.field, { width: width - 50 })}
+                  style={[styles.field, { width: width - 50 }]}
                   onSubmitEditing={() => handleSubmit()}
-                  // errorMessage={error() ?? undefined}
+                  errorMessage={error() ?? undefined}
                 />
               </View>
             </>

@@ -1,8 +1,6 @@
 {
   "autoBarrel.ignoreFilePathContainingAnyOf": ".spec,.test,.stories",
-  "cucumberautocomplete.steps": [
-    "cypress/support/step_definitions/**/*.ts"
-  ],
+  "cucumberautocomplete.steps": ["cypress/support/step_definitions/**/*.ts"],
   "cucumberautocomplete.syncfeatures": true,
   "cucumberautocomplete.strictGherkinCompletion": true,
   "cucumberautocomplete.strictGherkinValidation": true,
@@ -26,13 +24,9 @@
     "source.fixAll": true
   },
   "editor.inlayHints.enabled": "offUnlessPressed",
-  "editor.rulers": [
-    80
-  ],
+  "editor.rulers": [80],
   "eslint.lintTask.enable": true,
-  "eslint.validate": [
-    "typescript"
-  ],
+  "eslint.validate": ["typescript"],
   "files.exclude": {
     "**/node_modules": true
   },

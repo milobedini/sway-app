@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
+
 import { HomeNavigatorParamsList } from "../home/HomeNavigatorParamsList";
 import { LearnNavigatorParamsList } from "../learn/LearnNavigatorParamsList";
 import { MeditateNavigatorParamsList } from "../meditate/MeditateNavigatorParamsList";

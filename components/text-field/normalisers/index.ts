@@ -1,2 +1,2 @@
-export * from './lowercase'
-export * from './trim'
+export * from "./lowercase";
+export * from "./trim";

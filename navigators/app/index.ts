@@ -1,2 +1,2 @@
-export * from './AppNavigatorParamsList';
-export * from './AppNavigator';
+export * from "./AppNavigatorParamsList";
+export * from "./AppNavigator";
