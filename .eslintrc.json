@@ -21,7 +21,7 @@
     "react/display-name": "off",
     "import/first": "error",
     "import/no-duplicates": "error",
-    "import/order": [
+  "import/order": [
       "error",
       {
         "groups": [

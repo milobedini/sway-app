@@ -21,7 +21,6 @@ import { RegisterFormValues } from "./RegisterFormValues";
 import logo from "../../../../../../assets/logo_black.png";
 import { baseUrl } from "../../../../../../lib/api/api";
 
-
 const styles = StyleSheet.create({
   root: {
     display: "flex",
@@ -85,7 +84,6 @@ export const RegisterForm = ({
           initialValues={initialValues}
           onSubmit={async (values) => {
             try {
-              // const res = await axios.post(`${baseUrl}/auth/register/`, values);
               await axios.post(`${baseUrl}/auth/register/`, values);
               const completeOnboarding = async () => {
                 try {
