@@ -5,6 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { Colours } from "../../../../colours";
 import { Fonts } from "../../../../fonts";
+import { signOut } from "../../../../lib/auth/auth";
 import { MoreInfoNavigatorParamsList } from "../../MoreInfoNavigatorParamsList";
 
 const styles = StyleSheet.create({
@@ -29,7 +30,9 @@ const styles = StyleSheet.create({
     letterSpacing: -0.2,
     marginVertical: 10,
   },
-  section: {},
+  section: {
+    marginVertical: 10,
+  },
 });
 
 export type IndexScreenProps = StackScreenProps<
@@ -37,15 +40,29 @@ export type IndexScreenProps = StackScreenProps<
   "index"
 >;
 
-export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => (
-  <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-    <StatusBar style="dark" />
-    <View style={styles.main}>
-      <View style={styles.section}>
-        <Pressable onPress={() => navigation.navigate("profile")}>
-          <Text style={styles.title}>Profile</Text>
-        </Pressable>
+export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
+  const handleSignOut = () => {
+    navigation.reset({
+      routes: [{ name: "welcome" }],
+    });
+    signOut();
+  };
+
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <StatusBar style="dark" />
+      <View style={styles.main}>
+        <View style={styles.section}>
+          <Pressable onPress={() => navigation.navigate("profile")}>
+            <Text style={styles.title}>Profile</Text>
+          </Pressable>
+        </View>
+        <View style={styles.section}>
+          <Pressable onPress={handleSignOut}>
+            <Text style={styles.title}>Sign Out</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
-  </ScrollView>
-);
+    </ScrollView>
+  );
+};
