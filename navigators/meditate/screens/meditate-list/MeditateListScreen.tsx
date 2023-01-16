@@ -34,8 +34,11 @@ export const MeditateListScreen = ({
       <Text>API Test... {meditation?.name}</Text> */}
       <MeditateList
         style={styles.container}
-        // eslint-disable-next-line
-        onPress={() => console.log("Pressed)")}
+        onPress={(id) =>
+          navigation.navigate("show", {
+            meditationId: id,
+          })
+        }
       />
     </>
   );

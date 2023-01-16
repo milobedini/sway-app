@@ -1,4 +1,4 @@
 export type MeditateNavigatorParamsList = {
   list: undefined;
-  show: undefined;
+  show: { meditationId: number };
 };

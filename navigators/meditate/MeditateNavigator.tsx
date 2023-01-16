@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { MeditateNavigatorParamsList } from "./MeditateNavigatorParamsList";
-import { MeditateListScreen } from "./screens";
+import { MeditateListScreen, MeditateShowScreen } from "./screens";
 
 const Stack = createStackNavigator<MeditateNavigatorParamsList>();
 
@@ -12,5 +12,6 @@ export const MeditateNavigator = (): JSX.Element => (
       component={MeditateListScreen}
       // options={{header: () => <MediateListScreenHeader />}}
     />
+    <Stack.Screen name="show" component={MeditateShowScreen} />
   </Stack.Navigator>
 );
