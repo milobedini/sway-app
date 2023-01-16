@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 
@@ -10,6 +11,9 @@ const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
 export const RootNavigator = (): JSX.Element => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [signedOut, setSignedOut] = useState(false);
+
+  const route = useRoute();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -22,14 +26,18 @@ export const RootNavigator = (): JSX.Element => {
         return err;
       }
     };
+    if (route.params !== undefined) {
+      setSignedOut(true);
+    }
+
     checkLoggedIn();
   }, []);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {loggedIn ? (
+      {loggedIn && !signedOut ? (
         <>
           <Stack.Screen name="main" component={MainNavigator} />
-          <Stack.Screen name="welcome" component={WelcomeNavigator} />
         </>
       ) : (
         <>

@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
+import { Fonts } from "../../../../fonts";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
 import { RegisterForm } from "./components";
 
@@ -16,27 +17,21 @@ export type RegisterScreenProps = StackScreenProps<
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: Colours.dark.$,
-    paddingVertical: 24,
   },
 
-  content: {
-    flex: 1,
-  },
   title: {
     textAlign: "center",
     color: Colours.lightGrey.$,
     marginTop: 40,
   },
-  form: {
-    flexGrow: 1,
-  },
-  image: {
-    height: 500,
-    width: 800,
-    resizeMode: "contain",
+  haveAccount: {
+    color: Colours.bright.$,
+    fontFamily: Fonts.OpenSans_700Bold,
+    textAlign: "center",
+    marginTop: "-10%",
   },
 });
 export const RegisterScreen = ({
@@ -49,11 +44,12 @@ export const RegisterScreen = ({
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <SafeAreaView style={styles.content}>
-        <Text style={[textStyles.title, styles.title]} onPress={onNext}>
-          Sign Up
+      <SafeAreaView edges={["top", "bottom"]}>
+        <Text style={[textStyles.title, styles.title]}>Sign Up</Text>
+        <RegisterForm onSuccess={onNext} />
+        <Text style={styles.haveAccount} onPress={onNext}>
+          Already have an account?
         </Text>
-        <RegisterForm style={styles.form} onSuccess={onNext} />
       </SafeAreaView>
     </View>
   );
