@@ -17,12 +17,10 @@ export type SignInScreenProps = StackScreenProps<
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: Colours.dark.$,
-    paddingVertical: 24,
   },
-
   content: {
     flex: 1,
     alignItems: "stretch",
@@ -40,6 +38,7 @@ const styles = StyleSheet.create({
     height: 500,
     width: 800,
     resizeMode: "contain",
+    alignSelf: "center",
   },
 });
 export const SignInScreen = ({

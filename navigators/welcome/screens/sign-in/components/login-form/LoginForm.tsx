@@ -1,4 +1,10 @@
-import { StyleSheet, useWindowDimensions, View, ViewProps } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+  ViewProps,
+} from "react-native";
 import { Formik } from "formik";
 import { useState } from "react";
 import axios from "axios";
@@ -14,34 +20,47 @@ import {
   setUserId,
   setUsername,
 } from "../../../../../../lib/auth/auth";
+import { Fonts } from "../../../../../../fonts";
 
 const styles = StyleSheet.create({
   root: {
     display: "flex",
-    justifyContent: "space-between",
     marginVertical: 20,
   },
   title: {
     color: Colours.dark.$,
     textAlign: "center",
   },
-  body: { textAlign: "center", color: Colours.dark.$, marginVertical: 0 },
   fields: {
     display: "flex",
     paddingVertical: 0,
     alignItems: "center",
   },
   field: {
-    marginVertical: 8,
+    marginVertical: 2,
+  },
+  fieldError: {
+    marginVertical: 20,
   },
   error: {
-    paddingHorizontal: 20,
+    marginVertical: 2,
+    color: Colours.errorDark.$,
+    fontFamily: Fonts.OpenSans_700Bold,
+    fontSize: 16,
   },
 });
 
 export type LoginFormProps = Omit<ViewProps, "children"> & {
   // onFinish: void;
 };
+
+interface ResponseError {
+  response: {
+    data: {
+      detail: string;
+    };
+  };
+}
 
 export const LoginForm = ({ style, ...rest }: LoginFormProps): JSX.Element => {
   const initialValues: LoginFormValues = {
@@ -51,10 +70,7 @@ export const LoginForm = ({ style, ...rest }: LoginFormProps): JSX.Element => {
 
   // eslint-disable-next-line
   const [inProgress, setInProgress] = useState(false);
-
-  const error = () => {
-    return "There was a problem signing you in";
-  };
+  const [error, setError] = useState("");
 
   const { width } = useWindowDimensions();
 
@@ -83,24 +99,20 @@ export const LoginForm = ({ style, ...rest }: LoginFormProps): JSX.Element => {
         onSubmit={async (values) => {
           try {
             const res = await axios.post(`${baseUrl}/auth/login/`, values);
-
             successfulSignIn(res.data);
-
             navigation
               .getParent()
               ?.navigate("main", { screen: "home", params: {} });
           } catch (err) {
-            return err;
+            setError((err as ResponseError).response.data.detail);
           }
         }}
-        // validate={validate}
         validateOnBlur={false}
         validateOnChange={false}
       >
         {({ handleSubmit, ...formProps }) => (
           <>
             <View style={styles.fields}>
-              {/* <Text style={[textStyles.body, styles.body]}></Text> */}
               <TextField
                 {...formProps}
                 autoCapitalize="none"
@@ -108,31 +120,33 @@ export const LoginForm = ({ style, ...rest }: LoginFormProps): JSX.Element => {
                 autoFocus
                 clearButtonMode="while-editing"
                 editable={!inProgress}
-                enablesReturnKeyAutomatically
                 name={nameof<LoginFormValues>("email")}
-                // normaliser={[Normalisers.trim, Normalisers.lowercase]}
                 placeholder="Email Address"
                 returnKeyType="send"
                 style={[styles.field, { width: width - 50 }]}
                 onSubmitEditing={() => handleSubmit()}
-                errorMessage={error() ?? undefined}
+                errorMessage={error ?? undefined}
               />
               <TextField
                 {...formProps}
                 autoCapitalize="none"
                 autoCorrect={false}
-                autoFocus
                 clearButtonMode="while-editing"
                 editable={!inProgress}
                 enablesReturnKeyAutomatically
                 name={nameof<LoginFormValues>("password")}
-                // normaliser={[Normalisers.trim, Normalisers.lowercase]}
                 placeholder="Password"
                 returnKeyType="send"
-                style={[styles.field, { width: width - 50 }]}
+                style={[
+                  styles.field,
+                  { width: width - 50 },
+                  error ? styles.fieldError : null,
+                ]}
                 onSubmitEditing={() => handleSubmit()}
-                errorMessage={error() ?? undefined}
+                secureTextEntry
+                errorMessage={error ?? undefined}
               />
+              {error ? <Text style={styles.error}>{error}</Text> : null}
             </View>
           </>
         )}
