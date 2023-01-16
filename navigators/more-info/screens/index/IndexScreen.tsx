@@ -43,7 +43,7 @@ export type IndexScreenProps = StackScreenProps<
 export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
   const handleSignOut = () => {
     navigation.reset({
-      routes: [{ name: "welcome" }],
+      routes: [{ name: "app", params: { userSignedOut: true } }],
     });
     signOut();
   };
