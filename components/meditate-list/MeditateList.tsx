@@ -11,6 +11,7 @@ import Animated from "react-native-reanimated";
 
 import { Colours } from "../../colours";
 import { baseUrl } from "../../lib/api/api";
+import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
 import { mapMeditationTileData } from "./mapMeditationTileData";
 
@@ -82,7 +83,9 @@ export const MeditateList = ({
           style={styles.tile}
           meditation={mapMeditationTileData(meditation.item)}
           // eslint-disable-next-line
-          onPress={() => onPress(console.log("Pressed tile"))}
+          onPress={() =>
+            onPress(meditation.item.id ?? ThenThrow("Missing meditation id!"))
+          }
         />
       )}
       {...rest}
