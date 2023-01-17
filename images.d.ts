@@ -20,3 +20,5 @@ declare module "*.svg" {
 
   export default content;
 }
+
+declare module "*.mp3";
