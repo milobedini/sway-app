@@ -15,8 +15,15 @@ export type TimerShowScreenProps = StackScreenProps<
 >;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colours.dark.$ },
-  timerContainer: {},
+  container: {
+    flex: 1,
+    backgroundColor: Colours.dark.$,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  timerContainer: {
+    alignItems: "center",
+  },
 });
 
 export const TimerShowScreen = ({
