@@ -4,7 +4,6 @@ import {
   RefreshControl,
   ScrollViewProps,
   StyleSheet,
-  Text,
   useWindowDimensions,
 } from "react-native";
 import Animated from "react-native-reanimated";
@@ -89,8 +88,6 @@ export const MeditateList = ({
         />
       )}
       {...rest}
-    >
-      <Text>Meditate List Component</Text>
-    </Animated.FlatList>
+    ></Animated.FlatList>
   );
 };

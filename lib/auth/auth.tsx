@@ -12,6 +12,7 @@ export const getUsername = async () => {
 export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem("token");
+
     return token;
   } catch (err) {
     return err;
