@@ -63,7 +63,10 @@ export const Timer = (): JSX.Element => {
       }
       if (secondsLeftRef.current === 0) {
         playSound();
-        return () => clearInterval(interval);
+        return () => {
+          clearInterval(interval);
+          setSound(undefined);
+        };
       }
 
       return tick();
