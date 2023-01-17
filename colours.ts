@@ -7,6 +7,8 @@ export class Colours {
   static readonly black = new Colours("000000");
   static readonly errorDark = new Colours("F14040");
 
+  static readonly yellowNote = new Colours("fef68a");
+
   static readonly brightWhite = new Colours("FFFFFF");
   static readonly brightGrey = new Colours("D3D3D3");
   static readonly brightBlack = new Colours("000000");
