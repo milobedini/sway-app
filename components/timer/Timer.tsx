@@ -14,6 +14,7 @@ import { PauseIcon, PlayIcon, SettingsIcon } from "../icons";
 import { TimerSettingsContent } from "./TimerSettingsContext";
 import bell from "./Bell.mp3";
 import { Fonts } from "../../fonts";
+import { textStyles } from "../text";
 
 const styles = StyleSheet.create({
   settings: {
@@ -39,7 +40,7 @@ export const Timer = (): JSX.Element => {
   const settingsInfo = useContext(TimerSettingsContent);
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const [sound, setSound] = useState<Audio.Sound>();
+  const [finished, setFinished] = useState(false);
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
 
@@ -57,9 +58,10 @@ export const Timer = (): JSX.Element => {
   };
 
   const playSound = async (): Promise<void> => {
-    const { sound: loadedSound } = await Audio.Sound.createAsync(bell);
-    setSound(loadedSound);
-    await loadedSound.playAsync();
+    const loadedSound = await Audio.Sound.createAsync(bell);
+    // setSound(loadedSound);
+    await loadedSound.sound.playAsync();
+    // await loadedSound.sound.unloadAsync();
   };
   useEffect(() => {
     secondsLeftRef.current = settingsInfo.meditationMinutes * 60;
@@ -71,25 +73,29 @@ export const Timer = (): JSX.Element => {
       }
       if (secondsLeftRef.current === 0) {
         playSound();
+        setFinished(true);
+        setIsPaused(true);
+        isPausedRef.current = true;
+        secondsLeftRef.current = settingsInfo.meditationMinutes * 60;
+        setSecondsLeft(secondsLeftRef.current);
         return () => {
           clearInterval(interval);
-          setSound(undefined);
         };
       }
 
       return tick();
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(interval);
-  }, [settingsInfo, sound]);
+  }, [settingsInfo]);
 
-  useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
+  // useEffect(() => {
+  //   return sound
+  //     ? () => {
+  //         sound.unloadAsync();
+  //       }
+  //     : undefined;
+  // }, [sound]);
 
   return (
     <>
@@ -108,18 +114,32 @@ export const Timer = (): JSX.Element => {
       />
       <View style={{ marginTop: 20 }}>
         {isPaused ? (
-          <PlayIcon
-            fill={Colours.lightGrey.$}
-            onPress={() => {
-              setIsPaused(false);
-              isPausedRef.current = false;
-            }}
-          />
+          <>
+            {finished && (
+              <Text
+                style={[
+                  textStyles.body,
+                  { color: Colours.bright.$, textAlign: "center" },
+                ]}
+              >
+                Repeat?
+              </Text>
+            )}
+
+            <PlayIcon
+              fill={Colours.lightGrey.$}
+              onPress={() => {
+                setIsPaused(false);
+                isPausedRef.current = false;
+              }}
+            />
+          </>
         ) : (
           <PauseIcon
             fill={Colours.lightGrey.$}
             onPress={() => {
               setIsPaused(true);
+              setFinished(false);
               isPausedRef.current = true;
             }}
           />
