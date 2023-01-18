@@ -60,8 +60,6 @@ export const Timer = (): JSX.Element => {
   const playSound = async (): Promise<void> => {
     const loadedSound = await Audio.Sound.createAsync(bell);
     await loadedSound.sound.playAsync();
-    // remove below if fails
-    await loadedSound.sound.unloadAsync();
   };
   useEffect(() => {
     secondsLeftRef.current = settingsInfo.meditationMinutes * 60;
@@ -73,7 +71,6 @@ export const Timer = (): JSX.Element => {
       }
       if (secondsLeftRef.current === 0) {
         playSound();
-        // setIsPaused(true);
         setFinished(true);
         setIsPaused(true);
         isPausedRef.current = true;
