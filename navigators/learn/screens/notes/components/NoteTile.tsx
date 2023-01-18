@@ -7,9 +7,9 @@ export const NoteTile = (props: NoteTileProps): JSX.Element => {
   const { width } = useWindowDimensions();
   switch (width) {
     // case 'medium':
-    //     return <MediumRecipeTile {...props} />;
+    //     return <MediumNoteTile {...props} />;
     //   case 'large':
-    //     return <LargeRecipeTile {...props} />;
+    //     return <LargeNoteTile {...props} />;
     default:
       return <SmallNoteTile {...props} />;
   }

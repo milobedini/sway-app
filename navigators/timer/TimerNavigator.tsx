@@ -6,8 +6,7 @@ import { TimerNavigatorParamsList } from "./TimerNavigatorParamsList";
 const Stack = createStackNavigator<TimerNavigatorParamsList>();
 
 export const TimerNavigator = (): JSX.Element => (
-  <Stack.Navigator screenOptions={{ headerTitle: "" }}>
+  <Stack.Navigator screenOptions={{ headerTitle: "", headerShown: false }}>
     <Stack.Screen name="show" component={TimerShowScreen} />
-    {/* // options={{header: () => <TimerListScreenHeader />}} */}
   </Stack.Navigator>
 );

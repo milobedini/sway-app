@@ -2,7 +2,7 @@ import { ThenThrow } from "../../../../../lib/then-throw";
 import { NoteTileData } from "./NoteTileData";
 
 export declare type NotesListResponseDataItem = {
-  id?: number;
+  id: number;
   date?: string;
   text?: string;
 };

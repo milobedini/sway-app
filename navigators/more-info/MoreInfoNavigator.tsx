@@ -1,12 +1,15 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Colours } from "../../colours";
-import { Fonts } from "../../fonts";
 import { MoreInfoNavigatorParamsList } from "./MoreInfoNavigatorParamsList";
 import { IndexScreen } from "./screens/index/IndexScreen";
 import { ProfileScreen } from "./screens/profile/ProfileScreen";
+import { Colours } from "../../colours";
+import { Fonts } from "../../fonts";
 
 const Stack = createStackNavigator<MoreInfoNavigatorParamsList>();
+
+// Wireframe => eventually change to Waking Up format.
+// Profile stuff always at top. Rest of menu underneath.
 
 export const MoreInfoNavigator = (): JSX.Element => (
   <Stack.Navigator
@@ -18,6 +21,7 @@ export const MoreInfoNavigator = (): JSX.Element => (
         color: Colours.lightGrey.$,
         letterSpacing: -0.2,
       },
+
       headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
@@ -36,7 +40,7 @@ export const MoreInfoNavigator = (): JSX.Element => (
     <Stack.Screen
       name="profile"
       component={ProfileScreen}
-      options={{ title: "Profile" }}
+      options={{ headerTitle: "" }}
     />
   </Stack.Navigator>
 );

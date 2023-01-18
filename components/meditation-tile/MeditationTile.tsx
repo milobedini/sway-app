@@ -8,9 +8,9 @@ export const MeditationTile = (props: MeditationTileProps): JSX.Element => {
 
   switch (width) {
     // case 'medium':
-    //     return <MediumRecipeTile {...props} />;
+    //     return <MediumMeditationTile {...props} />;
     //   case 'large':
-    //     return <LargeRecipeTile {...props} />;
+    //     return <LargeMeditationTile {...props} />;
     default:
       return <SmallMeditationTile {...props} />;
   }

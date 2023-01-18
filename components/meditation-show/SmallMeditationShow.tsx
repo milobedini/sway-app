@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colours.dark.$,
   },
-  content: { alignItems: "stretch" },
+  content: { alignItems: "stretch", marginTop: 50 },
   heroImage: {
     width: "100%",
     maxHeight: 250,

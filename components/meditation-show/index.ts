@@ -1,1 +1,1 @@
-export * from "./SmallRecipeShow";
+export * from "./SmallMeditationShow";

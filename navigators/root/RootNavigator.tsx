@@ -1,10 +1,10 @@
-import { useRoute } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useRoute } from "@react-navigation/native";
 
-import { getUserId } from "../../lib/auth/auth";
-import { MainNavigator } from "../main/MainNavigator";
 import { WelcomeNavigator } from "../welcome/WelcomeNavigator";
+import { MainNavigator } from "../main/MainNavigator";
+import { getUserId } from "../../lib/auth/auth";
 import { RootNavigatorParamList } from "./RootNavigatorParamList";
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>();
