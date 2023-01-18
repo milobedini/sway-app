@@ -30,8 +30,6 @@ export const MeditateListScreen = ({
   return (
     <>
       <StatusBar style="dark" />
-      {/* <Text>Meditate List Screen</Text>
-      <Text>API Test... {meditation?.name}</Text> */}
       <MeditateList
         style={styles.container}
         onPress={(id) =>

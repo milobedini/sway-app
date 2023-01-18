@@ -29,9 +29,8 @@ export const FavouritesScreen = ({
     <View style={styles.container}>
       <FavouritesList
         onPress={(id) =>
-          navigation.getParent()?.navigate("meditate", {
-            screen: "show",
-            params: { meditationId: id },
+          navigation.navigate("show", {
+            meditationId: id,
           })
         }
       />

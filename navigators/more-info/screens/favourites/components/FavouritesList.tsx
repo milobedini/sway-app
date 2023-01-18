@@ -71,7 +71,7 @@ export const FavouritesList = ({
           style={styles.favList}
           contentContainerStyle={[styles.favs]}
           data={favourites}
-          keyExtractor={(favourite) => String(favourite.id)}
+          keyExtractor={(favourite: { id: number }) => String(favourite.id)}
           contentInsetAdjustmentBehavior="automatic"
           numColumns={numColumns}
           key={numColumns}

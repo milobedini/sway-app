@@ -4,15 +4,25 @@ import { MoreInfoNavigatorParamsList } from "./MoreInfoNavigatorParamsList";
 import { IndexScreen } from "./screens/index/IndexScreen";
 import { Colours } from "../../colours";
 import { FavouritesScreen } from "./screens/favourites";
+import { MeditateShowScreen } from "../meditate/screens";
 
 const Stack = createStackNavigator<MoreInfoNavigatorParamsList>();
 
 export const MoreInfoNavigator = (): JSX.Element => (
   <Stack.Navigator
     screenOptions={{
+      // headerBackTitleVisible: false,
+      // headerTintColor: Colours.bright.$,
+      headerTitle: "",
+      headerTransparent: true,
       headerBackTitleVisible: false,
       headerTintColor: Colours.bright.$,
-      headerTitle: "",
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+        borderBottomWidth: 0,
+        backgroundColor: Colours.dark.$,
+      },
     }}
   >
     <Stack.Screen
@@ -23,6 +33,11 @@ export const MoreInfoNavigator = (): JSX.Element => (
     <Stack.Screen
       name="favourites"
       component={FavouritesScreen}
+      options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
+    />
+    <Stack.Screen
+      name="show"
+      component={MeditateShowScreen}
       options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
     />
   </Stack.Navigator>
