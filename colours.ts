@@ -1,5 +1,12 @@
 export class Colours {
   static readonly dark = new Colours("0c1527");
+  static readonly darkButton = new Colours("2b3b5b");
+  static readonly azureBlue = new Colours("0f3d75");
+  static readonly dodgerBlue = new Colours("1e90ff");
+  static readonly oxfordBlue = new Colours("0a4f8e");
+  static readonly steelBlue = new Colours("4682b4");
+  static readonly denimBlue = new Colours("1560bd");
+  static readonly cadetBlue = new Colours("5f9ea0");
   static readonly white = new Colours("eef6ff");
   static readonly darkGrey = new Colours("a6adbb");
   static readonly bright = new Colours("18cdba");

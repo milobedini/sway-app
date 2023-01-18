@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Colours } from "../../../../colours";
@@ -8,6 +8,7 @@ import { HorizontalRule } from "../../../../components/horizontal-rule";
 import { Fonts } from "../../../../fonts";
 import { signOut } from "../../../../lib/auth/auth";
 import { MoreInfoNavigatorParamsList } from "../../MoreInfoNavigatorParamsList";
+import { ProfileScreen } from "../profile/ProfileScreen";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,10 @@ const styles = StyleSheet.create({
   },
   section: {
     marginVertical: 10,
+    backgroundColor: Colours.darkButton.$,
+    width: "100%",
+    padding: 12,
+    borderRadius: 12,
   },
   divider: {
     marginVertical: 24,
@@ -56,20 +61,31 @@ export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <StatusBar style="dark" />
       <View style={styles.main}>
-        <View style={styles.section}>
-          <Pressable onPress={() => navigation.navigate("profile")}>
-            <Text style={styles.title}>Profile</Text>
-          </Pressable>
-        </View>
+        {/* Profile View */}
+        <ProfileScreen />
         <HorizontalRule
           color={Colours.lightGrey.$}
           style={[styles.divider, { width: "100%" }]}
         />
-        <View style={styles.section}>
-          <Pressable onPress={handleSignOut}>
-            <Text style={styles.title}>Sign Out</Text>
-          </Pressable>
-        </View>
+        {/* Favourite Meditations Link*/}
+        <TouchableOpacity
+          style={styles.section}
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate("favourites")}
+        >
+          <Text style={[styles.title, { color: "white" }]}>
+            Favourite Meditations
+          </Text>
+        </TouchableOpacity>
+
+        {/* Menu View */}
+        <TouchableOpacity
+          style={styles.section}
+          onPress={handleSignOut}
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.title, { color: "white" }]}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
