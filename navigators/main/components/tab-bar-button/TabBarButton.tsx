@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
 export type TabBarButtonProps = {
   icon: ComponentType<SvgProps>;
   focussed: boolean;
+  onPress?: () => void;
 };
 
 export const TabBarButton = ({

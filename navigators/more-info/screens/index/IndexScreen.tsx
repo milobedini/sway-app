@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Colours } from "../../../../colours";
+import { HorizontalRule } from "../../../../components/horizontal-rule";
 import { Fonts } from "../../../../fonts";
 import { signOut } from "../../../../lib/auth/auth";
 import { MoreInfoNavigatorParamsList } from "../../MoreInfoNavigatorParamsList";
@@ -11,7 +12,7 @@ import { MoreInfoNavigatorParamsList } from "../../MoreInfoNavigatorParamsList";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colours.lightGrey.$,
+    backgroundColor: Colours.dark.$,
   },
   content: {
     alignItems: "stretch",
@@ -32,6 +33,9 @@ const styles = StyleSheet.create({
   },
   section: {
     marginVertical: 10,
+  },
+  divider: {
+    marginVertical: 24,
   },
 });
 
@@ -57,6 +61,10 @@ export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
             <Text style={styles.title}>Profile</Text>
           </Pressable>
         </View>
+        <HorizontalRule
+          color={Colours.lightGrey.$}
+          style={[styles.divider, { width: "100%" }]}
+        />
         <View style={styles.section}>
           <Pressable onPress={handleSignOut}>
             <Text style={styles.title}>Sign Out</Text>

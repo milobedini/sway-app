@@ -1,5 +1,5 @@
 export type NoteTileData = {
-  id?: number;
+  id: number;
   date?: string | Date;
   text?: string;
 };

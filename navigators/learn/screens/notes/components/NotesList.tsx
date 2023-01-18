@@ -14,12 +14,12 @@ import { mapNotesTileData } from "./mapNotesTileData";
 import { NoteTile } from "./NoteTile";
 
 const styles = StyleSheet.create({
-  noteList: { height: "60%", marginHorizontal: 14, marginTop: 12 },
+  noteList: { marginHorizontal: 14 },
   tile: { backgroundColor: Colours.yellowNote.$, marginBottom: 12 },
   newTile: {
     backgroundColor: "pink",
   },
-  notes: {},
+  notes: { marginTop: 45 },
 });
 
 export type NotesListProps = Omit<ScrollViewProps, "children"> & {
@@ -56,7 +56,7 @@ export const NotesList = ({ ...rest }: NotesListProps): JSX.Element => {
   return (
     <Animated.FlatList
       style={styles.noteList}
-      contentContainerStyle={styles.notes}
+      contentContainerStyle={[styles.notes]}
       data={notes}
       keyExtractor={(note) => String(note.id)}
       contentInsetAdjustmentBehavior="automatic"

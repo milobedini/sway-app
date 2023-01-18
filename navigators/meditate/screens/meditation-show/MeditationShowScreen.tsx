@@ -2,7 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { useWindowDimensions } from "react-native";
 
 import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
-import { SmallMeditationShow } from "../../../../components/meditation-show/SmallRecipeShow";
+import { SmallMeditationShow } from "../../../../components/meditation-show/SmallMeditationShow";
 
 export type MeditationShowScreenProps = StackScreenProps<
   MeditateNavigatorParamsList,

@@ -1,6 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { TabBarButton } from "./components";
+import { MainNavigatorParamList } from "./MainNavigatorParamsList";
 import { Colours } from "../../colours";
 import { HomeIcon } from "../../components/icons/HomeIcon";
 import { LearnIcon } from "../../components/icons/LearnIcon";
@@ -12,8 +14,6 @@ import { LearnNavigator } from "../learn";
 import { MeditateNavigator } from "../meditate";
 import { MoreInfoNavigator } from "../more-info";
 import { TimerNavigator } from "../timer";
-import { TabBarButton } from "./components";
-import { MainNavigatorParamList } from "./MainNavigatorParamsList";
 
 const Tab = createBottomTabNavigator<MainNavigatorParamList>();
 
@@ -37,6 +37,7 @@ export const SmallMainNavigator = (): JSX.Element => {
           shadowRadius: 36,
           shadowOffset: { width: 0, height: 6 },
         },
+        unmountOnBlur: true,
       }}
     >
       <Tab.Screen
