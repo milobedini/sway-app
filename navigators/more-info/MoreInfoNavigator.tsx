@@ -5,6 +5,7 @@ import { IndexScreen } from "./screens/index/IndexScreen";
 import { Colours } from "../../colours";
 import { FavouritesScreen } from "./screens/favourites";
 import { MeditateShowScreen } from "../meditate/screens";
+import { AboutScreen } from "./screens/about/AboutScreen";
 
 const Stack = createStackNavigator<MoreInfoNavigatorParamsList>();
 
@@ -38,6 +39,11 @@ export const MoreInfoNavigator = (): JSX.Element => (
     <Stack.Screen
       name="show"
       component={MeditateShowScreen}
+      options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
+    />
+    <Stack.Screen
+      name="about"
+      component={AboutScreen}
       options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
     />
   </Stack.Navigator>
