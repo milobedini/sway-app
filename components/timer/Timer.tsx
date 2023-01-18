@@ -59,9 +59,9 @@ export const Timer = (): JSX.Element => {
 
   const playSound = async (): Promise<void> => {
     const loadedSound = await Audio.Sound.createAsync(bell);
-    // setSound(loadedSound);
     await loadedSound.sound.playAsync();
-    // await loadedSound.sound.unloadAsync();
+    // remove below if fails
+    await loadedSound.sound.unloadAsync();
   };
   useEffect(() => {
     secondsLeftRef.current = settingsInfo.meditationMinutes * 60;
@@ -73,6 +73,7 @@ export const Timer = (): JSX.Element => {
       }
       if (secondsLeftRef.current === 0) {
         playSound();
+        // setIsPaused(true);
         setFinished(true);
         setIsPaused(true);
         isPausedRef.current = true;
@@ -84,18 +85,10 @@ export const Timer = (): JSX.Element => {
       }
 
       return tick();
-    }, 100);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [settingsInfo]);
-
-  // useEffect(() => {
-  //   return sound
-  //     ? () => {
-  //         sound.unloadAsync();
-  //       }
-  //     : undefined;
-  // }, [sound]);
 
   return (
     <>
