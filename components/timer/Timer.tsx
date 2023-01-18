@@ -43,6 +43,14 @@ export const Timer = (): JSX.Element => {
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
 
+  const totalSeconds = settingsInfo.meditationMinutes * 60;
+  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
+  const minutes = Math.floor(secondsLeft / 60);
+  let seconds: number | string = Math.floor(secondsLeft % 60);
+  if (seconds < 10) seconds = "0" + seconds;
+
+  const { width } = useWindowDimensions();
+
   const tick = () => {
     secondsLeftRef.current--;
     setSecondsLeft(secondsLeftRef.current);
@@ -73,7 +81,7 @@ export const Timer = (): JSX.Element => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [settingsInfo]);
+  }, [settingsInfo, sound]);
 
   useEffect(() => {
     return sound
@@ -82,14 +90,6 @@ export const Timer = (): JSX.Element => {
         }
       : undefined;
   }, [sound]);
-
-  const totalSeconds = settingsInfo.meditationMinutes * 60;
-  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
-  const minutes = Math.floor(secondsLeft / 60);
-  let seconds: number | string = Math.floor(secondsLeft % 60);
-  if (seconds < 10) seconds = "0" + seconds;
-
-  const { width } = useWindowDimensions();
 
   return (
     <>
