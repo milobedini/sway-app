@@ -65,7 +65,7 @@ export const MeditateList = ({
       style={style}
       contentContainerStyle={styles.meditations}
       data={meditations}
-      keyExtractor={(meditation) => String(meditation.id)}
+      keyExtractor={(meditation: { id: number }) => String(meditation.id)}
       contentInsetAdjustmentBehavior="automatic"
       numColumns={numColumns}
       key={numColumns}
@@ -81,7 +81,6 @@ export const MeditateList = ({
           key={meditation.item.id}
           style={styles.tile}
           meditation={mapMeditationTileData(meditation.item)}
-          // eslint-disable-next-line
           onPress={() =>
             onPress(meditation.item.id ?? ThenThrow("Missing meditation id!"))
           }

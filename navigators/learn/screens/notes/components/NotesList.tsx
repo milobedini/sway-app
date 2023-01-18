@@ -58,7 +58,7 @@ export const NotesList = ({ ...rest }: NotesListProps): JSX.Element => {
       style={styles.noteList}
       contentContainerStyle={[styles.notes]}
       data={notes}
-      keyExtractor={(note) => String(note.id)}
+      keyExtractor={(note: { id: number }) => String(note.id)}
       contentInsetAdjustmentBehavior="automatic"
       numColumns={numColumns}
       key={numColumns}

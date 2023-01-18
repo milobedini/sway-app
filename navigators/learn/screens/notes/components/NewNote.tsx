@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 import { Colours } from "../../../../../colours";
 
@@ -14,14 +21,18 @@ const styles = StyleSheet.create({
     height: "30%",
     marginHorizontal: 14,
   },
-  active: {
-    height: "65%",
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: "space-between",
   },
-  content: {},
-  footer: { flexDirection: "row", justifyContent: "space-between" },
-  input: {
+  active: {
+    height: "50%",
+    marginBottom: 36,
     marginTop: 8,
   },
+  footer: { flexDirection: "row", justifyContent: "space-between" },
+  input: {},
 });
 
 export const NewNote = (): JSX.Element => {
@@ -30,19 +41,24 @@ export const NewNote = (): JSX.Element => {
   const charLimit = 600;
 
   return (
-    <View style={[styles.container, active && styles.active]}>
-      <TextInput
-        style={styles.input}
-        onChangeText={setNoteText}
-        value={noteText}
-        placeholder="Type to add a note..."
-        autoCorrect
-        onFocus={() => setActive(true)}
-      />
-      <View style={styles.footer}>
-        <Text>{charLimit - noteText.length} Remaining</Text>
-        <Text>Save icon</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={[styles.container, active && styles.active]}
+    >
+      <View style={[styles.inner]}>
+        <TextInput
+          style={styles.input}
+          onChangeText={setNoteText}
+          value={noteText}
+          placeholder="Type to add a note..."
+          autoCorrect
+          onFocus={() => setActive(true)}
+        />
+        <View style={styles.footer}>
+          <Text>{charLimit - noteText.length} Remaining</Text>
+          <Text>Save icon</Text>
+        </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };

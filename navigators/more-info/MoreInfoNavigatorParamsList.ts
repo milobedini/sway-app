@@ -1,6 +1,5 @@
 export type MoreInfoNavigatorParamsList = {
   index: undefined;
-  profile: undefined;
-  welcome: undefined;
   app: undefined;
+  favourites: undefined;
 };

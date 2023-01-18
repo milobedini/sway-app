@@ -26,7 +26,7 @@ export const NotesScreen = ({
   route: { params },
 }: NotesScreenProps): JSX.Element => (
   <>
-    <StatusBar style="dark" />
+    <StatusBar style="light" />
 
     <View style={styles.container}>
       {/* Header */}
