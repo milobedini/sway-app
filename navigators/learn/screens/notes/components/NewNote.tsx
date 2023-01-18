@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     height: "30%",
     marginHorizontal: 14,
   },
+  active: {
+    height: "65%",
+  },
   content: {},
   footer: { flexDirection: "row", justifyContent: "space-between" },
   input: {
@@ -23,16 +26,18 @@ const styles = StyleSheet.create({
 
 export const NewNote = (): JSX.Element => {
   const [noteText, setNoteText] = useState("");
+  const [active, setActive] = useState(false);
   const charLimit = 600;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, active && styles.active]}>
       <TextInput
         style={styles.input}
         onChangeText={setNoteText}
         value={noteText}
         placeholder="Type to add a note..."
         autoCorrect
+        onFocus={() => setActive(true)}
       />
       <View style={styles.footer}>
         <Text>{charLimit - noteText.length} Remaining</Text>
