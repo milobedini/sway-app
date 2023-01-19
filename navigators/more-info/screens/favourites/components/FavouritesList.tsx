@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   RefreshControl,
   ScrollViewProps,
@@ -9,7 +9,6 @@ import {
   View,
 } from "react-native";
 import Animated from "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Colours } from "../../../../../colours";
 import { mapMeditationTileData } from "../../../../../components/meditate-list/mapMeditationTileData";
@@ -63,22 +62,31 @@ export const FavouritesList = ({
     setInProgress(false);
   }, []);
 
-  if (favourites.length >= 1) {
-    const numColumns = useMemo(() => {
-      if (width <= 480) return 1;
-      if (width <= 800) return 2;
-      return Math.floor((width - 346) / 370);
-    }, [width]);
+  const numColumns = useMemo(() => {
+    if (width <= 480) return 1;
+    if (width <= 800) return 2;
+    return Math.floor((width - 346) / 370);
+  }, [width]);
 
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const spacing = 30;
+  const itemSize = 74 + spacing * 3;
+
+  if (favourites.length >= 1) {
     return (
-      <SafeAreaView edges={["top"]}>
+      <Animated.View>
         <Animated.FlatList
           style={styles.favList}
           contentContainerStyle={[styles.favs]}
           data={favourites}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true }
+          )}
           keyExtractor={(favourite: { id: number }) => String(favourite.id)}
           contentInsetAdjustmentBehavior="automatic"
           numColumns={numColumns}
+          showsVerticalScrollIndicator={false}
           key={numColumns}
           refreshControl={
             <RefreshControl
@@ -87,21 +95,45 @@ export const FavouritesList = ({
               colors={[Colours.dark.$]}
             />
           }
-          renderItem={(favourite) => (
-            <MeditationTile
-              key={favourite.item.id}
-              style={styles.tile}
-              meditation={mapMeditationTileData(favourite.item)}
-              onPress={() =>
-                onPress(
-                  favourite.item.id ?? ThenThrow("Missing fav meditation id!")
-                )
-              }
-            />
-          )}
+          renderItem={({ item, index }) => {
+            const inputRange = [
+              -1,
+              0,
+              itemSize * index,
+              // finish after 2 items
+              itemSize * (index + 1),
+            ];
+            const opacityInputRange = [
+              -1,
+              0,
+              itemSize * index,
+              // finish after 2 items
+              itemSize * (index + 0.5),
+            ];
+            const scale = scrollY.interpolate({
+              inputRange,
+              outputRange: [1, 1, 1, 0],
+            });
+            const opacity = scrollY.interpolate({
+              inputRange: opacityInputRange,
+              outputRange: [1, 1, 1, 0],
+            });
+            return (
+              <Animated.View style={{ opacity, transform: [{ scale }] }}>
+                <MeditationTile
+                  key={item.id}
+                  style={[styles.tile]}
+                  meditation={mapMeditationTileData(item)}
+                  onPress={() =>
+                    onPress(item.id ?? ThenThrow("Missing meditation id!"))
+                  }
+                />
+              </Animated.View>
+            );
+          }}
           {...rest}
         ></Animated.FlatList>
-      </SafeAreaView>
+      </Animated.View>
     );
   }
 
