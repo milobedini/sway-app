@@ -1,6 +1,7 @@
 export type LearnNavigatorParamsList = {
   home: undefined;
   notes: undefined;
-  articles: undefined;
+  feed: undefined;
   community: undefined;
+  articles: undefined;
 };

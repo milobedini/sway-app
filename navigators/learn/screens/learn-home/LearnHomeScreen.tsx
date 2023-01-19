@@ -81,14 +81,14 @@ export const LearnHomeScreen = ({
         <TouchableOpacity
           style={styles.bottomButton}
           activeOpacity={0.7}
-          onPress={() => navigation.navigate("articles")}
+          onPress={() => navigation.navigate("feed")}
         >
           <Text style={[textStyles.title, styles.title]}>Articles</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.bottomButton}
           activeOpacity={0.7}
-          onPress={() => navigation.navigate("community")}
+          onPress={() => navigation.navigate("feed")}
         >
           <Text style={[textStyles.title, styles.title]}>Community</Text>
         </TouchableOpacity>
