@@ -3,6 +3,7 @@ import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
+import * as SplashScreen from "expo-splash-screen";
 
 import { FontsContainer } from "./components/fonts-container";
 import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
@@ -10,6 +11,8 @@ import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
 import store from "./lib/redux/store";
 
 const prefix = Linking.createURL("/");
+
+void SplashScreen.preventAutoHideAsync();
 
 const App = (): JSX.Element => {
   // const [init, setInit] = useState(true);
