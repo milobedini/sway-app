@@ -93,5 +93,5 @@ export const SmallMeditationShow = ({
       </ScrollView>
     );
   }
-  return <></>;
+  return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
 };

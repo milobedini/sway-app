@@ -5,6 +5,7 @@ import {
   ScrollViewProps,
   StyleSheet,
   useWindowDimensions,
+  View,
 } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -53,30 +54,34 @@ export const NotesList = ({ ...rest }: NotesListProps): JSX.Element => {
     return Math.floor((width - 346) / 370);
   }, [width]);
 
-  return (
-    <Animated.FlatList
-      style={styles.noteList}
-      contentContainerStyle={[styles.notes]}
-      data={notes}
-      keyExtractor={(note: { id: number }) => String(note.id)}
-      contentInsetAdjustmentBehavior="automatic"
-      numColumns={numColumns}
-      key={numColumns}
-      refreshControl={
-        <RefreshControl
-          refreshing={inProgress}
-          tintColor={Colours.dark.$}
-          colors={[Colours.dark.$]}
-        />
-      }
-      renderItem={(note) => (
-        <NoteTile
-          key={note.item.id}
-          style={styles.tile}
-          note={mapNotesTileData(note.item)}
-        />
-      )}
-      {...rest}
-    ></Animated.FlatList>
-  );
+  if (notes) {
+    return (
+      <Animated.FlatList
+        style={styles.noteList}
+        contentContainerStyle={[styles.notes]}
+        data={notes}
+        keyExtractor={(note: { id: number }) => String(note.id)}
+        contentInsetAdjustmentBehavior="automatic"
+        numColumns={numColumns}
+        key={numColumns}
+        refreshControl={
+          <RefreshControl
+            refreshing={inProgress}
+            tintColor={Colours.dark.$}
+            colors={[Colours.dark.$]}
+          />
+        }
+        renderItem={(note) => (
+          <NoteTile
+            key={note.item.id}
+            style={styles.tile}
+            note={mapNotesTileData(note.item)}
+          />
+        )}
+        {...rest}
+      ></Animated.FlatList>
+    );
+  }
+
+  return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
 };

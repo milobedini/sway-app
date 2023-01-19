@@ -1,7 +1,13 @@
 import { useMemo } from "react";
-import { ScrollViewProps, StyleSheet, useWindowDimensions } from "react-native";
+import {
+  ScrollViewProps,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import Animated from "react-native-reanimated";
 
+import { Colours } from "../../colours";
 import { useAppSelector } from "../../lib/redux/hooks";
 import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
@@ -68,5 +74,5 @@ export const MeditateList = ({
       ></Animated.FlatList>
     );
   }
-  return <></>;
+  return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
 };

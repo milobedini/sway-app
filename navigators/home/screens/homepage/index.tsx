@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -64,11 +64,22 @@ Should link to the latest/daily meditation only.
 */
 // eslint-disable-next-line
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
+  const [id, setId] = useState();
   const { width, height } = useWindowDimensions();
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
   );
   const user = useAppSelector((state) => state.userProfile.profile);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const currentUser = await getUserId();
+      if (currentUser?.id !== user.id) {
+        setId(currentUser?.id);
+      }
+    };
+    getUser;
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -98,10 +109,10 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   }, [meditations]);
 
   useEffect(() => {
-    if (!user) {
+    if (!user || id !== user.id) {
       getProfile();
     }
-  }, [meditations]);
+  }, [id]);
 
   return (
     <View style={styles.container}>
