@@ -23,10 +23,6 @@ import {
 import { Fonts } from "../../../../../../fonts";
 
 const styles = StyleSheet.create({
-  root: {
-    display: "flex",
-    marginVertical: 20,
-  },
   title: {
     color: Colours.dark.$,
     textAlign: "center",
@@ -93,7 +89,7 @@ export const LoginForm = ({ style, ...rest }: LoginFormProps): JSX.Element => {
   const navigation = useNavigation();
 
   return (
-    <View style={[style, styles.root]} {...rest}>
+    <View style={[style]} {...rest}>
       <Formik
         initialValues={initialValues}
         onSubmit={async (values) => {

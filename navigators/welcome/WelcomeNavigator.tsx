@@ -15,9 +15,6 @@ const Stack = createStackNavigator<WelcomeNavigatorParamsList>();
 export const WelcomeNavigator = (): JSX.Element => {
   const [onboarded, setOnboarded] = useState(false);
 
-  // const navigation =
-  //   useNavigation<NavigationProp<WelcomeNavigatorParamsList>>();
-
   useEffect(() => {
     const checkOnboarded = async () => {
       try {
@@ -34,15 +31,15 @@ export const WelcomeNavigator = (): JSX.Element => {
 
   return (
     <Stack.Navigator>
-      {/* {Platform.OS !== 'web' && ( */}
-      {/* If not onboarded */}
       <>
         {!onboarded ? (
           <>
             <Stack.Screen
               name="ready"
               component={ReadyScreen}
-              options={{ headerShown: false }}
+              options={{
+                headerShown: false,
+              }}
             />
             <Stack.Group
               screenOptions={{
@@ -74,7 +71,6 @@ export const WelcomeNavigator = (): JSX.Element => {
             headerLeft: HeaderBackButton,
           }}
         >
-          {/* <Stack.Screen name="register" component={RegisterScreen} /> */}
           <Stack.Screen name="signIn" component={SignInScreen} />
         </Stack.Group>
       </>
