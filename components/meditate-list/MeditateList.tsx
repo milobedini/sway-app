@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import {
   ScrollViewProps,
   StyleSheet,
@@ -50,28 +50,64 @@ export const MeditateList = ({
     return Math.floor((width - 346) / 370);
   }, [width]);
 
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const spacing = 30;
+  const itemSize = 74 + spacing * 3;
+
   if (meditations) {
     return (
-      <Animated.FlatList
-        style={style}
-        contentContainerStyle={styles.meditations}
-        data={meditations}
-        keyExtractor={(meditation: { id: number }) => String(meditation.id)}
-        contentInsetAdjustmentBehavior="automatic"
-        numColumns={numColumns}
-        key={numColumns}
-        renderItem={(meditation) => (
-          <MeditationTile
-            key={meditation.item.id}
-            style={styles.tile}
-            meditation={mapMeditationTileData(meditation.item)}
-            onPress={() =>
-              onPress(meditation.item.id ?? ThenThrow("Missing meditation id!"))
-            }
-          />
-        )}
-        {...rest}
-      ></Animated.FlatList>
+      <Animated.View style={{ flex: 1 }}>
+        <Animated.FlatList
+          style={style}
+          contentContainerStyle={styles.meditations}
+          data={meditations}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true }
+          )}
+          keyExtractor={(meditation: { id: number }) => String(meditation.id)}
+          contentInsetAdjustmentBehavior="automatic"
+          numColumns={numColumns}
+          key={numColumns}
+          renderItem={({ item, index }) => {
+            const inputRange = [
+              -1,
+              0,
+              itemSize * index,
+              // finish after 2 items
+              itemSize * (index + 1),
+            ];
+            const opacityInputRange = [
+              -1,
+              0,
+              itemSize * index,
+              // finish after 2 items
+              itemSize * (index + 0.5),
+            ];
+            const scale = scrollY.interpolate({
+              inputRange,
+              outputRange: [1, 1, 1, 0],
+            });
+            const opacity = scrollY.interpolate({
+              inputRange: opacityInputRange,
+              outputRange: [1, 1, 1, 0],
+            });
+            return (
+              <Animated.View style={{ opacity, transform: [{ scale }] }}>
+                <MeditationTile
+                  key={item.id}
+                  style={[styles.tile]}
+                  meditation={mapMeditationTileData(item)}
+                  onPress={() =>
+                    onPress(item.id ?? ThenThrow("Missing meditation id!"))
+                  }
+                />
+              </Animated.View>
+            );
+          }}
+          {...rest}
+        ></Animated.FlatList>
+      </Animated.View>
     );
   }
   return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
