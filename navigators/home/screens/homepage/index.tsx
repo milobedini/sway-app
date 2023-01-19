@@ -10,7 +10,6 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import * as SplashScreen from "expo-splash-screen";
 
 import { Colours } from "../../../../colours";
@@ -23,6 +22,7 @@ import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
 import backgroundImage from "./background.png";
 import backgroundWeb from "./background_web.png";
 import meditationImage from "./logo_black.png";
+import { useAppDispatch, useAppSelector } from "../../../../lib/redux/hooks";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -65,10 +65,12 @@ Should link to the latest/daily meditation only.
 // eslint-disable-next-line
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
-  const meditations = useSelector((state) => state.allMeditations.meditations);
-  const user = useSelector((state) => state.userProfile.profile);
+  const meditations = useAppSelector(
+    (state) => state.allMeditations.meditations
+  );
+  const user = useAppSelector((state) => state.userProfile.profile);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Refactor all of these. Then just call a setup app content function.
 

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { ScrollViewProps, StyleSheet, useWindowDimensions } from "react-native";
 import Animated from "react-native-reanimated";
-import { useSelector } from "react-redux";
 
+import { useAppSelector } from "../../lib/redux/hooks";
 import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
 import { mapMeditationTileData } from "./mapMeditationTileData";
@@ -34,7 +34,9 @@ export const MeditateList = ({
 }: MeditateListProps): JSX.Element => {
   const { width } = useWindowDimensions();
 
-  const meditations = useSelector((state) => state.allMeditations.meditations);
+  const meditations = useAppSelector(
+    (state) => state.allMeditations.meditations
+  );
 
   const numColumns = useMemo(() => {
     if (width <= 480) return 1;

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { Fonts } from "../../../../fonts";
+import { useAppSelector } from "../../../../lib/redux/hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileScreen = (): JSX.Element => {
-  const user = useSelector((state) => state.userProfile.profile);
+  const user = useAppSelector((state) => state.userProfile.profile);
 
   if (user) {
     return (
