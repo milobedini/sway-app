@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Image,
   ImageBackground,
@@ -64,32 +64,24 @@ Should link to the latest/daily meditation only.
 */
 // eslint-disable-next-line
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
-  const [id, setId] = useState();
+  // const [id, setId] = useState();
   const { width, height } = useWindowDimensions();
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
   );
   const user = useAppSelector((state) => state.userProfile.profile);
 
-  useEffect(() => {
-    const getUser = async () => {
-      const currentUser = await getUserId();
-      if (currentUser?.id !== user.id) {
-        setId(currentUser?.id);
-      }
-    };
-    getUser;
-  }, []);
-
   const dispatch = useAppDispatch();
 
   // Refactor all of these. Then just call a setup app content function.
 
+  // Load meditations in to redux state.
   const getMeditations = async () => {
     const res = await axios.get(`${baseUrl}/meditations/`);
     dispatch(setMeditations(res.data));
   };
 
+  // Load profile in to redux state.
   const getProfile = async () => {
     const config = await secureGet(
       `${baseUrl}/auth/profile/${await getUserId()}/`
@@ -102,17 +94,25 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     }
   };
 
+  // Load meditations if not loaded
   useEffect(() => {
     if (!meditations || meditations.length === 0) {
       getMeditations();
     }
   }, [meditations]);
 
+  // Check logged in user to compare to redux state.
+  const getCurrentUser = async () => {
+    const currentUserId = await getUserId();
+    return currentUserId;
+  };
+
+  // Load profile if not loaded, or if user has changed.
   useEffect(() => {
-    if (!user || id !== user.id) {
+    if (!user || getCurrentUser() !== user.id) {
       getProfile();
     }
-  }, [id]);
+  }, []);
 
   return (
     <View style={styles.container}>

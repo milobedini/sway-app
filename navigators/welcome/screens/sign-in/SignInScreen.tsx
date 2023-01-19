@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -9,6 +9,7 @@ import { textStyles } from "../../../../components/text";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
 import { LoginForm } from "./components";
 import logo from "../../../../assets/logo_black.png";
+import { Fonts } from "../../../../fonts";
 
 export type SignInScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,
@@ -18,19 +19,15 @@ export type SignInScreenProps = StackScreenProps<
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: Colours.dark.$,
   },
   content: {
     flex: 1,
-    alignItems: "stretch",
-    padding: 26,
   },
+  background: { flex: 0.7, marginTop: 20 },
   title: {
     textAlign: "center",
     color: Colours.lightGrey.$,
-    marginTop: 40,
   },
   form: {
     flexGrow: 1,
@@ -52,16 +49,17 @@ export const SignInScreen = ({
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <SafeAreaView style={styles.content}>
-        <Text style={[textStyles.title, styles.title]} onPress={toHome}>
-          Sign In
-        </Text>
-        <LoginForm style={styles.form} />
-        <Image
+      <SafeAreaView edges={["top"]} style={styles.content}>
+        <ImageBackground
+          style={[styles.background]}
           source={logo}
-          style={styles.image}
           onLoad={() => SplashScreen.hideAsync()}
-        />
+        >
+          <Text style={[textStyles.title, styles.title]} onPress={toHome}>
+            Sign In
+          </Text>
+          <LoginForm style={styles.form} />
+        </ImageBackground>
       </SafeAreaView>
     </View>
   );
