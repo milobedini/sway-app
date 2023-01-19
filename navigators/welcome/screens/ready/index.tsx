@@ -1,6 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { Image, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as SplashScreen from "expo-splash-screen";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
@@ -41,7 +42,11 @@ export const ReadyScreen = ({ navigation }: ReadyScreenProps): JSX.Element => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={logo} style={styles.image} />
+      <Image
+        source={logo}
+        style={styles.image}
+        onLoad={() => SplashScreen.hideAsync()}
+      />
       <Text style={[textStyles.title, styles.title]}>Welcome to Sway</Text>
       <PrimaryButton
         title="Get Started!"

@@ -1,15 +1,8 @@
-import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
-import {
-  RefreshControl,
-  ScrollViewProps,
-  StyleSheet,
-  useWindowDimensions,
-} from "react-native";
+import { useMemo } from "react";
+import { ScrollViewProps, StyleSheet, useWindowDimensions } from "react-native";
 import Animated from "react-native-reanimated";
+import { useSelector } from "react-redux";
 
-import { Colours } from "../../colours";
-import { baseUrl } from "../../lib/api/api";
 import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
 import { mapMeditationTileData } from "./mapMeditationTileData";
@@ -41,18 +34,7 @@ export const MeditateList = ({
 }: MeditateListProps): JSX.Element => {
   const { width } = useWindowDimensions();
 
-  const [inProgress, setInProgress] = useState(true);
-  const [meditations, setMeditations] = useState([]);
-
-  useEffect(() => {
-    const getMeditations = async () => {
-      setInProgress(true);
-      const res = await axios.get(`${baseUrl}/meditations/`);
-      setMeditations(res.data);
-    };
-    getMeditations();
-    setInProgress(false);
-  }, []);
+  const meditations = useSelector((state) => state.allMeditations.meditations);
 
   const numColumns = useMemo(() => {
     if (width <= 480) return 1;
@@ -60,33 +42,29 @@ export const MeditateList = ({
     return Math.floor((width - 346) / 370);
   }, [width]);
 
-  return (
-    <Animated.FlatList
-      style={style}
-      contentContainerStyle={styles.meditations}
-      data={meditations}
-      keyExtractor={(meditation: { id: number }) => String(meditation.id)}
-      contentInsetAdjustmentBehavior="automatic"
-      numColumns={numColumns}
-      key={numColumns}
-      refreshControl={
-        <RefreshControl
-          refreshing={inProgress}
-          tintColor={Colours.dark.$}
-          colors={[Colours.dark.$]}
-        />
-      }
-      renderItem={(meditation) => (
-        <MeditationTile
-          key={meditation.item.id}
-          style={styles.tile}
-          meditation={mapMeditationTileData(meditation.item)}
-          onPress={() =>
-            onPress(meditation.item.id ?? ThenThrow("Missing meditation id!"))
-          }
-        />
-      )}
-      {...rest}
-    ></Animated.FlatList>
-  );
+  if (meditations) {
+    return (
+      <Animated.FlatList
+        style={style}
+        contentContainerStyle={styles.meditations}
+        data={meditations}
+        keyExtractor={(meditation: { id: number }) => String(meditation.id)}
+        contentInsetAdjustmentBehavior="automatic"
+        numColumns={numColumns}
+        key={numColumns}
+        renderItem={(meditation) => (
+          <MeditationTile
+            key={meditation.item.id}
+            style={styles.tile}
+            meditation={mapMeditationTileData(meditation.item)}
+            onPress={() =>
+              onPress(meditation.item.id ?? ThenThrow("Missing meditation id!"))
+            }
+          />
+        )}
+        {...rest}
+      ></Animated.FlatList>
+    );
+  }
+  return <></>;
 };

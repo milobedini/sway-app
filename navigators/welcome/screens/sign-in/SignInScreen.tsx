@@ -2,6 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as SplashScreen from "expo-splash-screen";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
@@ -56,7 +57,11 @@ export const SignInScreen = ({
           Sign In
         </Text>
         <LoginForm style={styles.form} />
-        <Image source={logo} style={styles.image} />
+        <Image
+          source={logo}
+          style={styles.image}
+          onLoad={() => SplashScreen.hideAsync()}
+        />
       </SafeAreaView>
     </View>
   );
