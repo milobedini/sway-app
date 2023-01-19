@@ -12,8 +12,6 @@ const Stack = createStackNavigator<MoreInfoNavigatorParamsList>();
 export const MoreInfoNavigator = (): JSX.Element => (
   <Stack.Navigator
     screenOptions={{
-      // headerBackTitleVisible: false,
-      // headerTintColor: Colours.bright.$,
       headerTitle: "",
       headerTransparent: true,
       headerBackTitleVisible: false,

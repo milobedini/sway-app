@@ -37,7 +37,6 @@ export const SmallMainNavigator = (): JSX.Element => {
           shadowRadius: 36,
           shadowOffset: { width: 0, height: 6 },
         },
-        unmountOnBlur: true,
       }}
     >
       <Tab.Screen
