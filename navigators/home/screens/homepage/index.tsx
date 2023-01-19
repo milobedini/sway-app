@@ -1,4 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
+import axios from "axios";
+import { useEffect } from "react";
 import {
   Image,
   ImageBackground,
@@ -8,9 +10,12 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
+import { baseUrl } from "../../../../lib/api/api";
+import { setMeditations } from "../../../../lib/redux/actions/meditationsActions";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
 import backgroundImage from "./background.png";
 import backgroundWeb from "./background_web.png";
@@ -57,13 +62,30 @@ Should link to the latest/daily meditation only.
 // eslint-disable-next-line
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
+  const meditations = useSelector((state) => state.allMeditations.meditations);
+  const dispatch = useDispatch();
+
+  const getMeditations = async () => {
+    const res = await axios.get(`${baseUrl}/meditations/`);
+    dispatch(setMeditations(res.data));
+  };
+
+  useEffect(() => {
+    if (!meditations || meditations.length === 0) {
+      getMeditations();
+    }
+  }, [meditations]);
+
   return (
     <View style={styles.container}>
       <ImageBackground
         style={[styles.background, { height: height }]}
         source={width > 480 ? backgroundWeb : backgroundImage}
       >
-        <Text style={[textStyles.title, styles.sway]}>Sway</Text>
+        <Text style={[textStyles.title, styles.sway]}>
+          {/* {meditations[0]?.name} */}
+          Sway
+        </Text>
         <TouchableOpacity
           onPress={() =>
             navigation

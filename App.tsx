@@ -2,9 +2,12 @@ import "react-native-gesture-handler";
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { StatusBar } from "react-native";
+import { Provider } from "react-redux";
 
 import { FontsContainer } from "./components/fonts-container";
 import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
+// import store from "./lib/redux/store";
+import store from "./lib/redux/store";
 
 const prefix = Linking.createURL("/");
 
@@ -79,7 +82,7 @@ const App = (): JSX.Element => {
     },
   };
   return (
-    <>
+    <Provider store={store}>
       <StatusBar
         backgroundColor={"blue"}
         barStyle="light-content"
@@ -90,7 +93,7 @@ const App = (): JSX.Element => {
           <AppNavigator />
         </FontsContainer>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 };
 
