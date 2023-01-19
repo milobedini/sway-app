@@ -9,7 +9,6 @@ import { textStyles } from "../../../../components/text";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
 import { LoginForm } from "./components";
 import logo from "../../../../assets/logo_black.png";
-import { Fonts } from "../../../../fonts";
 
 export type SignInScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,

@@ -27,6 +27,11 @@ const styles = StyleSheet.create({
   tile: {
     marginBottom: 12,
   },
+  noFavContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export type FavouritesListProps = Omit<ScrollViewProps, "children"> & {
@@ -58,7 +63,7 @@ export const FavouritesList = ({
     setInProgress(false);
   }, []);
 
-  if (favourites) {
+  if (favourites.length >= 1) {
     const numColumns = useMemo(() => {
       if (width <= 480) return 1;
       if (width <= 800) return 2;
@@ -99,9 +104,10 @@ export const FavouritesList = ({
       </SafeAreaView>
     );
   }
+
   return (
-    <View style={styles.favList}>
-      <Text style={textStyles.title}>
+    <View style={styles.noFavContainer}>
+      <Text style={[textStyles.body, { maxWidth: "75%", textAlign: "center" }]}>
         You have not favourited any meditations yet!
       </Text>
     </View>
