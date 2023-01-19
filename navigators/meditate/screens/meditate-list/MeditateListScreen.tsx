@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import { MeditateList } from "../../../../components/meditate-list";
 import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
 import { Colours } from "../../../../colours";
+
 export type MeditateListScreenProps = StackScreenProps<
   MeditateNavigatorParamsList,
   "list"
@@ -30,6 +31,7 @@ export const MeditateListScreen = ({
   return (
     <>
       <StatusBar style="dark" />
+
       <MeditateList
         style={styles.container}
         onPress={(id) =>

@@ -1,4 +1,5 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 import { Colours } from "../../colours";
 import { MeditationTileTags } from "../meditation-tile-tags";
@@ -13,6 +14,13 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 0.5,
     borderColor: Colours.bright.$,
+    shadowColor: Colours.white.$,
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
   },
   imageAndTitleContainer: {
     flexDirection: "row",
@@ -40,7 +48,7 @@ export const SmallMeditationTile = ({
   style,
   ...rest
 }: MeditationTileProps): JSX.Element => (
-  <Pressable style={[styles.container, style]} {...rest}>
+  <Animated.View style={[styles.container, style]} {...rest}>
     <View style={styles.imageAndTitleContainer}>
       {/* Needs to become meditation image once these have been added. Image for each category */}
       <Image source={medTile} style={styles.image} />
@@ -49,5 +57,5 @@ export const SmallMeditationTile = ({
       </Text>
     </View>
     <MeditationTileTags style={styles.tags} meditation={meditation} />
-  </Pressable>
+  </Animated.View>
 );
