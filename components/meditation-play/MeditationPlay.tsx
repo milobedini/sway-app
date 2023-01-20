@@ -3,7 +3,13 @@ import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { Colours } from "../../colours";
 import { textStyles } from "../text";
 
-export const MeditationPlay = ({ setModalVisible }): JSX.Element => (
+interface MeditationPlayProps {
+  setModalVisible: () => void;
+}
+
+export const MeditationPlay = ({
+  setModalVisible,
+}: MeditationPlayProps): JSX.Element => (
   <Modal animationType="slide" transparent={true} visible={true}>
     <View
       style={{
