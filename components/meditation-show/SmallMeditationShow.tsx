@@ -110,7 +110,7 @@ export const SmallMeditationShow = ({
     );
   }
   if (meditation && modalVisible) {
-    return <MeditationPlay setModalVisible={setModalVisible} />;
+    return <MeditationPlay onPress={() => setModalVisible(false)} />;
   }
   return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
 };
