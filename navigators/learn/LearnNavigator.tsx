@@ -8,29 +8,31 @@ import { NotesScreen } from "./screens/notes";
 
 const Stack = createStackNavigator<LearnNavigatorParamsList>();
 
-export const LearnNavigator = (): JSX.Element => (
-  <Stack.Navigator
-    screenOptions={{
-      headerTitle: "",
-      headerTransparent: true,
-      headerBackTitleVisible: false,
-      headerTintColor: Colours.bright.$,
-      headerStyle: {
-        elevation: 0,
-        shadowOpacity: 0,
-        borderBottomWidth: 0,
-        backgroundColor: Colours.dark.$,
-      },
-    }}
-    initialRouteName="home"
-  >
-    <Stack.Screen
-      name="home"
-      component={LearnHomeScreen}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen name="notes" component={NotesScreen} />
+export const LearnNavigator = (): JSX.Element => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: "",
+        headerTransparent: true,
+        headerBackTitleVisible: false,
+        headerTintColor: Colours.bright.$,
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: Colours.dark.$,
+        },
+      }}
+      initialRouteName="home"
+    >
+      <Stack.Screen
+        name="home"
+        component={LearnHomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="notes" component={NotesScreen} />
 
-    <Stack.Screen name="feed" component={FeedNavigator} />
-  </Stack.Navigator>
-);
+      <Stack.Screen name="feed" component={FeedNavigator} />
+    </Stack.Navigator>
+  );
+};

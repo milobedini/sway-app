@@ -66,33 +66,35 @@ export const LearnHomeScreen = ({
   navigation,
   // eslint-disable-next-line
   route: { params },
-}: LearnHomeScreenProps): JSX.Element => (
-  <ImageBackground source={learnBackground} style={styles.background}>
-    <StatusBar style="dark" />
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.topButton}
-        activeOpacity={0.7}
-        onPress={() => navigation.navigate("notes")}
-      >
-        <Text style={[textStyles.title, styles.title]}>Notes</Text>
-      </TouchableOpacity>
-      <View style={styles.bottomContainer}>
+}: LearnHomeScreenProps): JSX.Element => {
+  return (
+    <ImageBackground source={learnBackground} style={styles.background}>
+      <StatusBar style="dark" />
+      <View style={styles.container}>
         <TouchableOpacity
-          style={styles.bottomButton}
+          style={styles.topButton}
           activeOpacity={0.7}
-          onPress={() => navigation.navigate("feed")}
+          onPress={() => navigation.navigate("notes")}
         >
-          <Text style={[textStyles.title, styles.title]}>Articles</Text>
+          <Text style={[textStyles.title, styles.title]}>Notes</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.bottomButton}
-          activeOpacity={0.7}
-          onPress={() => navigation.navigate("feed")}
-        >
-          <Text style={[textStyles.title, styles.title]}>Community</Text>
-        </TouchableOpacity>
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity
+            style={styles.bottomButton}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("feed")}
+          >
+            <Text style={[textStyles.title, styles.title]}>Articles</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.bottomButton}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("feed")}
+          >
+            <Text style={[textStyles.title, styles.title]}>Community</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  </ImageBackground>
-);
+    </ImageBackground>
+  );
+};
