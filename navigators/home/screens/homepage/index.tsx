@@ -23,6 +23,8 @@ import backgroundWeb from "./background_web.png";
 import meditationImage from "./logo_black.png";
 import { useAppDispatch, useAppSelector } from "../../../../lib/redux/hooks";
 import { LoadingIndicator } from "../../../../components/loading-animation";
+import { setArticles } from "../../../../lib/redux/actions/feedActions";
+import { PostListResponseDataItem } from "../../../learn/screens/feed/components";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -70,6 +72,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
   );
+  const articles = useAppSelector((state) => state.allArticles.articles);
   const user = useAppSelector((state) => state.userProfile.profile);
 
   const dispatch = useAppDispatch();
@@ -85,6 +88,26 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     // Load meditations if not loaded
     if (!meditations || meditations.length === 0) {
       getMeditations();
+    }
+    // Load articles in to redux state.
+    const getArticles = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/feed/`);
+        dispatch(
+          setArticles(
+            res.data.filter(
+              (post: PostListResponseDataItem) => post.category === "Threads"
+            )
+          )
+        );
+      } catch (err) {
+        return err;
+      }
+    };
+
+    // Load articles if not loaded
+    if (!articles || articles.length === 0) {
+      getArticles();
     }
 
     // Load profile in to redux state.
@@ -109,15 +132,14 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
       getProfile();
     }
 
-    // Remove loader after max 2.5 seconds regardless. This should be used to load all content. Timeout for now.
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-
     // Load profile if not loaded, or if user has changed.
     if (!user || getCurrentUser() !== user.id) {
       getProfile();
     }
+    // Remove loader after max 2.5 seconds regardless. This should be used to load all content. Timeout for now.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
   }, [meditations]);
 
   if (!loading) {
