@@ -2,25 +2,27 @@ import { ThenThrow } from "../../../../../lib/then-throw";
 import { PostTileData } from "./PostTileData";
 
 export declare type PostListResponseDataItem = {
-  id: number;
-  author: { username: string };
-  created_at: string | Date;
-  title: string;
-  views: number;
-  text: string;
-  category: string;
+  id?: number;
+  author?: { username: string };
+  created_at?: string | Date;
+  title?: string;
+  views?: number;
+  text?: string;
+  category?: string;
+  comments?: [];
 };
 
 export const mapPostsTileData = (
   post: PostListResponseDataItem
 ): PostTileData => {
   const id = post.id ?? ThenThrow("id is missing");
-  const author = post?.author.username;
+  const author = post?.author?.username;
   const created_at = post?.created_at;
   const title = post?.title;
   const views = post?.views;
   const text = post?.text;
   const category = post?.category;
+  const comments = post?.comments;
   return {
     id,
     author,
@@ -29,5 +31,6 @@ export const mapPostsTileData = (
     views,
     text,
     category,
+    comments,
   };
 };

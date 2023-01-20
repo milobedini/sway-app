@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 
 import { baseUrl } from "../../../../../lib/api/api";
 import { PostTile } from "./PostTile";
-import { mapPostsTileData } from "./mapPostsTileData";
+import { mapPostsTileData, PostListResponseDataItem } from "./mapPostsTileData";
 
 const styles = StyleSheet.create({
   tabContainer: {
@@ -25,7 +25,11 @@ export const PostsList = ({ ...rest }: PostsListProps): JSX.Element => {
     const getPosts = async () => {
       try {
         const res = await axios.get(`${baseUrl}/feed/`);
-        setPosts(res.data);
+        setPosts(
+          res.data.filter(
+            (post: PostListResponseDataItem) => post.category === "Threads"
+          )
+        );
       } catch (err) {
         return err;
       }
@@ -44,7 +48,11 @@ export const PostsList = ({ ...rest }: PostsListProps): JSX.Element => {
         numColumns={1}
         contentContainerStyle={styles.tabContainer}
         renderItem={(post) => (
-          <PostTile key={post.item.id} post={mapPostsTileData(post.item)} />
+          <PostTile
+            key={post.item.id}
+            post={mapPostsTileData(post.item)}
+            article={false}
+          />
         )}
         {...rest}
       ></Animated.FlatList>

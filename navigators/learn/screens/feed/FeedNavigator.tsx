@@ -3,7 +3,8 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Colours } from "../../../../colours";
-import { HomeIcon } from "../../../../components/icons";
+import { ArticlesIcon } from "../../../../components/icons/ArticlesIcon";
+import { CommunityIcon } from "../../../../components/icons/CommunityIcon";
 import { TabBarButton } from "../../../main/components";
 import { LearnNavigatorParamsList } from "../../LearnNavigatorParamsList";
 import { ArticleFeed } from "./articles/ArticleFeedScreen";
@@ -31,7 +32,6 @@ export const FeedNavigator = (): JSX.Element => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          paddingTop: 4,
           paddingBottom: bottom ? bottom / 2 : 8,
           height: 76 + bottom / 6,
           borderTopWidth: 0,
@@ -44,20 +44,20 @@ export const FeedNavigator = (): JSX.Element => {
       }}
     >
       <Tab.Screen
-        name="community"
-        component={CommunityFeed}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarButton icon={HomeIcon} focussed={focused} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="articles"
         component={ArticleFeed}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarButton icon={HomeIcon} focussed={focused} />
+            <TabBarButton icon={ArticlesIcon} focussed={focused} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="community"
+        component={CommunityFeed}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarButton icon={CommunityIcon} focussed={focused} />
           ),
         }}
       />
