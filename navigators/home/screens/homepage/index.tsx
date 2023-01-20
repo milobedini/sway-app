@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -10,7 +10,6 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
@@ -23,8 +22,7 @@ import backgroundImage from "./background.png";
 import backgroundWeb from "./background_web.png";
 import meditationImage from "./logo_black.png";
 import { useAppDispatch, useAppSelector } from "../../../../lib/redux/hooks";
-import { setArticles } from "../../../../lib/redux/actions/feedActions";
-import { PostListResponseDataItem } from "../../../learn/screens/feed/components";
+import { LoadingIndicator } from "../../../../components/loading-animation";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -68,104 +66,90 @@ Should link to the latest/daily meditation only.
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   // const [id, setId] = useState();
   const { width, height } = useWindowDimensions();
+  const [loading, setLoading] = useState(true);
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
   );
-  const articles = useAppSelector((state) => state.allArticles.articles);
   const user = useAppSelector((state) => state.userProfile.profile);
 
   const dispatch = useAppDispatch();
 
-  // Refactor all of these. Then just call a setup app content function.
-
-  // Load meditations in to redux state.
-  const getMeditations = async () => {
-    const res = await axios.get(`${baseUrl}/meditations/`);
-    dispatch(setMeditations(res.data));
-  };
-
-  // Load profile in to redux state.
-  const getProfile = async () => {
-    const config = await secureGet(
-      `${baseUrl}/auth/profile/${await getUserId()}/`
-    );
-    try {
-      const res = await axios(config);
-      dispatch(setProfile(res.data));
-    } catch (err) {
-      return err;
-    }
-  };
-
-  // Load articles in to redux state.
-  const getArticles = async () => {
-    try {
-      const res = await axios.get(`${baseUrl}/feed/`);
-      dispatch(
-        setArticles(
-          res.data.filter(
-            (post: PostListResponseDataItem) => post.category === "Articles"
-          )
-        )
-      );
-    } catch (err) {
-      return err;
-    }
-  };
-
-  // Load meditations if not loaded
+  //  APP SETUP - REFACTOR
   useEffect(() => {
+    // Load meditations in to redux state.
+    const getMeditations = async () => {
+      const res = await axios.get(`${baseUrl}/meditations/`);
+      dispatch(setMeditations(res.data));
+    };
+
+    // Load meditations if not loaded
     if (!meditations || meditations.length === 0) {
       getMeditations();
     }
-  }, [meditations]);
-  // Load articles if not loaded
-  useEffect(() => {
-    if (!articles || articles.length === 0) {
-      getArticles();
-    }
-  }, [articles]);
 
-  // Check logged in user to compare to redux state.
-  const getCurrentUser = async () => {
-    const currentUserId = await getUserId();
-    return currentUserId;
-  };
+    // Load profile in to redux state.
+    const getProfile = async () => {
+      const config = await secureGet(
+        `${baseUrl}/auth/profile/${await getUserId()}/`
+      );
+      try {
+        const res = await axios(config);
+        dispatch(setProfile(res.data));
+      } catch (err) {
+        return err;
+      }
+    };
 
-  // Load profile if not loaded, or if user has changed.
-  useEffect(() => {
+    // Check logged in user to compare to redux state.
+    const getCurrentUser = async () => {
+      const currentUserId = await getUserId();
+      return currentUserId;
+    };
     if (!user || getCurrentUser() !== user.id) {
       getProfile();
     }
-  }, []);
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={[styles.background, { height: height }]}
-        source={width > 480 ? backgroundWeb : backgroundImage}
-        onLoad={() => {
-          if (meditations) {
-            SplashScreen.hideAsync();
-          }
-        }}
-      >
-        <Text style={[textStyles.title, styles.sway]}>Sway</Text>
-        <TouchableOpacity
-          onPress={() =>
-            navigation
-              .getParent()
-              ?.navigate("meditate", { screen: "list", params: {} })
-          }
-          style={[styles.button]}
-          activeOpacity={0.4}
+    // Remove loader after max 2.5 seconds regardless. This should be used to load all content. Timeout for now.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+
+    // Load profile if not loaded, or if user has changed.
+    if (!user || getCurrentUser() !== user.id) {
+      getProfile();
+    }
+  }, [meditations]);
+
+  if (!loading) {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          style={[styles.background, { height: height }]}
+          source={width > 480 ? backgroundWeb : backgroundImage}
+          onLoad={() => {
+            if (meditations) {
+              setLoading(false);
+            }
+          }}
         >
-          <Text style={[textStyles.title, styles.imageTitle]}>
-            Your Daily Meditation
-          </Text>
-          <Image source={meditationImage} style={styles.image} />
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
-  );
+          <Text style={[textStyles.title, styles.sway]}>Sway</Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigation
+                .getParent()
+                ?.navigate("meditate", { screen: "list", params: {} })
+            }
+            style={[styles.button]}
+            activeOpacity={0.4}
+          >
+            <Text style={[textStyles.title, styles.imageTitle]}>
+              Your Daily Meditation
+            </Text>
+            <Image source={meditationImage} style={styles.image} />
+          </TouchableOpacity>
+        </ImageBackground>
+      </View>
+    );
+  }
+  return <LoadingIndicator size={100} marginBottom={0} />;
 };
