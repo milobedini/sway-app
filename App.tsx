@@ -3,29 +3,14 @@ import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
-import * as SplashScreen from "expo-splash-screen";
 
 import { FontsContainer } from "./components/fonts-container";
 import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
-// import store from "./lib/redux/store";
 import store from "./lib/redux/store";
 
 const prefix = Linking.createURL("/");
 
-void SplashScreen.preventAutoHideAsync();
-
 const App = (): JSX.Element => {
-  // const [init, setInit] = useState(true);
-
-  // useEffect(() => {
-  //   if (!init) return;
-
-  //   if (props.reset) {
-  //     // clear all settings
-  //   }
-  //   setInit(false);
-  // }, [init]);
-
   const linking: LinkingOptions<AppNavigatorParamList> = {
     prefixes: [prefix],
     config: {
@@ -84,6 +69,7 @@ const App = (): JSX.Element => {
       },
     },
   };
+
   return (
     <Provider store={store}>
       <StatusBar
@@ -99,5 +85,4 @@ const App = (): JSX.Element => {
     </Provider>
   );
 };
-
 export default App;
