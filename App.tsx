@@ -1,5 +1,9 @@
 import "react-native-gesture-handler";
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  LinkingOptions,
+  NavigationContainer,
+} from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
@@ -7,8 +11,12 @@ import { Provider } from "react-redux";
 import { FontsContainer } from "./components/fonts-container";
 import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
 import store from "./lib/redux/store";
+import { Colours } from "./colours";
 
 const prefix = Linking.createURL("/");
+
+const navTheme = DefaultTheme;
+navTheme.colors.background = Colours.dark.$;
 
 const App = (): JSX.Element => {
   const linking: LinkingOptions<AppNavigatorParamList> = {
@@ -77,7 +85,11 @@ const App = (): JSX.Element => {
         barStyle="light-content"
         translucent
       />
-      <NavigationContainer linking={linking}>
+      <NavigationContainer
+        linking={linking}
+        theme={navTheme}
+        //  onReady=Loading State here?
+      >
         <FontsContainer>
           <AppNavigator />
         </FontsContainer>
