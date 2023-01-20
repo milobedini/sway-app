@@ -7,6 +7,7 @@ import {
   Text,
   useWindowDimensions,
   View,
+  TouchableOpacity,
 } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -72,6 +73,8 @@ export const FavouritesList = ({
   const spacing = 30;
   const itemSize = 74 + spacing * 3;
 
+  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
   if (favourites.length >= 1) {
     return (
       <Animated.View>
@@ -119,16 +122,18 @@ export const FavouritesList = ({
               outputRange: [1, 1, 1, 0],
             });
             return (
-              <Animated.View style={{ opacity, transform: [{ scale }] }}>
+              <AnimatedTouchable
+                style={{ opacity, transform: [{ scale }] }}
+                onPress={() =>
+                  onPress(item.id ?? ThenThrow("Missing meditation id!"))
+                }
+              >
                 <MeditationTile
                   key={item.id}
                   style={[styles.tile]}
                   meditation={mapMeditationTileData(item)}
-                  onPress={() =>
-                    onPress(item.id ?? ThenThrow("Missing meditation id!"))
-                  }
                 />
-              </Animated.View>
+              </AnimatedTouchable>
             );
           }}
           {...rest}

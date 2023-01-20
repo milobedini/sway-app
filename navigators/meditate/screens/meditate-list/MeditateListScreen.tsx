@@ -34,11 +34,11 @@ export const MeditateListScreen = ({
 
       <MeditateList
         style={styles.container}
-        onPress={(id) =>
+        onPress={(id) => {
           navigation.navigate("show", {
             meditationId: id,
-          })
-        }
+          });
+        }}
       />
     </>
   );

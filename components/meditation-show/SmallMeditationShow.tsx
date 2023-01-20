@@ -1,13 +1,22 @@
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Colours } from "../../colours";
 import { Fonts } from "../../fonts";
 import { baseUrl } from "../../lib/api/api";
 import { HorizontalRule } from "../horizontal-rule";
+import { PlayIcon } from "../icons";
+import { MeditationPlay } from "../meditation-play/MeditationPlay";
 import { MeditationTileTags } from "../meditation-tile-tags";
 import { textStyles } from "../text";
 import medTile from "./MedTile2.png";
@@ -60,6 +69,7 @@ export const SmallMeditationShow = ({
   meditationId,
 }: SmallMeditationShowProps): JSX.Element => {
   const [meditation, setMeditation] = useState<MeditationDataObject>();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const getMeditation = async (id: number) => {
@@ -70,7 +80,7 @@ export const SmallMeditationShow = ({
     getMeditation(meditationId);
   }, []);
 
-  if (meditation) {
+  if (meditation && !modalVisible) {
     return (
       <ScrollView
         style={styles.container}
@@ -80,6 +90,12 @@ export const SmallMeditationShow = ({
         <SafeAreaView edges={["top", "bottom"]}>
           {/* Below will launch audio player when pressed */}
           <Image source={medTile} style={styles.heroImage} />
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            style={{ alignItems: "center" }}
+          >
+            <PlayIcon fill={Colours.bright.$} />
+          </TouchableOpacity>
           <View style={styles.card}>
             <Text style={[styles.title, styles.space]}>{meditation.name}</Text>
             <HorizontalRule color={Colours.bright.$} style={styles.divider} />
@@ -92,6 +108,9 @@ export const SmallMeditationShow = ({
         </SafeAreaView>
       </ScrollView>
     );
+  }
+  if (meditation && modalVisible) {
+    return <MeditationPlay setModalVisible={setModalVisible} />;
   }
   return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
 };

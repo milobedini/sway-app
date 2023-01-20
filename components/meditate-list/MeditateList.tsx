@@ -2,6 +2,7 @@ import { useMemo, useRef } from "react";
 import {
   ScrollViewProps,
   StyleSheet,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -54,6 +55,8 @@ export const MeditateList = ({
   const spacing = 30;
   const itemSize = 74 + spacing * 3;
 
+  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
   if (meditations) {
     return (
       <Animated.View style={{ flex: 1 }}>
@@ -93,16 +96,18 @@ export const MeditateList = ({
               outputRange: [1, 1, 1, 0],
             });
             return (
-              <Animated.View style={{ opacity, transform: [{ scale }] }}>
+              <AnimatedTouchable
+                style={{ opacity, transform: [{ scale }] }}
+                onPress={() =>
+                  onPress(item.id ?? ThenThrow("Missing meditation id!"))
+                }
+              >
                 <MeditationTile
                   key={item.id}
                   style={[styles.tile]}
                   meditation={mapMeditationTileData(item)}
-                  onPress={() =>
-                    onPress(item.id ?? ThenThrow("Missing meditation id!"))
-                  }
                 />
-              </Animated.View>
+              </AnimatedTouchable>
             );
           }}
           {...rest}
