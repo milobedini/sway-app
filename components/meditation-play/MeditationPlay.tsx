@@ -30,6 +30,8 @@ export const MeditationPlay = ({
   const { width } = useWindowDimensions();
   const [playing, setPlaying] = useState(false);
   const [playbackInstance, setPlaybackInstance] = useState(null);
+  const [sound, setSound] = useState(null);
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     Audio.setAudioModeAsync({
@@ -54,17 +56,25 @@ export const MeditationPlay = ({
     const { sound, status } = await Audio.Sound.createAsync({
       uri: meditation.audio,
     });
+    setSound(sound);
+    setStatus(status);
     onPlaybackStatusUpdate(status);
 
     setPlaybackInstance(sound);
   };
 
   const onPlayPausePressed = () => {
+    // console.log("SOUND", sound);
+    // console.log("STATUS", status);
     if (playbackInstance != null) {
       if (playing) {
+        // console.log("PAUSE");
         playbackInstance.pauseAsync();
+        setPlaying(false);
       } else {
+        // console.log("PLAY");
         playbackInstance.playAsync();
+        setPlaying(true);
       }
     }
   };
