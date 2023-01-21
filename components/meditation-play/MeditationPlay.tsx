@@ -55,8 +55,6 @@ export const MeditationPlay = ({
       uri: meditation.audio,
     });
 
-    setSound(sound);
-    setStatus(status);
     onPlaybackStatusUpdate(status);
 
     setPlaybackInstance(sound);
