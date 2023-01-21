@@ -30,8 +30,6 @@ export const MeditationPlay = ({
   const { width } = useWindowDimensions();
   const [playing, setPlaying] = useState(false);
   const [playbackInstance, setPlaybackInstance] = useState(null);
-  const [sound, setSound] = useState(null);
-  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     Audio.setAudioModeAsync({
@@ -56,6 +54,7 @@ export const MeditationPlay = ({
     const { sound, status } = await Audio.Sound.createAsync({
       uri: meditation.audio,
     });
+
     setSound(sound);
     setStatus(status);
     onPlaybackStatusUpdate(status);
@@ -64,18 +63,25 @@ export const MeditationPlay = ({
   };
 
   const onPlayPausePressed = () => {
-    // console.log("SOUND", sound);
-    // console.log("STATUS", status);
     if (playbackInstance != null) {
       if (playing) {
-        // console.log("PAUSE");
         playbackInstance.pauseAsync();
         setPlaying(false);
       } else {
-        // console.log("PLAY");
         playbackInstance.playAsync();
         setPlaying(true);
       }
+    }
+  };
+
+  const onClose = async () => {
+    if (playbackInstance !== null) {
+      setPlaying(false);
+      playbackInstance.pauseAsync();
+
+      await playbackInstance.unloadAsync();
+      setPlaybackInstance(null);
+      onPress();
     }
   };
 
@@ -120,13 +126,13 @@ export const MeditationPlay = ({
               <Icon name="chevron-down" color="white" size={24} />
             </RectButton>
             <Text style={styles.title}>{meditation.name}</Text>
-            <RectButton style={styles.button} {...{ onPress }}>
-              <AntDesign
-                name="close"
-                color="white"
-                size={24}
-                onPress={onPress}
-              />
+            <RectButton
+              style={styles.button}
+              onPress={async () => {
+                await onClose();
+              }}
+            >
+              <AntDesign name="close" color="white" size={24} />
             </RectButton>
           </View>
           <Image source={MedTile} style={styles.cover} />
@@ -138,14 +144,9 @@ export const MeditationPlay = ({
             <AntDesign name="heart" size={24} color="#55b661" />
           </View>
           <View style={styles.slider} />
-
-          <TouchableOpacity style={styles.controls}>
-            <AntDesign name="pause" color="white" size={48} />
-          </TouchableOpacity>
-
           <TouchableOpacity style={styles.controls}>
             <AntDesign
-              name="play"
+              name={playing ? "pause" : "play"}
               color="white"
               size={48}
               onPress={onPlayPausePressed}
