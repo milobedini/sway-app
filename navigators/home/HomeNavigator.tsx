@@ -22,7 +22,13 @@ export const HomeNavigator = (): JSX.Element => (
       },
     }}
   >
-    <Stack.Screen name="homepage" component={HomeScreen} />
+    <Stack.Screen
+      name="homepage"
+      component={HomeScreen}
+      options={{
+        headerLeftContainerStyle: { display: "none" },
+      }}
+    />
     <Stack.Screen
       name="show"
       component={MeditateShowScreen}
