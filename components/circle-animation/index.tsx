@@ -35,9 +35,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
   image: {
-    // height: 500,
-    // width: 800,
-    // resizeMode: "contain",
+    borderRadius: 100,
   },
 });
 
@@ -68,6 +66,11 @@ export const Circle = ({ onPress, animatedValue }: CircleProps) => {
       Colours.dark.$,
       Colours.dark.$,
     ],
+  });
+
+  const imageSize = animatedValue.interpolate({
+    inputRange,
+    outputRange: [50, 50, 80, 80, 50],
   });
   return (
     <Animated.View
@@ -123,8 +126,12 @@ export const Circle = ({ onPress, animatedValue }: CircleProps) => {
               source={logo}
               style={[
                 styles.image,
-                styles.circle,
-                { backgroundColor: circleBg },
+
+                {
+                  backgroundColor: circleBg,
+                  height: imageSize,
+                  width: imageSize,
+                },
               ]}
             />
           </Animated.View>

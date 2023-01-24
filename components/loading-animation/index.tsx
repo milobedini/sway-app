@@ -1,13 +1,15 @@
-import { MotiView } from "@motify/components";
+// import { MotiView } from "@motify/components";
 import { View } from "react-native";
+import LottieView from "lottie-react-native";
 
 import { Colours } from "../../colours";
 
+// const size = 100;
 export const LoadingIndicator = ({
-  size,
+  // size,
   marginBottom,
 }: {
-  size: number;
+  // size: number;
   marginBottom: number;
 }) => {
   return (
@@ -20,7 +22,7 @@ export const LoadingIndicator = ({
         marginBottom: marginBottom,
       }}
     >
-      <MotiView
+      {/* <MotiView
         // Breathing animation
         from={{
           width: size,
@@ -32,10 +34,10 @@ export const LoadingIndicator = ({
           shadowColor: Colours.white.$,
         }}
         animate={{
-          width: size + 20,
-          height: size + 20,
-          borderRadius: (size + 20) / 2,
-          borderWidth: size / 10,
+          width: size * 2,
+          height: size * 2,
+          borderRadius: size,
+          borderWidth: size / 5,
           shadowOpacity: 1,
           borderColor: Colours.bright.$,
           shadowColor: Colours.bright.$,
@@ -51,6 +53,13 @@ export const LoadingIndicator = ({
           shadowOpacity: 1,
           shadowRadius: 10,
         }}
+      /> */}
+      <LottieView
+        style={{ alignSelf: "center", width: 260, height: 260 }}
+        source={require("../../assets/Sway-Loading.json")}
+        autoPlay
+        loop
+        speed={0.85}
       />
     </View>
   );
