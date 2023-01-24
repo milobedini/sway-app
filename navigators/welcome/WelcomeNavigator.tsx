@@ -45,11 +45,18 @@ export const WelcomeNavigator = (): JSX.Element => {
               screenOptions={{
                 headerTransparent: true,
                 headerTitle: "",
+                animationEnabled: false,
                 headerLeft: HeaderBackButton,
                 headerRight: HeaderSkipButton,
               }}
             >
-              <Stack.Screen name="breathe" component={BreatheScreen} />
+              <Stack.Screen
+                name="breathe"
+                component={BreatheScreen}
+                options={{
+                  headerLeftContainerStyle: { display: "none" },
+                }}
+              />
               <Stack.Screen name="sit" component={SitScreen} />
               <Stack.Screen name="grow" component={GrowScreen} />
             </Stack.Group>
