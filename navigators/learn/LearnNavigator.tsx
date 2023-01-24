@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Colours } from "../../colours";
 import { LearnNavigatorParamsList } from "./LearnNavigatorParamsList";
 import { FeedNavigator } from "./screens/feed";
+import { ArticleShowScreen } from "./screens/feed/articles/ArticleShowScreen";
 import { LearnHomeScreen } from "./screens/learn-home/LearnHomeScreen";
 import { NotesScreen } from "./screens/notes";
 
@@ -33,6 +34,7 @@ export const LearnNavigator = (): JSX.Element => {
       <Stack.Screen name="notes" component={NotesScreen} />
 
       <Stack.Screen name="feed" component={FeedNavigator} />
+      <Stack.Screen name="show" component={ArticleShowScreen} />
     </Stack.Navigator>
   );
 };
