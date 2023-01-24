@@ -45,7 +45,6 @@ export const WelcomeNavigator = (): JSX.Element => {
               screenOptions={{
                 headerTransparent: true,
                 headerTitle: "",
-                animationEnabled: false,
                 headerLeft: HeaderBackButton,
                 headerRight: HeaderSkipButton,
               }}
@@ -55,6 +54,7 @@ export const WelcomeNavigator = (): JSX.Element => {
                 component={BreatheScreen}
                 options={{
                   headerLeftContainerStyle: { display: "none" },
+                  animationEnabled: false,
                 }}
               />
               <Stack.Screen name="sit" component={SitScreen} />
