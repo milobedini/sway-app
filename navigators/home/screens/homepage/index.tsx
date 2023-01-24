@@ -1,4 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -11,6 +13,8 @@ import {
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
+import { baseUrl } from "../../../../lib/api/api";
+import { ThenThrow } from "../../../../lib/then-throw";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
 import backgroundImage from "./background.png";
 import backgroundWeb from "./background_web.png";
@@ -48,15 +52,18 @@ const styles = StyleSheet.create({
   },
 });
 
-/* 
-WIREFRAME
-
-Should link to the latest/daily meditation only.
-
-*/
-// eslint-disable-next-line
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
+
+  const [latestId, setLatestId] = useState(0);
+
+  useEffect(() => {
+    const checkLatest = async () => {
+      const res = await axios.get(`${baseUrl}/meditations/latest/`);
+      setLatestId(res.data.id);
+    };
+    checkLatest();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -66,11 +73,15 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
       >
         <Text style={[textStyles.title, styles.sway]}>Sway</Text>
         <TouchableOpacity
-          onPress={() =>
-            navigation
-              .getParent()
-              ?.navigate("meditate", { screen: "list", params: {} })
-          }
+          onPress={() => {
+            if (latestId !== 0) {
+              navigation.navigate("show", {
+                meditationId: latestId,
+              });
+            } else {
+              ThenThrow("Missing meditation id!");
+            }
+          }}
           style={[styles.button]}
           activeOpacity={0.4}
         >
