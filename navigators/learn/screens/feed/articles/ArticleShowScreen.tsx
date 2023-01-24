@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSans_500Medium,
     fontSize: 18,
     marginHorizontal: "5%",
-    textAlign: "justify",
+    // textAlign: "justify",
   },
 });
 
