@@ -101,7 +101,7 @@ export const SmallMainNavigator = (): JSX.Element => {
     // Remove loader after max 2.5 seconds regardless. This should be used to load all content. Timeout for now.
     setTimeout(() => {
       setLoading(false);
-    }, 2700);
+    }, 3000);
   }, [meditations]);
 
   if (!loading) {
@@ -176,5 +176,5 @@ export const SmallMainNavigator = (): JSX.Element => {
       </Tab.Navigator>
     );
   }
-  return <LoadingIndicator size={100} marginBottom={0} />;
+  return <LoadingIndicator marginBottom={0} />;
 };
