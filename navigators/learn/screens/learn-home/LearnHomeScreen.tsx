@@ -89,7 +89,7 @@ export const LearnHomeScreen = ({
           <TouchableOpacity
             style={styles.bottomButton}
             activeOpacity={0.7}
-            onPress={() => navigation.navigate("feed")}
+            onPress={() => navigation.navigate("feed", { screen: "community" })}
           >
             <Text style={[textStyles.title, styles.title]}>Community</Text>
           </TouchableOpacity>
