@@ -58,7 +58,7 @@ export const SmallMainNavigator = (): JSX.Element => {
         dispatch(
           setArticles(
             res.data.filter(
-              (post: PostListResponseDataItem) => post.category === "Threads"
+              (post: PostListResponseDataItem) => post.category === "Articles"
             )
           )
         );

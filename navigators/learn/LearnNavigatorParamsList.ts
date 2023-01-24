@@ -4,4 +4,5 @@ export type LearnNavigatorParamsList = {
   feed: undefined;
   community: undefined;
   articles: undefined;
+  show: { articleId: number };
 };

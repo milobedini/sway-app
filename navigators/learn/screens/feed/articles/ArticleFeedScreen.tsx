@@ -1,8 +1,10 @@
+import { StackScreenProps } from "@react-navigation/stack";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { Colours } from "../../../../../colours";
 import { useAppSelector } from "../../../../../lib/redux/hooks";
+import { LearnNavigatorParamsList } from "../../../LearnNavigatorParamsList";
 import { mapPostsTileData, PostTile } from "../components";
 
 const styles = StyleSheet.create({
@@ -12,7 +14,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 });
-export const ArticleFeed = (): JSX.Element => {
+
+export type ArticleFeedScreenProps = StackScreenProps<
+  LearnNavigatorParamsList,
+  "articles"
+>;
+export const ArticleFeed = ({
+  navigation,
+  // eslint-disable-next-line
+  route: { params },
+}: ArticleFeedScreenProps): JSX.Element => {
   const articles = useAppSelector((state) => state.allArticles.articles);
 
   if (articles.length >= 1) {
@@ -29,6 +40,14 @@ export const ArticleFeed = (): JSX.Element => {
               article={true}
               key={post.item.id}
               post={mapPostsTileData(post.item)}
+              onPress={
+                (id) => {
+                  navigation.navigate("show", {
+                    articleId: id,
+                  });
+                }
+                // (id) => console.log(id)
+              }
             />
           )}
           // {...rest}
