@@ -1,6 +1,6 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import { Colours } from "../../../../colours";
 import { ArticlesIcon } from "../../../../components/icons/ArticlesIcon";
@@ -9,31 +9,34 @@ import { TabBarButton } from "../../../main/components";
 import { LearnNavigatorParamsList } from "../../LearnNavigatorParamsList";
 import { ArticleFeed } from "./articles/ArticleFeedScreen";
 import { CommunityFeed } from "./community/CommunityFeedScreen";
+import { Fonts } from "../../../../fonts";
 
-const Tab = createBottomTabNavigator<LearnNavigatorParamsList>();
+const Tab = createMaterialTopTabNavigator<LearnNavigatorParamsList>();
 export type CommunityScreenProps = StackScreenProps<
   LearnNavigatorParamsList,
   "feed"
 >;
 
-// export const CommunityScreen = ({
-//   // eslint-disable-next-line
-//   navigation,
-//   // eslint-disable-next-line
-//   route: { params },
-// }: CommunityScreenProps): JSX.Element => <></>;
-
 export const FeedNavigator = (): JSX.Element => {
-  const { bottom } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
+        tabBarLabelStyle: {
+          marginTop: 20,
+          fontFamily: Fonts.OpenSans_700Bold,
+          color: "white",
+          textAlign: "center",
+        },
+        tabBarContentContainerStyle: {
+          alignItems: "center",
+        },
+        tabBarIndicatorStyle: { backgroundColor: Colours.bright.$ },
         tabBarStyle: {
-          paddingBottom: bottom ? bottom / 2 : 8,
-          height: 76 + bottom / 6,
+          paddingTop: top,
+          height: 88 + top,
           borderTopWidth: 0,
           shadowOpacity: 0.3,
           shadowColor: "#34715D",
