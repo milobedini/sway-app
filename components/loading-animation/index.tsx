@@ -20,6 +20,9 @@ export const LoadingIndicator = ({
         justifyContent: "center",
         alignItems: "center",
         marginBottom: marginBottom,
+        width: "100%",
+        margin: 0,
+        padding: 0,
       }}
     >
       {/* <MotiView

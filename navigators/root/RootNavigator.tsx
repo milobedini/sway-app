@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useRoute } from "@react-navigation/native";
+import Modal from "react-native-modal";
+import { View } from "react-native";
 
 import { WelcomeNavigator } from "../welcome/WelcomeNavigator";
 import { MainNavigator } from "../main/MainNavigator";
@@ -37,20 +39,32 @@ export const RootNavigator = (): JSX.Element => {
     checkLoggedIn();
   }, []);
   if (checking) {
-    return <LoadingIndicator size={100} marginBottom={0} />;
+    return <View style={{ flex: 1 }} />;
   }
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {loggedIn && !signedOut ? (
-        <>
-          <Stack.Screen name="main" component={MainNavigator} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="welcome" component={WelcomeNavigator} />
-          <Stack.Screen name="main" component={MainNavigator} />
-        </>
-      )}
-    </Stack.Navigator>
+    <>
+      <Modal
+        isVisible={checking}
+        // // animationOut="fadeOut"
+        // animationIn={"fadeIn"}
+        // animationInTiming={3000}
+        // // animationOutTiming={3000}
+        style={{ flex: 1, width: "100%", margin: 0, padding: 0 }}
+      >
+        <LoadingIndicator marginBottom={0} />
+      </Modal>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {loggedIn && !signedOut ? (
+          <>
+            <Stack.Screen name="main" component={MainNavigator} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="welcome" component={WelcomeNavigator} />
+            <Stack.Screen name="main" component={MainNavigator} />
+          </>
+        )}
+      </Stack.Navigator>
+    </>
   );
 };

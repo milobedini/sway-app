@@ -70,7 +70,7 @@ export const Circle = ({ onPress, animatedValue }: CircleProps) => {
 
   const imageSize = animatedValue.interpolate({
     inputRange,
-    outputRange: [50, 50, 80, 80, 50],
+    outputRange: [50, 50, 25, 25, 50],
   });
   return (
     <Animated.View

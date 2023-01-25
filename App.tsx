@@ -1,3 +1,4 @@
+import "./warnings.ts";
 import "react-native-gesture-handler";
 import {
   DefaultTheme,
