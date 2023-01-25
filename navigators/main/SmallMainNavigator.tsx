@@ -111,7 +111,7 @@ export const SmallMainNavigator = (): JSX.Element => {
     <>
       <Modal
         isVisible={loading}
-        animationOut="fadeOut"
+        animationOut="fadeOutDown"
         animationIn={"fadeIn"}
         animationInTiming={1000}
         animationOutTiming={2000}
