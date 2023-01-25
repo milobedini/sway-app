@@ -7,15 +7,19 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
+import axios from "axios";
 
 import { Colours } from "../../../../../colours";
+import { textStyles } from "../../../../../components/text";
+import { baseUrl, secureWithBody } from "../../../../../lib/api/api";
+import { useToast } from "../../../../../components/toast/useToast";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colours.bright.$,
     justifyContent: "space-between",
     borderRadius: 10,
-    paddingHorizontal: 14,
     paddingVertical: 6,
     marginBottom: 8,
     height: "30%",
@@ -23,6 +27,7 @@ const styles = StyleSheet.create({
   },
   inner: {
     padding: 24,
+    paddingTop: 3,
     flex: 1,
     justifyContent: "space-between",
   },
@@ -32,13 +37,41 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   footer: { flexDirection: "row", justifyContent: "space-between" },
-  input: {},
+  input: {
+    color: "black",
+  },
 });
 
-export const NewNote = (): JSX.Element => {
+type NewNoteProps = {
+  setNoteAdded: (x: boolean) => void;
+  active: boolean;
+  setActive: (x: boolean) => void;
+};
+export const NewNote = ({
+  setNoteAdded,
+  active,
+  setActive,
+}: NewNoteProps): JSX.Element => {
   const [noteText, setNoteText] = useState("");
-  const [active, setActive] = useState(false);
+
   const charLimit = 600;
+
+  const handleSubmit = async () => {
+    if (noteText.trim().length <= 0) return;
+
+    const data = { text: noteText };
+    const config = await secureWithBody(`${baseUrl}/notes/`, data, "post");
+    try {
+      await axios(config);
+      setNoteAdded(true);
+      setNoteText("");
+      setNoteAdded(false);
+      setActive(false);
+      useToast(Platform.OS, "add");
+    } catch (err) {
+      return err;
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -47,16 +80,25 @@ export const NewNote = (): JSX.Element => {
     >
       <View style={[styles.inner]}>
         <TextInput
-          style={styles.input}
+          style={[textStyles.body, styles.input]}
           onChangeText={setNoteText}
           value={noteText}
           placeholder="Type to add a note..."
           autoCorrect
+          onPressIn={() => setActive(true)}
           onFocus={() => setActive(true)}
+          multiline
+          numberOfLines={8}
+          returnKeyType="none"
         />
         <View style={styles.footer}>
           <Text>{charLimit - noteText.length} Remaining</Text>
-          <Text>Save icon</Text>
+          <FontAwesome5
+            name="save"
+            size={24}
+            color={Colours.yellowNote.$}
+            onPress={handleSubmit}
+          />
         </View>
       </View>
     </KeyboardAvoidingView>
