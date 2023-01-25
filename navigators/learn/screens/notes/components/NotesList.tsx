@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import {
+  Keyboard,
   RefreshControl,
   ScrollViewProps,
   StyleSheet,
@@ -81,7 +82,10 @@ export const NotesList = ({
         renderItem={(note) => (
           <NoteTile
             key={note.item.id}
-            onPress={() => setActive(false)}
+            onPress={() => {
+              Keyboard.dismiss();
+              setActive(false);
+            }}
             style={styles.tile}
             note={mapNotesTileData(note.item)}
             setNoteDeleted={setNoteDeleted}
