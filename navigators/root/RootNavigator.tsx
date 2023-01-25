@@ -45,10 +45,6 @@ export const RootNavigator = (): JSX.Element => {
     <>
       <Modal
         isVisible={checking}
-        // // animationOut="fadeOut"
-        // animationIn={"fadeIn"}
-        // animationInTiming={3000}
-        // // animationOutTiming={3000}
         style={{ flex: 1, width: "100%", margin: 0, padding: 0 }}
       >
         <LoadingIndicator marginBottom={0} />
