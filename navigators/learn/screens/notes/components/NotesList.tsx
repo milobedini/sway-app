@@ -25,20 +25,27 @@ const styles = StyleSheet.create({
 
 export type NotesListProps = Omit<ScrollViewProps, "children"> & {
   // onPress: (noteId: number) => void;
+  noteAdded: boolean;
+  setActive: (x: boolean) => void;
 };
 
-export const NotesList = ({ ...rest }: NotesListProps): JSX.Element => {
+export const NotesList = ({
+  noteAdded,
+  setActive,
+  ...rest
+}: NotesListProps): JSX.Element => {
   const { width } = useWindowDimensions();
 
   const [inProgress, setInProgress] = useState(true);
   const [notes, setNotes] = useState([]);
+  const [noteDeleted, setNoteDeleted] = useState(false);
 
   useEffect(() => {
     const getNotes = async () => {
       const config = await secureGet(`${baseUrl}/notes/`);
       try {
         const res = await axios(config);
-        setNotes(res.data);
+        setNotes(res.data.reverse());
       } catch (err) {
         return err;
       }
@@ -46,7 +53,7 @@ export const NotesList = ({ ...rest }: NotesListProps): JSX.Element => {
     getNotes();
     setInProgress(false);
     // Note to delete in [] below
-  }, []);
+  }, [noteAdded, noteDeleted]);
 
   const numColumns = useMemo(() => {
     if (width <= 480) return 1;
@@ -74,8 +81,10 @@ export const NotesList = ({ ...rest }: NotesListProps): JSX.Element => {
         renderItem={(note) => (
           <NoteTile
             key={note.item.id}
+            onPress={() => setActive(false)}
             style={styles.tile}
             note={mapNotesTileData(note.item)}
+            setNoteDeleted={setNoteDeleted}
           />
         )}
         {...rest}

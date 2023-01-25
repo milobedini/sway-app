@@ -1,5 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Colours } from "../../../../colours";
@@ -24,18 +25,27 @@ export const NotesScreen = ({
   navigation,
   // eslint-disable-next-line
   route: { params },
-}: NotesScreenProps): JSX.Element => (
-  <>
-    <StatusBar style="light" />
+}: NotesScreenProps): JSX.Element => {
+  const [noteAdded, setNoteAdded] = useState(false);
+  const [active, setActive] = useState(false);
 
-    <View style={styles.container}>
-      {/* Header */}
-      {/* Search */}
+  return (
+    <>
+      <StatusBar style="light" />
 
-      {/* Send notes object to be mapped as note cards. */}
-      <NotesList />
+      <View style={styles.container}>
+        {/* Header */}
+        {/* Search */}
 
-      <NewNote />
-    </View>
-  </>
-);
+        {/* Send notes object to be mapped as note cards. */}
+        <NotesList noteAdded={noteAdded} setActive={setActive} />
+
+        <NewNote
+          setNoteAdded={setNoteAdded}
+          active={active}
+          setActive={setActive}
+        />
+      </View>
+    </>
+  );
+};

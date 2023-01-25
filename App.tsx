@@ -8,11 +8,13 @@ import {
 import * as Linking from "expo-linking";
 import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
+import Toast from "react-native-toast-message";
 
 import { FontsContainer } from "./components/fonts-container";
 import { AppNavigator, AppNavigatorParamList } from "./navigators/app";
 import store from "./lib/redux/store";
 import { Colours } from "./colours";
+import { toastConfig } from "./components/toast/ToastConfig";
 
 const prefix = Linking.createURL("/");
 
@@ -95,6 +97,7 @@ const App = (): JSX.Element => {
           <AppNavigator />
         </FontsContainer>
       </NavigationContainer>
+      <Toast config={toastConfig} />
     </Provider>
   );
 };
