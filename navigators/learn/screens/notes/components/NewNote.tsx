@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -67,6 +68,7 @@ export const NewNote = ({
       setNoteText("");
       setNoteAdded(false);
       setActive(false);
+      Keyboard.dismiss();
       useToast(Platform.OS, "add");
     } catch (err) {
       return err;
