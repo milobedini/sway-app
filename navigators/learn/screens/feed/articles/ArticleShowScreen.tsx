@@ -1,5 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -87,6 +88,7 @@ export const ArticleShowScreen = ({
   if (article) {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
+        <StatusBar style="light" />
         <View style={styles.header}>
           <Text style={styles.headerText}>{article.author.username}</Text>
           <Text style={styles.headerText}>

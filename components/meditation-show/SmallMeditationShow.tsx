@@ -86,7 +86,7 @@ export const SmallMeditationShow = ({
         style={styles.container}
         contentContainerStyle={styles.content}
       >
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
         <SafeAreaView edges={["top", "bottom"]}>
           {/* Below will launch audio player when pressed */}
           <Image source={medTile} style={styles.heroImage} />

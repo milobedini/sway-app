@@ -64,7 +64,7 @@ export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <View style={styles.main}>
         {/* Profile View */}
         <ProfileScreen />

@@ -1,4 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -29,6 +30,7 @@ export const ArticleFeed = ({
   if (articles.length >= 1) {
     return (
       <View style={styles.container}>
+        <StatusBar style="light" />
         <Animated.FlatList
           data={articles}
           keyExtractor={(post: { id: number }) => String(post.id)}

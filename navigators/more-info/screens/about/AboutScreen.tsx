@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Colours } from "../../../../colours";
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
 
 export const AboutScreen = (): JSX.Element => (
   <View style={styles.container}>
+    <StatusBar style="light" />
     <Text style={[textStyles.title]}>About Page</Text>
   </View>
 );

@@ -36,7 +36,7 @@ export const TimerShowScreen = ({
   const [meditationMinutes, setMeditationMinutes] = useState(1);
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <View style={styles.container}>
         <View style={styles.timerContainer}>
           <TimerSettingsContent.Provider
