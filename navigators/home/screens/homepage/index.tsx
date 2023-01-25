@@ -15,11 +15,11 @@ import {
   Blur,
   Canvas,
   Circle,
-  ColorMatrix,
   DisplacementMap,
   Fill,
   LinearGradient,
   mix,
+  Offset,
   sub,
   Turbulence,
   useComputedValue,
@@ -37,8 +37,6 @@ export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
 >;
-
-const black_and_white = [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0];
 
 const styles = StyleSheet.create({
   container: {
@@ -137,21 +135,26 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
           <LinearGradient
             start={start}
             end={end}
-            colors={[Colours.bright.$, Colours.darkPink.$]}
+            colors={[Colours.bright.$, "#E70696"]}
           />
         </Circle>
         <BackdropFilter filter={<Blur blur={10} />} clip={rect}>
-          {/* 1st child is the filter */}
-          {/* <Fill color="rgba(12, 21, 39, 0.3)" /> */}
-          {/* <Blur  blur={20}/> */}
-          {/* <ColorMatrix /> */}
-          {/* <DisplacementMap channelX={"a"} channelY="a" scale={500}>
-            <Turbulence freqX={0.01} freqY={0.05} octaves={4} />
-          </DisplacementMap> */}
+          <Circle c={c} r={radius}>
+            <LinearGradient
+              start={start}
+              end={end}
+              colors={[Colours.bright.$, "#E70696"]}
+            />
+          </Circle>
+          <Blur blur={1}>
+            <Offset x={0} y={0}>
+              <DisplacementMap channelX="a" channelY="r" scale={50}>
+                <Turbulence freqX={0.01} freqY={0.05} octaves={4} />
+              </DisplacementMap>
+            </Offset>
+          </Blur>
+          <Fill color="rgba(0, 0, 0, 0.3)" />
         </BackdropFilter>
-        <DisplacementMap channelX="a" channelY="r" scale={20}>
-          <Turbulence freqX={0.05} freqY={0.05} octaves={4} />
-        </DisplacementMap>
       </Canvas>
     </View>
   );
