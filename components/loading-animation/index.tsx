@@ -25,7 +25,7 @@ export const LoadingIndicator = ({
         source={require("../../assets/Sway-Loading.json")}
         autoPlay
         loop
-        speed={0.85}
+        speed={0.7}
       />
     </View>
   );

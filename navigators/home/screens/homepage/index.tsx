@@ -1,23 +1,37 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Image,
-  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
+import {
+  add,
+  BackdropFilter,
+  Blur,
+  Canvas,
+  Circle,
+  DisplacementMap,
+  Fill,
+  LinearGradient,
+  mix,
+  Offset,
+  sub,
+  Turbulence,
+  useComputedValue,
+  useLoop,
+  vec,
+} from "@shopify/react-native-skia";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { baseUrl } from "../../../../lib/api/api";
 import { ThenThrow } from "../../../../lib/then-throw";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
-import backgroundImage from "./background.png";
-import backgroundWeb from "./background_web.png";
 import meditationImage from "./logo_black.png";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
@@ -25,9 +39,14 @@ export type HomeScreenProps = StackScreenProps<
 >;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colours.dark.$ },
-  background: { flex: 0.5, justifyContent: "center", textAlign: "center" },
-  sway: { textAlign: "center" },
+  container: {
+    flex: 1,
+    backgroundColor: Colours.dark.$,
+  },
+  buttonContainer: {
+    flex: 0.5,
+    paddingTop: 80,
+  },
   button: {
     flexDirection: "row",
     width: 300,
@@ -35,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: "10%",
-    backgroundColor: "rgba(12, 21, 39, 0.6)",
+    backgroundColor: "rgba(43, 59, 91, 0.4)",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: Colours.bright.$,
@@ -53,8 +72,6 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
-  const { width, height } = useWindowDimensions();
-
   const [latestId, setLatestId] = useState(0);
 
   useEffect(() => {
@@ -65,13 +82,31 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     checkLatest();
   }, []);
 
+  const progress = useLoop({ duration: 2000 });
+  const { width, height } = useWindowDimensions();
+  const c = vec(width / 2, height / 4);
+  const r = c.x - 32;
+  // below defines half of the screen
+  const rect = useMemo(
+    () => ({ x: 0, y: c.y, width, height: c.y }),
+    [c.y, width]
+  );
+  const start = useComputedValue(
+    () => sub(c, vec(0, mix(progress.current, r, r / 2))),
+    [progress]
+  );
+  const end = useComputedValue(
+    () => add(c, vec(0, mix(progress.current, r, r / 2))),
+    []
+  );
+  const radius = useComputedValue(
+    () => mix(progress.current, r, r / 2),
+    [progress]
+  );
+
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={[styles.background, { height: height }]}
-        source={width > 480 ? backgroundWeb : backgroundImage}
-      >
-        <Text style={[textStyles.title, styles.sway]}>Sway</Text>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
             if (latestId !== 0) {
@@ -90,7 +125,37 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
           </Text>
           <Image source={meditationImage} style={styles.image} />
         </TouchableOpacity>
-      </ImageBackground>
+      </View>
+      <Canvas
+        style={{
+          flex: 1,
+        }}
+      >
+        <Circle c={c} r={radius}>
+          <LinearGradient
+            start={start}
+            end={end}
+            colors={[Colours.bright.$, "#E70696"]}
+          />
+        </Circle>
+        <BackdropFilter filter={<Blur blur={10} />} clip={rect}>
+          <Circle c={c} r={radius}>
+            <LinearGradient
+              start={start}
+              end={end}
+              colors={[Colours.bright.$, "#E70696"]}
+            />
+          </Circle>
+          <Blur blur={1}>
+            <Offset x={0} y={0}>
+              <DisplacementMap channelX="a" channelY="r" scale={50}>
+                <Turbulence freqX={0.01} freqY={0.05} octaves={4} />
+              </DisplacementMap>
+            </Offset>
+          </Blur>
+          <Fill color="rgba(0, 0, 0, 0.3)" />
+        </BackdropFilter>
+      </Canvas>
     </View>
   );
 };

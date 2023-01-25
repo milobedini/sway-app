@@ -112,8 +112,9 @@ export const SmallMainNavigator = (): JSX.Element => {
       <Modal
         isVisible={loading}
         animationOut="fadeOut"
-        animationIn={"bounceIn"}
-        animationOutTiming={3000}
+        animationIn={"fadeIn"}
+        animationInTiming={1000}
+        animationOutTiming={2000}
         style={{ flex: 1, width: "100%", margin: 0, padding: 0 }}
       >
         <LoadingIndicator marginBottom={0} />
