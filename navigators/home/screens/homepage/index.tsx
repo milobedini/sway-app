@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+import { Canvas, Fill } from "@shopify/react-native-skia";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
@@ -25,72 +26,75 @@ export type HomeScreenProps = StackScreenProps<
 >;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colours.dark.$ },
-  background: { flex: 0.5, justifyContent: "center", textAlign: "center" },
-  sway: { textAlign: "center" },
-  button: {
-    flexDirection: "row",
-    width: 300,
-    alignSelf: "center",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    marginTop: "10%",
-    backgroundColor: "rgba(12, 21, 39, 0.6)",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: Colours.bright.$,
-  },
-  image: {
-    width: 120,
-    height: 120,
-  },
-  imageTitle: {
-    textAlign: "center",
-    fontSize: 20,
-    color: Colours.lightGrey.$,
-    maxWidth: "50%",
-  },
+  // container: { flex: 1, backgroundColor: Colours.dark.$ },
+  // background: { flex: 0.5, justifyContent: "center", textAlign: "center" },
+  // sway: { textAlign: "center" },
+  // button: {
+  //   flexDirection: "row",
+  //   width: 300,
+  //   alignSelf: "center",
+  //   justifyContent: "space-evenly",
+  //   alignItems: "center",
+  //   marginTop: "10%",
+  //   backgroundColor: "rgba(12, 21, 39, 0.6)",
+  //   borderRadius: 8,
+  //   borderWidth: 1,
+  //   borderColor: Colours.bright.$,
+  // },
+  // image: {
+  //   width: 120,
+  //   height: 120,
+  // },
+  // imageTitle: {
+  //   textAlign: "center",
+  //   fontSize: 20,
+  //   color: Colours.lightGrey.$,
+  //   maxWidth: "50%",
+  // },
 });
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
-  const { width, height } = useWindowDimensions();
+  // const { width, height } = useWindowDimensions();
 
-  const [latestId, setLatestId] = useState(0);
+  // const [latestId, setLatestId] = useState(0);
 
-  useEffect(() => {
-    const checkLatest = async () => {
-      const res = await axios.get(`${baseUrl}/meditations/latest/`);
-      setLatestId(res.data.id);
-    };
-    checkLatest();
-  }, []);
+  // useEffect(() => {
+  //   const checkLatest = async () => {
+  //     const res = await axios.get(`${baseUrl}/meditations/latest/`);
+  //     setLatestId(res.data.id);
+  //   };
+  //   checkLatest();
+  // }, []);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={[styles.background, { height: height }]}
-        source={width > 480 ? backgroundWeb : backgroundImage}
-      >
-        <Text style={[textStyles.title, styles.sway]}>Sway</Text>
-        <TouchableOpacity
-          onPress={() => {
-            if (latestId !== 0) {
-              navigation.navigate("show", {
-                meditationId: latestId,
-              });
-            } else {
-              ThenThrow("Missing meditation id!");
-            }
-          }}
-          style={[styles.button]}
-          activeOpacity={0.4}
-        >
-          <Text style={[textStyles.title, styles.imageTitle]}>
-            Your Daily Meditation
-          </Text>
-          <Image source={meditationImage} style={styles.image} />
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
+    // <View style={styles.container}>
+    //   <ImageBackground
+    //     style={[styles.background, { height: height }]}
+    //     source={width > 480 ? backgroundWeb : backgroundImage}
+    //   >
+    //     <Text style={[textStyles.title, styles.sway]}>Sway</Text>
+    //     <TouchableOpacity
+    //       onPress={() => {
+    //         if (latestId !== 0) {
+    //           navigation.navigate("show", {
+    //             meditationId: latestId,
+    //           });
+    //         } else {
+    //           ThenThrow("Missing meditation id!");
+    //         }
+    //       }}
+    //       style={[styles.button]}
+    //       activeOpacity={0.4}
+    //     >
+    //       <Text style={[textStyles.title, styles.imageTitle]}>
+    //         Your Daily Meditation
+    //       </Text>
+    //       <Image source={meditationImage} style={styles.image} />
+    //     </TouchableOpacity>
+    //   </ImageBackground>
+    // </View>
+    <Canvas style={{ flex: 1 }}>
+      <Fill color={Colours.dark.$} />
+    </Canvas>
   );
 };
