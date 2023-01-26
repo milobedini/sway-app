@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Colours } from "../../colours";
 import { MeditateNavigatorParamsList } from "./MeditateNavigatorParamsList";
 import { MeditateListScreen, MeditateShowScreen } from "./screens";
+import { MeditationCategoriesScreen } from "./screens/meditation-categories/MeditationCategoriesScreen";
 import { MeditationMenuScreen } from "./screens/meditation-menu/MeditationMenuScreen";
 import { MeditationSearchScreen } from "./screens/meditation-search/MeditationSearchScreen";
 
@@ -26,6 +27,11 @@ export const MeditateNavigator = (): JSX.Element => (
       name="menu"
       component={MeditationMenuScreen}
       options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="categories"
+      component={MeditationCategoriesScreen}
+      options={{ headerTransparent: true }}
     />
     <Stack.Screen
       name="list"

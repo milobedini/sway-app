@@ -83,7 +83,7 @@ export const ArticleShowScreen = ({
       setArticle(res.data);
     };
     getArticle(articleId);
-  }, [article?.id]);
+  }, []);
 
   if (article) {
     return (

@@ -1,6 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   Image,
   StyleSheet,
@@ -29,10 +28,10 @@ import {
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
-import { baseUrl } from "../../../../lib/api/api";
 import { ThenThrow } from "../../../../lib/then-throw";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
 import meditationImage from "./logo_black.png";
+import { useAppSelector } from "../../../../lib/redux/hooks";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -72,15 +71,9 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
-  const [latestId, setLatestId] = useState(0);
-
-  useEffect(() => {
-    const checkLatest = async () => {
-      const res = await axios.get(`${baseUrl}/meditations/latest/`);
-      setLatestId(res.data.id);
-    };
-    checkLatest();
-  }, []);
+  const latestMeditation = useAppSelector(
+    (state) => state.latestMeditation.latestMeditation
+  );
 
   const progress = useLoop({ duration: 2000 });
   const { width, height } = useWindowDimensions();
@@ -109,9 +102,9 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
-            if (latestId !== 0) {
+            if (latestMeditation.id !== 0) {
               navigation.navigate("show", {
-                meditationId: latestId,
+                meditationId: latestMeditation.id,
               });
             } else {
               ThenThrow("Missing meditation id!");
