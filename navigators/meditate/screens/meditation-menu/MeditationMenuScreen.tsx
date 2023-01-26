@@ -137,7 +137,7 @@ export const MeditationMenuScreen = ({
       </View>
 
       {/* Most recently listened/added horizontal scroll */}
-      <MostRecent />
+      <MostRecent onPress={() => navigation.navigate("list")} />
       <HorizontalRule color={"white"} />
 
       {/* Most listened to */}

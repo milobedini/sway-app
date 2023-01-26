@@ -36,7 +36,7 @@ export const MeditateNavigator = (): JSX.Element => (
     <Stack.Screen
       name="list"
       component={MeditateListScreen}
-      options={{ headerShown: false }}
+      options={{ headerTransparent: true }}
     />
     <Stack.Screen
       name="show"

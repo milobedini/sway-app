@@ -45,7 +45,7 @@ export const MostListened = (): JSX.Element => {
   return (
     <View style={styles.container}>
       {/* Show 2 meditations at once */}
-      <Text style={styles.title}>Most Recent</Text>
+      <Text style={styles.title}>Most Listened</Text>
       <FlatList
         data={meditations}
         keyExtractor={(meditation: MeditationListResponseDataItem, index) =>

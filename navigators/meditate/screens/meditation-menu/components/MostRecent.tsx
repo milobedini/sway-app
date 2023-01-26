@@ -3,6 +3,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -15,13 +16,16 @@ import medTile from "../../../../../components/meditation-tile/MedTile.png";
 import { Fonts } from "../../../../../fonts";
 import { Colours } from "../../../../../colours";
 
-export const MostRecent = (): JSX.Element => {
+type MostRecentProps = {
+  onPress: () => void;
+};
+export const MostRecent = ({ onPress }: MostRecentProps): JSX.Element => {
   const { width } = useWindowDimensions();
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
   );
   const styles = StyleSheet.create({
-    container: { flex: 1, margin: 12 },
+    container: { flex: 1, margin: 12, marginTop: 8 },
 
     list: { borderRadius: 10 },
     listItem: {
@@ -41,12 +45,32 @@ export const MostRecent = (): JSX.Element => {
       color: Colours.bright.$,
       marginBottom: 10,
     },
+    topText: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 4,
+    },
   });
   return (
     <View style={styles.container}>
       {/* Show 2 meditations at once */}
       {/* <Text>Most Recent horizontal scroll.</Text> */}
-      <Text style={styles.title}>Most Recent</Text>
+      <View style={styles.topText}>
+        <Text style={styles.title}>Most Recent</Text>
+        <TouchableOpacity
+          style={{
+            backgroundColor: Colours.dark.$,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 8,
+            borderRadius: 1000,
+          }}
+          onPress={onPress}
+        >
+          <Text style={[styles.title, { marginBottom: 0 }]}>View All</Text>
+        </TouchableOpacity>
+      </View>
+
       <FlatList
         data={meditations}
         keyExtractor={(meditation: MeditationListResponseDataItem, index) =>
