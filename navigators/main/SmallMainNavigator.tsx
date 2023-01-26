@@ -18,7 +18,10 @@ import { MeditateNavigator } from "../meditate";
 import { MoreInfoNavigator } from "../more-info";
 import { TimerNavigator } from "../timer";
 import { useAppDispatch, useAppSelector } from "../../lib/redux/hooks";
-import { setMeditations } from "../../lib/redux/actions/meditationsActions";
+import {
+  setLatestMeditation,
+  setMeditations,
+} from "../../lib/redux/actions/meditationsActions";
 import { baseUrl, secureGet } from "../../lib/api/api";
 import { setArticles } from "../../lib/redux/actions/feedActions";
 import { PostListResponseDataItem } from "../learn/screens/feed/components";
@@ -38,7 +41,9 @@ export const SmallMainNavigator = (): JSX.Element => {
   );
   const articles = useAppSelector((state) => state.allArticles.articles);
   const user = useAppSelector((state) => state.userProfile.profile);
-
+  const latestMeditation = useAppSelector(
+    (state) => state.latestMeditation.latestMeditation
+  );
   const dispatch = useAppDispatch();
 
   //  APP SETUP - REFACTOR
@@ -100,12 +105,27 @@ export const SmallMainNavigator = (): JSX.Element => {
     if (!user || getCurrentUser() !== user.id) {
       getProfile();
     }
+
+    // Load latest meditation
+    const checkLatest = async () => {
+      const res = await axios.get(`${baseUrl}/meditations/latest/`);
+      try {
+        dispatch(setLatestMeditation(res.data));
+      } catch (err) {
+        return err;
+      }
+    };
+
+    if (!latestMeditation) {
+      checkLatest();
+    }
+
     // Remove loader after max 2.5 seconds regardless. This should be used to load all content. Timeout for now.
 
     setTimeout(() => {
       setLoading(false);
     }, 2500);
-  }, [meditations]);
+  }, []);
 
   return (
     <>

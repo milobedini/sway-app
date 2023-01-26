@@ -1,131 +1,147 @@
+import { LinearGradient } from "expo-linear-gradient";
 import {
-  FlatList,
   Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
-import { useRef, useState } from "react";
+import { StackScreenProps } from "@react-navigation/stack";
 
-import image1 from "./gallery/one.png";
-import image2 from "./gallery/two.png";
-import image3 from "./gallery/three.png";
-import image4 from "./gallery/four.png";
-import image5 from "./gallery/five.png";
-import image6 from "./gallery/six.png";
-import image7 from "./gallery/seven.png";
-import image8 from "./gallery/eight.png";
+import { textStyles } from "../../../../components/text";
+import meditationImage from "../../../home/screens/homepage/logo_black.png";
+import { ThenThrow } from "../../../../lib/then-throw";
 import { Colours } from "../../../../colours";
+import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
+import { MostRecent } from "./components/MostRecent";
+import { MostListened } from "./components/MostListened";
+import { HorizontalRule } from "../../../../components/horizontal-rule";
+import { useAppSelector } from "../../../../lib/redux/hooks";
 
-const styles = StyleSheet.create({ container: { flex: 1 } });
-
-const IMAGE_SIZE = 80;
-const SPACING = 10;
-
-export const MeditationMenuScreen = (): JSX.Element => {
-  const images = [
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
-    image6,
-    image7,
-    image8,
-  ];
-
+export type MeditationMenuScreenProps = StackScreenProps<
+  MeditateNavigatorParamsList,
+  "menu"
+>;
+export const MeditationMenuScreen = ({
+  navigation,
+}: MeditationMenuScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
 
-  const topRef = useRef();
-  const thumbRef = useRef();
-  const [activeIndex, setActiveIndex] = useState(0);
+  const styles = StyleSheet.create({
+    container: { flex: 1 },
+    button: {
+      flexDirection: "row",
+      width: 300,
+      alignSelf: "center",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      marginTop: height / 12,
+      backgroundColor: "rgba(12, 21, 39, 0.5)",
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: Colours.bright.$,
+      height: 110,
+    },
+    image: {
+      width: 120,
+      height: 120,
+    },
+    imageTitle: {
+      textAlign: "center",
+      fontSize: 20,
+      color: Colours.lightGrey.$,
+      maxWidth: "50%",
+    },
+    lesserButtonsContainer: { flexDirection: "row" },
+    lesserButton: {
+      width: width / 2.2,
+      height: 80,
+      marginHorizontal: 8,
+      backgroundColor: "rgba(12, 21, 39, 0.3)",
+      marginTop: 20,
+    },
+    lesserImageTitle: {
+      fontSize: 16,
+      textAlign: "center",
+      color: Colours.lightGrey.$,
+    },
+  });
 
-  const scrollToIndex = (index: number) => {
-    setActiveIndex(index);
-    // sync and scroll flatlists
-    // @ts-expect-error ref.
-    topRef?.current?.scrollToOffset({
-      offset: index * width,
-      animated: true,
-    });
-    // Is middle of thumbnail greater than middle of screen position?
-    if (index * (IMAGE_SIZE + SPACING) - IMAGE_SIZE / 2 > width / 2) {
-      // @ts-expect-error ref.
-      thumbRef?.current?.scrollToOffset({
-        offset: index * (IMAGE_SIZE + SPACING) - width / 2 + IMAGE_SIZE / 2,
-        animated: true,
-      });
-    } else {
-      // go back to 0 if below half screen.
-      // @ts-expect-error ref.
-      thumbRef?.current?.scrollToOffset({
-        offset: 0,
-        animated: true,
-      });
-    }
-  };
+  const latestMeditation = useAppSelector(
+    (state) => state.latestMeditation.latestMeditation
+  );
 
-  if (!images) {
-    return <></>;
-  }
   return (
     <View style={styles.container}>
-      <FlatList
-        // @ts-expect-error ref.
-        ref={topRef}
-        data={images}
-        keyExtractor={(_item, index) => index.toString()}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={(ev) => {
-          scrollToIndex(Math.floor(ev.nativeEvent.contentOffset.x / width));
-        }}
-        renderItem={(item) => {
-          return (
-            <View style={{ width: width, height: height }}>
-              <Image
-                source={item.item}
-                style={[{ width: width, height: height }]}
-              />
-            </View>
-          );
-        }}
+      <LinearGradient
+        colors={["#0b3057", "#051c30"]}
+        style={StyleSheet.absoluteFill}
       />
-      <FlatList
-        // @ts-expect-error ref.
-        ref={thumbRef}
-        data={images}
-        keyExtractor={(_item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ position: "absolute", bottom: IMAGE_SIZE }}
-        contentContainerStyle={{ paddingHorizontal: SPACING }}
-        initialScrollIndex={0}
-        renderItem={(item) => {
-          return (
-            <TouchableOpacity onPress={() => scrollToIndex(item.index)}>
-              <Image
-                source={item.item}
-                style={[
-                  {
-                    width: IMAGE_SIZE,
-                    height: IMAGE_SIZE,
-                    borderRadius: 12,
-                    marginRight: SPACING,
-                    borderWidth: 2,
-                    borderColor:
-                      activeIndex === item.index
-                        ? Colours.bright.$
-                        : "transparent",
-                  },
-                ]}
-              />
-            </TouchableOpacity>
-          );
+
+      {/* Daily Med Button */}
+
+      <TouchableOpacity
+        onPress={() => {
+          if (latestMeditation.id !== 0) {
+            navigation.navigate("show", {
+              meditationId: latestMeditation.id,
+            });
+          } else {
+            ThenThrow("Missing meditation id!");
+          }
         }}
-      />
+        style={[styles.button]}
+        activeOpacity={0.4}
+      >
+        <Text style={[textStyles.title, styles.imageTitle]}>
+          Your Daily Meditation
+        </Text>
+        <Image source={meditationImage} style={styles.image} />
+      </TouchableOpacity>
+
+      {/* Intro Course Button */}
+
+      <View style={styles.lesserButtonsContainer}>
+        <TouchableOpacity
+          // onPress={() => {
+          //   if (latestId !== 0) {
+          //     navigation.navigate("show", {
+          //       meditationId: latestId,
+          //     });
+          //   } else {
+          //     ThenThrow("Missing meditation id!");
+          //   }
+          // }}
+          style={[styles.button, styles.lesserButton]}
+          activeOpacity={0.4}
+        >
+          <Text style={[textStyles.title, styles.lesserImageTitle]}>
+            Introductory Course
+          </Text>
+        </TouchableOpacity>
+
+        {/* Categories - including all */}
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("categories");
+          }}
+          style={[styles.button, styles.lesserButton]}
+          activeOpacity={0.4}
+        >
+          <Text style={[textStyles.title, styles.lesserImageTitle]}>
+            Categories
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Most recently listened/added horizontal scroll */}
+      <MostRecent />
+      <HorizontalRule color={"white"} />
+
+      {/* Most listened to */}
+      <MostListened />
     </View>
   );
 };

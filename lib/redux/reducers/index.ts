@@ -8,5 +8,6 @@ const reducers = combineReducers({
   allMeditations: meditationsReducer,
   userProfile: profileReducer,
   allArticles: feedReducer,
+  latestMeditation: meditationsReducer,
 });
 export default reducers;

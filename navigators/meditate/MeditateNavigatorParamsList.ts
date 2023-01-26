@@ -3,4 +3,5 @@ export type MeditateNavigatorParamsList = {
   show: { meditationId: number };
   search: undefined;
   menu: undefined;
+  categories: undefined;
 };
