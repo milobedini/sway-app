@@ -44,7 +44,7 @@ export const MeditationCategoriesScreen = (): JSX.Element => {
       marginRight: 10,
       backgroundColor: "rgba(12, 21, 39, 0.6)",
       borderWidth: 1,
-      borderColor: Colours.bright.$,
+      borderColor: Colours.white.$,
       alignItems: "center",
       justifyContent: "center",
       width: IMAGE_SIZE * 2,
