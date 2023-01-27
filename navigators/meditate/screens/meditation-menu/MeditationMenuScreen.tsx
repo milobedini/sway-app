@@ -1,6 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
 import {
   Image,
+  ImageSourcePropType,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,8 +18,8 @@ import { Colours } from "../../../../colours";
 import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
 import { MostRecent } from "./components/MostRecent";
 import { MostListened } from "./components/MostListened";
-import { HorizontalRule } from "../../../../components/horizontal-rule";
 import { useAppSelector } from "../../../../lib/redux/hooks";
+import { meditationGallery } from "./gallery/MeditationGallery";
 
 export type MeditationMenuScreenProps = StackScreenProps<
   MeditateNavigatorParamsList,
@@ -27,6 +29,7 @@ export const MeditationMenuScreen = ({
   navigation,
 }: MeditationMenuScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
+  const images = meditationGallery;
 
   const styles = StyleSheet.create({
     container: { flex: 1 },
@@ -36,7 +39,7 @@ export const MeditationMenuScreen = ({
       alignSelf: "center",
       justifyContent: "space-evenly",
       alignItems: "center",
-      marginTop: height / 12,
+      marginTop: height / 10,
       backgroundColor: "rgba(12, 21, 39, 0.5)",
       borderRadius: 8,
       borderWidth: 1,
@@ -59,7 +62,8 @@ export const MeditationMenuScreen = ({
       height: 80,
       marginHorizontal: 8,
       backgroundColor: "rgba(12, 21, 39, 0.3)",
-      marginTop: 20,
+      marginTop: 40,
+      marginBottom: 40,
     },
     lesserImageTitle: {
       fontSize: 16,
@@ -69,11 +73,12 @@ export const MeditationMenuScreen = ({
   });
 
   const latestMeditation = useAppSelector(
+    //@ts-expect-error redux naming issue
     (state) => state.latestMeditation.latestMeditation
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <LinearGradient
         colors={["#0b3057", "#051c30"]}
         style={StyleSheet.absoluteFill}
@@ -86,6 +91,10 @@ export const MeditationMenuScreen = ({
           if (latestMeditation.id !== 0) {
             navigation.navigate("show", {
               meditationId: latestMeditation.id,
+              image:
+                meditationGallery[
+                  Math.floor(Math.random() * meditationGallery.length)
+                ],
             });
           } else {
             ThenThrow("Missing meditation id!");
@@ -104,15 +113,6 @@ export const MeditationMenuScreen = ({
 
       <View style={styles.lesserButtonsContainer}>
         <TouchableOpacity
-          // onPress={() => {
-          //   if (latestId !== 0) {
-          //     navigation.navigate("show", {
-          //       meditationId: latestId,
-          //     });
-          //   } else {
-          //     ThenThrow("Missing meditation id!");
-          //   }
-          // }}
           style={[styles.button, styles.lesserButton]}
           activeOpacity={0.4}
         >
@@ -137,11 +137,26 @@ export const MeditationMenuScreen = ({
       </View>
 
       {/* Most recently listened/added horizontal scroll */}
-      <MostRecent onPress={() => navigation.navigate("list")} />
-      <HorizontalRule color={"white"} />
-
+      <MostRecent
+        onPress={() => navigation.navigate("list")}
+        onTouch={(id: number, image: ImageSourcePropType) => {
+          navigation.navigate("show", {
+            meditationId: id,
+            image: image,
+          });
+        }}
+        images={images}
+      />
       {/* Most listened to */}
-      <MostListened />
-    </View>
+      <MostListened
+        onPress={(id: number, image: ImageSourcePropType) => {
+          navigation.navigate("show", {
+            meditationId: id,
+            image: image,
+          });
+        }}
+        images={images}
+      />
+    </ScrollView>
   );
 };

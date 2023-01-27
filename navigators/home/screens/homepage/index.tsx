@@ -32,6 +32,7 @@ import { ThenThrow } from "../../../../lib/then-throw";
 import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
 import meditationImage from "./logo_black.png";
 import { useAppSelector } from "../../../../lib/redux/hooks";
+import { meditationGallery } from "../../../meditate/screens/meditation-menu/gallery/MeditationGallery";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const latestMeditation = useAppSelector(
+    //@ts-expect-error redux naming issue
     (state) => state.latestMeditation.latestMeditation
   );
 
@@ -105,6 +107,10 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
             if (latestMeditation.id !== 0) {
               navigation.navigate("show", {
                 meditationId: latestMeditation.id,
+                image:
+                  meditationGallery[
+                    Math.floor(Math.random() * meditationGallery.length)
+                  ],
               });
             } else {
               ThenThrow("Missing meditation id!");

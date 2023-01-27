@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { ImageSourcePropType, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -49,9 +49,10 @@ export const MeditateListScreen = ({
       />
       <MeditateList
         style={styles.container}
-        onPress={(id) => {
+        onPress={(id: number, image: ImageSourcePropType) => {
           navigation.navigate("show", {
             meditationId: id,
+            image: image,
           });
         }}
       />

@@ -6,6 +6,7 @@ import { Minutes } from "./Minutes";
 
 export type MeditationTileTagsProps = ViewProps & {
   meditation: MeditationTileData;
+  colour: string;
 };
 
 const styles = StyleSheet.create({
@@ -22,10 +23,11 @@ const styles = StyleSheet.create({
 export const MeditationTileTags = ({
   meditation,
   style,
+  colour,
   ...rest
 }: MeditationTileTagsProps): JSX.Element => (
   <View style={[styles.container, style]} {...rest}>
-    <Category meditation={meditation} style={styles.tag} />
-    <Minutes meditation={meditation} style={styles.tag} />
+    <Category meditation={meditation} style={styles.tag} colour={colour} />
+    <Minutes meditation={meditation} style={styles.tag} colour={colour} />
   </View>
 );

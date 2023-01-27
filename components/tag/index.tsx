@@ -5,7 +5,7 @@ import { Fonts } from "../../fonts";
 
 export type TagProps = ViewProps & {
   values?: string[];
-  colour?: "Green" | "Grey";
+  colour?: string;
 };
 
 const styles = StyleSheet.create({
