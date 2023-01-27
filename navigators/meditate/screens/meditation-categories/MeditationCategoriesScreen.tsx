@@ -11,7 +11,7 @@ import { useRef, useState } from "react";
 
 import { Colours } from "../../../../colours";
 import { meditationCategoryGallery } from "./gallery/MeditationCategoryGallery";
-import { categoryMap } from "./components/CategoryMap";
+import { categoryMap } from "./components/categoryMap";
 import { textStyles } from "../../../../components/text";
 import { useAppSelector } from "../../../../lib/redux/hooks";
 import { MeditationListResponseDataItem } from "../../../../components/meditate-list/mapMeditationTileData";
