@@ -84,13 +84,13 @@ export const MostListened = ({
                 onPress(
                   Number(item.id),
                   //@ts-expect-error image type
-                  randomisedImages[index % (randomisedImages.length - 1)]
+                  randomisedImages[index % randomisedImages.length]
                 )
               }
             >
               <Image
                 //@ts-expect-error image type
-                source={randomisedImages[index % (randomisedImages.length - 1)]}
+                source={randomisedImages[index % randomisedImages.length]}
                 style={styles.image}
               />
               <Text
