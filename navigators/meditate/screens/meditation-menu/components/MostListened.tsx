@@ -25,7 +25,7 @@ export const MostListened = ({
   onPress,
   images,
 }: MostListenedProps): JSX.Element => {
-  const randomisedImages = shuffle(images);
+  const randomisedImages = shuffle(images.slice());
   const { height } = useWindowDimensions();
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations

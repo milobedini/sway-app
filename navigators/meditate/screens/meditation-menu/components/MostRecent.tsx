@@ -32,7 +32,7 @@ export const MostRecent = ({
     (state) => state.allMeditations.meditations
   );
 
-  const randomisedImages = shuffle(images);
+  const randomisedImages = shuffle(images.slice());
 
   const styles = StyleSheet.create({
     container: { flex: 1, margin: 12, marginTop: 8 },
@@ -113,13 +113,13 @@ export const MostRecent = ({
           return (
             <TouchableOpacity
               style={styles.listItem}
-              onPress={() =>
+              onPress={() => {
                 onTouch(
                   Number(item.id),
                   //@ts-expect-error image type
                   randomisedImages[index % randomisedImages.length]
-                )
-              }
+                );
+              }}
             >
               <Image
                 //@ts-expect-error image type
