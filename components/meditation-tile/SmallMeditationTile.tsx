@@ -5,7 +5,6 @@ import { Colours } from "../../colours";
 import { MeditationTileTags } from "../meditation-tile-tags";
 import { textStyles } from "../text";
 import { MeditationTileProps } from "./MeditationTileProps";
-import medTile from "./MedTile.png";
 
 const styles = StyleSheet.create({
   container: {
@@ -46,16 +45,22 @@ const styles = StyleSheet.create({
 export const SmallMeditationTile = ({
   meditation,
   style,
+  image,
   ...rest
 }: MeditationTileProps): JSX.Element => (
   <Animated.View style={[styles.container, style]} {...rest}>
     <View style={styles.imageAndTitleContainer}>
       {/* Needs to become meditation image once these have been added. Image for each category */}
-      <Image source={medTile} style={styles.image} />
+
+      <Image source={image} style={styles.image} />
       <Text style={[textStyles.body, styles.title]} accessibilityRole="header">
         {meditation.name}
       </Text>
     </View>
-    <MeditationTileTags style={styles.tags} meditation={meditation} />
+    <MeditationTileTags
+      style={styles.tags}
+      meditation={meditation}
+      colour={Colours.bright.$}
+    />
   </Animated.View>
 );

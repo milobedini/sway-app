@@ -1,8 +1,10 @@
 import {
   FlatList,
   Image,
+  ImageSourcePropType,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -11,14 +13,26 @@ import { MeditationListResponseDataItem } from "../../../../../components/medita
 import { MeditationTileTags } from "../../../../../components/meditation-tile-tags";
 import { textStyles } from "../../../../../components/text";
 import { useAppSelector } from "../../../../../lib/redux/hooks";
-import medTile from "../../../../../components/meditation-tile/MedTile.png";
 import { Fonts } from "../../../../../fonts";
 import { Colours } from "../../../../../colours";
+import { shuffle } from "../../../../../lib/shuffle";
 
-export const MostListened = (): JSX.Element => {
-  const { width } = useWindowDimensions();
+type MostListenedProps = {
+  onPress: (id: number, image: ImageSourcePropType) => void;
+  images: ImageSourcePropType[];
+};
+export const MostListened = ({
+  onPress,
+  images,
+}: MostListenedProps): JSX.Element => {
+  const randomisedImages = shuffle(images);
+  const { height } = useWindowDimensions();
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
+  );
+
+  const mostListenedMeditations = [...meditations].sort((a, b) =>
+    a.views < b.views ? 1 : -1
   );
   const styles = StyleSheet.create({
     container: { flex: 1, margin: 12 },
@@ -31,41 +45,66 @@ export const MostListened = (): JSX.Element => {
 
     list: { borderRadius: 10 },
     listItem: {
-      width: (width - 22) / 2,
-      height: "100%",
       paddingRight: 10,
       borderRadius: 10,
+      maxWidth: height / 5,
+      marginRight: 10,
     },
     image: {
-      width: "100%",
-      height: "50%",
-      resizeMode: "cover",
+      height: height / 5,
+      aspectRatio: 1,
+      borderRadius: 8,
+    },
+    imageText: {
+      maxWidth: "100%",
+      height: 50,
+      color: "white",
+      marginHorizontal: 4,
+      fontSize: 14,
     },
   });
   return (
     <View style={styles.container}>
-      {/* Show 2 meditations at once */}
       <Text style={styles.title}>Most Listened</Text>
       <FlatList
-        data={meditations}
+        data={mostListenedMeditations}
         keyExtractor={(meditation: MeditationListResponseDataItem, index) =>
           meditation.id ? meditation.id.toString() : index.toString()
         }
         horizontal
-        pagingEnabled
+        pagingEnabled={false}
         showsHorizontalScrollIndicator={false}
         style={styles.list}
-        contentContainerStyle={{}}
-        renderItem={({ item }) => {
+        contentContainerStyle={{ alignItems: "center" }}
+        renderItem={({ item, index }) => {
           return (
-            <View style={styles.listItem}>
-              <Image source={medTile} style={styles.image} />
-              <Text style={[textStyles.body]} accessibilityRole="header">
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={() =>
+                onPress(
+                  Number(item.id),
+                  //@ts-expect-error image type
+                  randomisedImages[index % (randomisedImages.length - 1)]
+                )
+              }
+            >
+              <Image
+                //@ts-expect-error image type
+                source={randomisedImages[index % (randomisedImages.length - 1)]}
+                style={styles.image}
+              />
+              <Text
+                style={[textStyles.body, styles.imageText]}
+                accessibilityRole="header"
+              >
                 {item.name}
               </Text>
 
-              <MeditationTileTags meditation={item} />
-            </View>
+              <MeditationTileTags
+                meditation={item}
+                colour={Colours.darkGrey.$}
+              />
+            </TouchableOpacity>
           );
         }}
       />

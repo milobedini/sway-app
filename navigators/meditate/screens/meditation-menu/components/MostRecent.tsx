@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  ImageSourcePropType,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,49 +13,62 @@ import { MeditationListResponseDataItem } from "../../../../../components/medita
 import { MeditationTileTags } from "../../../../../components/meditation-tile-tags";
 import { textStyles } from "../../../../../components/text";
 import { useAppSelector } from "../../../../../lib/redux/hooks";
-import medTile from "../../../../../components/meditation-tile/MedTile.png";
 import { Fonts } from "../../../../../fonts";
 import { Colours } from "../../../../../colours";
+import { shuffle } from "../../../../../lib/shuffle";
 
 type MostRecentProps = {
   onPress: () => void;
+  onTouch: (id: number, image: ImageSourcePropType) => void;
+  images: ImageSourcePropType[];
 };
-export const MostRecent = ({ onPress }: MostRecentProps): JSX.Element => {
-  const { width } = useWindowDimensions();
+export const MostRecent = ({
+  onPress,
+  onTouch,
+  images,
+}: MostRecentProps): JSX.Element => {
+  const { height } = useWindowDimensions();
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
   );
+
+  const randomisedImages = shuffle(images);
+
   const styles = StyleSheet.create({
     container: { flex: 1, margin: 12, marginTop: 8 },
 
     list: { borderRadius: 10 },
     listItem: {
-      width: (width - 22) / 2,
-      height: "100%",
       paddingRight: 10,
       borderRadius: 10,
+      maxWidth: height / 5,
+      marginRight: 10,
     },
     image: {
-      width: "100%",
-      height: "50%",
-      resizeMode: "cover",
+      height: height / 5,
+      aspectRatio: 1,
+      borderRadius: 8,
     },
     title: {
       fontFamily: Fonts.OpenSans_700Bold,
       fontSize: 20,
       color: Colours.bright.$,
-      marginBottom: 10,
     },
     topText: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 4,
+      marginBottom: 10,
+    },
+    imageText: {
+      maxWidth: "100%",
+      height: 50,
+      color: "white",
+      marginHorizontal: 4,
+      fontSize: 14,
     },
   });
   return (
     <View style={styles.container}>
-      {/* Show 2 meditations at once */}
-      {/* <Text>Most Recent horizontal scroll.</Text> */}
       <View style={styles.topText}>
         <Text style={styles.title}>Most Recent</Text>
         <TouchableOpacity
@@ -62,12 +76,26 @@ export const MostRecent = ({ onPress }: MostRecentProps): JSX.Element => {
             backgroundColor: Colours.dark.$,
             justifyContent: "center",
             alignItems: "center",
-            paddingHorizontal: 8,
+            paddingHorizontal: 12,
             borderRadius: 1000,
+            borderWidth: 1,
+            borderColor: Colours.bright.$,
+            paddingVertical: 4,
           }}
           onPress={onPress}
         >
-          <Text style={[styles.title, { marginBottom: 0 }]}>View All</Text>
+          <Text
+            style={[
+              styles.title,
+              {
+                marginBottom: 0,
+                color: "white",
+                fontSize: 18,
+              },
+            ]}
+          >
+            View All
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -77,20 +105,39 @@ export const MostRecent = ({ onPress }: MostRecentProps): JSX.Element => {
           meditation.id ? meditation.id.toString() : index.toString()
         }
         horizontal
-        pagingEnabled
+        pagingEnabled={false}
         showsHorizontalScrollIndicator={false}
         style={styles.list}
-        contentContainerStyle={{}}
-        renderItem={({ item }) => {
+        contentContainerStyle={{ alignItems: "center" }}
+        renderItem={({ item, index }) => {
           return (
-            <View style={styles.listItem}>
-              <Image source={medTile} style={styles.image} />
-              <Text style={[textStyles.body]} accessibilityRole="header">
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={() =>
+                onTouch(
+                  Number(item.id),
+                  //@ts-expect-error image type
+                  randomisedImages[index % (randomisedImages.length - 1)]
+                )
+              }
+            >
+              <Image
+                //@ts-expect-error image type
+                source={randomisedImages[index % (randomisedImages.length - 1)]}
+                style={styles.image}
+              />
+              <Text
+                style={[textStyles.body, styles.imageText]}
+                accessibilityRole="header"
+              >
                 {item.name}
               </Text>
-
-              <MeditationTileTags meditation={item} />
-            </View>
+              <MeditationTileTags
+                //@ts-expect-error naming mismatch
+                meditation={item}
+                colour={Colours.darkGrey.$}
+              />
+            </TouchableOpacity>
           );
         }}
       />

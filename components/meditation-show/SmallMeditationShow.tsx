@@ -1,8 +1,10 @@
+import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
   Image,
+  ImageSourcePropType,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,7 +21,6 @@ import { PlayIcon } from "../icons";
 import { MeditationPlay } from "../meditation-play/MeditationPlay";
 import { MeditationTileTags } from "../meditation-tile-tags";
 import { textStyles } from "../text";
-import medTile from "./MedTile2.png";
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +71,10 @@ export const SmallMeditationShow = ({
 }: SmallMeditationShowProps): JSX.Element => {
   const [meditation, setMeditation] = useState<MeditationDataObject>();
   const [modalVisible, setModalVisible] = useState(false);
+  const route = useRoute();
+
+  const { image }: string | undefined | ImageSourcePropType = route.params;
+  // const image = (route.params as { image: string }).image;
 
   useEffect(() => {
     const getMeditation = async (id: number) => {
@@ -89,7 +94,7 @@ export const SmallMeditationShow = ({
         <StatusBar style="light" />
         <SafeAreaView edges={["top", "bottom"]}>
           {/* Below will launch audio player when pressed */}
-          <Image source={medTile} style={styles.heroImage} />
+          <Image source={image} style={styles.heroImage} />
           <TouchableOpacity
             onPress={() => setModalVisible(true)}
             style={{ alignItems: "center" }}
@@ -102,6 +107,7 @@ export const SmallMeditationShow = ({
             <MeditationTileTags
               style={[styles.tags, styles.space]}
               meditation={meditation}
+              colour={Colours.bright.$}
             />
             <Text style={[textStyles.body]}>{meditation?.description}</Text>
           </View>

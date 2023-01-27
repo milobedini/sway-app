@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
 import {
+  ImageSourcePropType,
   ScrollViewProps,
   StyleSheet,
   TouchableOpacity,
@@ -13,6 +14,17 @@ import { useAppSelector } from "../../lib/redux/hooks";
 import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
 import { mapMeditationTileData } from "./mapMeditationTileData";
+import imageOne from "../../navigators/meditate/screens/meditation-menu/gallery/one.png";
+import imageTwo from "../../navigators/meditate/screens/meditation-menu/gallery/two.png";
+import imageThree from "../../navigators/meditate/screens/meditation-menu/gallery/three.png";
+import imageFour from "../../navigators/meditate/screens/meditation-menu/gallery/four.png";
+import imageFive from "../../navigators/meditate/screens/meditation-menu/gallery/five.png";
+import imageSix from "../../navigators/meditate/screens/meditation-menu/gallery/six.png";
+import imageSeven from "../../navigators/meditate/screens/meditation-menu/gallery/seven.png";
+import imageEight from "../../navigators/meditate/screens/meditation-menu/gallery/eight.png";
+import imageNine from "../../navigators/meditate/screens/meditation-menu/gallery/nine.png";
+import imageTen from "../../navigators/meditate/screens/meditation-menu/gallery/ten.png";
+import { shuffle } from "../../lib/shuffle";
 
 const styles = StyleSheet.create({
   meditations: {
@@ -25,7 +37,7 @@ const styles = StyleSheet.create({
 });
 
 export type MeditateListProps = Omit<ScrollViewProps, "children"> & {
-  onPress: (meditationId: number) => void;
+  onPress: (meditationId: number, image: ImageSourcePropType) => void;
 };
 
 // WIREFRAME
@@ -40,6 +52,20 @@ export const MeditateList = ({
   ...rest
 }: MeditateListProps): JSX.Element => {
   const { width } = useWindowDimensions();
+  const images = [
+    imageOne,
+    imageTwo,
+    imageThree,
+    imageFour,
+    imageFive,
+    imageSix,
+    imageSeven,
+    imageEight,
+    imageNine,
+    imageTen,
+  ];
+
+  const randomisedImages = shuffle(images);
 
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations
@@ -99,13 +125,19 @@ export const MeditateList = ({
               <AnimatedTouchable
                 style={{ opacity, transform: [{ scale }] }}
                 onPress={() =>
-                  onPress(item.id ?? ThenThrow("Missing meditation id!"))
+                  onPress(
+                    item.id,
+                    //@ts-expect-error image type
+                    randomisedImages[index % randomisedImages.length] ??
+                      ThenThrow("Missing meditation id!")
+                  )
                 }
               >
                 <MeditationTile
                   key={item.id}
                   style={[styles.tile]}
                   meditation={mapMeditationTileData(item)}
+                  image={randomisedImages[index % randomisedImages.length]}
                 />
               </AnimatedTouchable>
             );
