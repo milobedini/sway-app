@@ -123,6 +123,7 @@ export const MeditationCategoriesScreen = (): JSX.Element => {
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={(ev) => {
           scrollToIndex(Math.floor(ev.nativeEvent.contentOffset.x / width));
+          setFilter(categoryMap[ev.nativeEvent.contentOffset.x / width]);
         }}
         renderItem={(item) => {
           return (

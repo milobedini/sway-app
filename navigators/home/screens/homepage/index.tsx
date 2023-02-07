@@ -77,7 +77,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     (state) => state.latestMeditation.latestMeditation
   );
 
-  const progress = useLoop({ duration: 2000 });
+  const progress = useLoop({ duration: 3000 });
   const { width, height } = useWindowDimensions();
   const c = vec(width / 2, height / 4);
   const r = c.x - 32;

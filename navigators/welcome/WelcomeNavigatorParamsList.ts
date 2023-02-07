@@ -5,4 +5,5 @@ export type WelcomeNavigatorParamsList = {
   grow: undefined;
   register: undefined;
   signIn: undefined;
+  welcomeCarousel: undefined;
 };

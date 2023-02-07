@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 
 import { HeaderBackButton } from "./components/header-back-button";
 import { HeaderSkipButton } from "./components/header-skip-button";
-import { BreatheScreen, ReadyScreen } from "./screens";
-import { GrowScreen } from "./screens/grow";
+import { ReadyScreen } from "./screens";
 import { RegisterScreen } from "./screens/register";
 import { SignInScreen } from "./screens/sign-in";
-import { SitScreen } from "./screens/sit";
+import { WelcomeCarousel } from "./screens/welcome-carousel";
 import { WelcomeNavigatorParamsList } from "./WelcomeNavigatorParamsList";
 
 const Stack = createStackNavigator<WelcomeNavigatorParamsList>();
@@ -49,7 +48,7 @@ export const WelcomeNavigator = (): JSX.Element => {
                 headerRight: HeaderSkipButton,
               }}
             >
-              <Stack.Screen
+              {/* <Stack.Screen
                 name="breathe"
                 component={BreatheScreen}
                 options={{
@@ -58,7 +57,15 @@ export const WelcomeNavigator = (): JSX.Element => {
                 }}
               />
               <Stack.Screen name="sit" component={SitScreen} />
-              <Stack.Screen name="grow" component={GrowScreen} />
+              <Stack.Screen name="grow" component={GrowScreen} /> */}
+              <Stack.Screen
+                name="welcomeCarousel"
+                component={WelcomeCarousel}
+                options={{
+                  headerShown: false,
+                  animationEnabled: false,
+                }}
+              />
             </Stack.Group>
             <Stack.Group
               screenOptions={{
