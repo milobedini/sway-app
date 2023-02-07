@@ -45,7 +45,7 @@ export const ReadyScreen = ({ navigation }: ReadyScreenProps): JSX.Element => {
     setStarted(true);
     onPress();
     setTimeout(() => {
-      navigation.push("breathe"), [navigation];
+      navigation.push("welcomeCarousel"), [navigation];
     }, 3000);
   };
 
