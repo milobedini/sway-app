@@ -72,6 +72,7 @@ export const WelcomeNavigator = (): JSX.Element => {
                 headerTransparent: true,
                 headerTitle: "",
                 headerLeft: HeaderBackButton,
+                headerShown: false,
               }}
             >
               <Stack.Screen name="register" component={RegisterScreen} />

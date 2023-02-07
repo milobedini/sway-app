@@ -63,7 +63,7 @@ export const WelcomeCarousel = ({
       <TouchableOpacity
         style={{
           position: "absolute",
-          top: welcomeConstants.spacing * 4.5,
+          top: welcomeConstants.spacing * 5,
           right: welcomeConstants.spacing,
         }}
       >
@@ -71,7 +71,7 @@ export const WelcomeCarousel = ({
           onPress={() => navigation.navigate("register")}
           style={{
             width: welcomeConstants.buttonSize * 3,
-            height: welcomeConstants.buttonSize / 1.25,
+            height: welcomeConstants.buttonSize,
             borderRadius: welcomeConstants.buttonSize / 2,
             backgroundColor: Colours.bright.$,
             justifyContent: "center",

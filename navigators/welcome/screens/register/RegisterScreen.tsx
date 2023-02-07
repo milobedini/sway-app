@@ -73,7 +73,7 @@ export const RegisterScreen = ({
   }));
 
   // variables
-  const snapPoints = useMemo(() => ["80%"], []);
+  const snapPoints = useMemo(() => ["100%"], []);
 
   // callbacks
   const showModal = useCallback(() => {
@@ -172,7 +172,7 @@ export const RegisterScreen = ({
                     name="keyboard-arrow-down"
                     size={36}
                     color={Colours.bright.$}
-                    style={{ transform: [{ scaleX: 1.4 }] }}
+                    style={{ transform: [{ scaleX: 1.4 }], marginTop: 30 }}
                   />
                 </View>
               </Pressable>
@@ -194,7 +194,7 @@ export const RegisterScreen = ({
                 {
                   fontSize: 32,
                   color: Colours.dark.$,
-                  marginBottom: loginConstants.spacing,
+                  marginBottom: loginConstants.spacing / 2,
                 },
               ]}
             >
@@ -227,6 +227,7 @@ export const RegisterScreen = ({
                 {({ handleSubmit, errors, ...formProps }) => (
                   <>
                     <TextField
+                      context="register"
                       {...formProps}
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -252,6 +253,7 @@ export const RegisterScreen = ({
                       errorMessage={errors.email ?? undefined}
                     />
                     <TextField
+                      context="register"
                       {...formProps}
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -276,6 +278,7 @@ export const RegisterScreen = ({
                       errorMessage={errors.username ?? undefined}
                     />
                     <TextField
+                      context="register"
                       {...formProps}
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -300,6 +303,7 @@ export const RegisterScreen = ({
                       errorMessage={errors.password ?? undefined}
                     />
                     <TextField
+                      context="register"
                       {...formProps}
                       autoCapitalize="none"
                       autoCorrect={false}
