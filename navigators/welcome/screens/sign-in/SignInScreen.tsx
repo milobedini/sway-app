@@ -87,7 +87,7 @@ export const SignInScreen = ({
   }));
 
   // variables
-  const snapPoints = useMemo(() => ["60%"], []);
+  const snapPoints = useMemo(() => ["70%"], []);
 
   // callbacks
   const showModal = useCallback(() => {
@@ -148,7 +148,7 @@ export const SignInScreen = ({
         >
           <LoginLogo />
           <Text style={[styles.light, styles.heading]}>
-            Awaken {"\n"}to your true nature
+            Awaken {"\n"}to your true self
           </Text>
           <View
             style={{
@@ -196,7 +196,10 @@ export const SignInScreen = ({
                     name="keyboard-arrow-down"
                     size={36}
                     color={Colours.bright.$}
-                    style={{ transform: [{ scaleX: 1.4 }] }}
+                    style={{
+                      transform: [{ scaleX: 1.4 }],
+                      marginTop: 30,
+                    }}
                   />
                 </View>
               </Pressable>
@@ -206,7 +209,7 @@ export const SignInScreen = ({
           <View
             style={{
               paddingHorizontal: loginConstants.spacing * 2,
-              paddingVertical: loginConstants.spacing * 3,
+              paddingVertical: loginConstants.spacing * 2,
               justifyContent: "space-between",
 
               flex: 1,
@@ -248,6 +251,7 @@ export const SignInScreen = ({
                 {({ handleSubmit, ...formProps }) => (
                   <>
                     <TextField
+                      context="signIn"
                       {...formProps}
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -273,6 +277,7 @@ export const SignInScreen = ({
                     />
 
                     <TextField
+                      context="signIn"
                       {...formProps}
                       autoCapitalize="none"
                       autoCorrect={false}

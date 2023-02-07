@@ -13,7 +13,7 @@ const descriptions = [
 const images = [breathe, sit, grow];
 
 export const welcomeConstants = {
-  indicatorSize: 4,
+  indicatorSize: 12,
   spacing: 14,
   buttonSize: 64,
   data: [...Array(3).keys()].map((i) => ({

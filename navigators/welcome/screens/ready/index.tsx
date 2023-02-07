@@ -46,14 +46,14 @@ export const ReadyScreen = ({ navigation }: ReadyScreenProps): JSX.Element => {
     onPress();
     setTimeout(() => {
       navigation.push("welcomeCarousel"), [navigation];
-    }, 3000);
+    }, 2000);
   };
 
   const animatedValue = useRef(new Animated.Value(0)).current;
   const animation = (toValue: number) =>
     Animated.timing(animatedValue, {
       toValue,
-      duration: 3000,
+      duration: 2000,
       useNativeDriver: false,
     });
 

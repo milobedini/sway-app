@@ -15,7 +15,7 @@ export const DetailsWrapper = ({ scrollY, data }: DetailsWrapperProps) => {
         bottom: 0,
         top: "60%",
         alignItems: "center",
-        left: welcomeConstants.spacing * 2 + welcomeConstants.indicatorSize,
+        left: welcomeConstants.spacing * 2 + welcomeConstants.indicatorSize / 3,
         right: welcomeConstants.spacing,
       }}
       pointerEvents="none"
