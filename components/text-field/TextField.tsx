@@ -1,15 +1,10 @@
 import { useFormikContext } from "formik";
 import { forwardRef, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
 
 import { Colours } from "../../colours";
 import { Fonts } from "../../fonts";
+import { loginConstants } from "../../navigators/welcome/screens/sign-in/components/loginConstants";
 import { Error } from "../error";
 import { useForwardRef } from "../use-forward-ref";
 import { normalise } from "./normalise";
@@ -23,39 +18,42 @@ export type TextFieldProps = Omit<TextInputProps, "value"> & {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: Colours.dark.$,
-    borderColor: Colours.bright.$,
-    borderRadius: 15,
-    borderStyle: "solid",
-    borderWidth: 2,
-    color: Colours.bright.$,
-    fontFamily: Fonts.OpenSans_700Bold,
-    fontSize: 16,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-  },
-  inputWithTitle: {
-    paddingTop: 24,
-    paddingBottom: 8,
-  },
-  title: {
-    color: Colours.bright.$,
-    fontFamily: Fonts.OpenSans_700Bold,
-    fontSize: 12,
-    left: 24,
-    position: "absolute",
-    top: 9,
-  },
-  focussed: {
-    borderColor: Colours.bright.$,
-  },
+  // input: {
+  //   backgroundColor: Colours.dark.$,
+  //   borderColor: Colours.bright.$,
+  //   borderRadius: 15,
+  //   borderStyle: "solid",
+  //   borderWidth: 2,
+  //   color: Colours.bright.$,
+  //   fontFamily: Fonts.OpenSans_700Bold,
+  //   fontSize: 16,
+  //   paddingHorizontal: 24,
+  //   paddingVertical: 16,
+  // },
+  // inputWithTitle: {
+  //   paddingTop: 24,
+  //   paddingBottom: 8,
+  // },
+  // title: {
+  //   color: Colours.bright.$,
+  //   fontFamily: Fonts.OpenSans_700Bold,
+  //   fontSize: 12,
+  //   left: 24,
+  //   position: "absolute",
+  //   top: 9,
+  // },
+  // focussed: {
+  //   borderColor: Colours.bright.$,
+  // },
   errored: {
     borderColor: Colours.errorDark.$,
   },
   errorMessage: {
     marginHorizontal: 22,
     marginVertical: 4,
+  },
+  regular: {
+    fontFamily: Fonts.OpenSans_500Medium,
   },
 });
 
@@ -75,24 +73,36 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
     },
     parentRef
   ): JSX.Element => {
+    // eslint-disable-next-line
     const [focussed, setFocussed] = useState(false);
 
     const { setFieldValue, values, errors, setFieldTouched } =
       useFormikContext<Record<string, string>>();
 
     const internalRef = useForwardRef(parentRef);
-    const showTitle = !!values[name];
+
     const showError = (!!errors[name] || !errorMessage) && !hideErrorMessage;
 
     return (
       <View style={style}>
         <TextInput
           {...rest}
+          // style={[
+          //   //   styles.input,
+          //   // focussed && styles.focussed,
+          //   showError && styles.errored,
+          //   //   showTitle && styles.inputWithTitle,
+          // ]}
           style={[
-            styles.input,
-            focussed && styles.focussed,
-            showError && styles.errored,
-            showTitle && styles.inputWithTitle,
+            styles.regular,
+            {
+              borderBottomWidth: 2,
+              borderBottomColor: "rgba(0,0,0,0.1)",
+              height: 64,
+              fontSize: 24,
+              marginBottom: loginConstants.spacing * 2,
+              paddingHorizontal: loginConstants.spacing / 2,
+            },
           ]}
           onFocus={(e) => {
             setFocussed(true);
@@ -108,11 +118,10 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
             setFieldValue(name, normalise(e, normaliser));
           }}
           placeholder={placeholder}
-          placeholderTextColor={Colours.bright.$}
+          placeholderTextColor="rgba(0,0,0,0.3)"
           ref={internalRef}
           value={values[name]}
         />
-        {showTitle && <Text style={styles.title}>{placeholder}</Text>}
         {showError && (
           <Error style={styles.errorMessage}>
             {errorMessage ?? errors[name]}
