@@ -18,33 +18,6 @@ export type TextFieldProps = Omit<TextInputProps, "value"> & {
 };
 
 const styles = StyleSheet.create({
-  // input: {
-  //   backgroundColor: Colours.dark.$,
-  //   borderColor: Colours.bright.$,
-  //   borderRadius: 15,
-  //   borderStyle: "solid",
-  //   borderWidth: 2,
-  //   color: Colours.bright.$,
-  //   fontFamily: Fonts.OpenSans_700Bold,
-  //   fontSize: 16,
-  //   paddingHorizontal: 24,
-  //   paddingVertical: 16,
-  // },
-  // inputWithTitle: {
-  //   paddingTop: 24,
-  //   paddingBottom: 8,
-  // },
-  // title: {
-  //   color: Colours.bright.$,
-  //   fontFamily: Fonts.OpenSans_700Bold,
-  //   fontSize: 12,
-  //   left: 24,
-  //   position: "absolute",
-  //   top: 9,
-  // },
-  // focussed: {
-  //   borderColor: Colours.bright.$,
-  // },
   errored: {
     borderColor: Colours.errorDark.$,
   },
@@ -87,12 +60,6 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
       <View style={style}>
         <TextInput
           {...rest}
-          // style={[
-          //   //   styles.input,
-          //   // focussed && styles.focussed,
-          //   showError && styles.errored,
-          //   //   showTitle && styles.inputWithTitle,
-          // ]}
           style={[
             styles.regular,
             {
