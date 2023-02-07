@@ -83,6 +83,7 @@ export const WelcomeNavigator = (): JSX.Element => {
             headerTransparent: true,
             headerTitle: "",
             headerLeft: HeaderBackButton,
+            headerShown: false,
           }}
         >
           <Stack.Screen name="signIn" component={SignInScreen} />
