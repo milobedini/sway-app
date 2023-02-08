@@ -83,6 +83,15 @@ export const ArticleShowScreen = ({
           return "from";
         }
       });
+
+      /* @ts-expect-error animation */
+      ref?.current?.setNativeProps({
+        blurRadius: Math.round(value / 30),
+      });
+
+      return () => {
+        scrollY.removeAllListeners();
+      };
     });
   }, []);
 
