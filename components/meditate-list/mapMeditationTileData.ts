@@ -10,6 +10,7 @@ export declare type MeditationListResponseDataItem = {
   minutes?: number;
   sessions?: number;
   created_at?: string;
+  favourited_by?: [];
 };
 
 export const mapMeditationTileData = (
