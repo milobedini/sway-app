@@ -119,10 +119,7 @@ export const PostTile = ({
       <TouchableOpacity
         style={styles.postContainer}
         onPress={() => {
-          if (article && onPress) {
-            return onPress(post.id ?? ThenThrow("Missing post id"));
-          }
-          setActive(!active);
+          return onPress(post.id ?? ThenThrow("Missing post id"));
         }}
       >
         <View
@@ -161,7 +158,8 @@ export const PostTile = ({
             {article && (
               <Text
                 style={[textStyles.hint, styles.toggle]}
-                onPress={() => setActive(!active)}
+                // onPress={() => setActive(!active)}
+                // onPress={() => onPress(post.id)}
               >
                 Collapse
               </Text>
@@ -186,7 +184,8 @@ export const PostTile = ({
             {article && (
               <Text
                 style={[textStyles.hint, styles.toggle]}
-                onPress={() => setActive(!active)}
+                // onPress={() => setActive(!active)}
+                // onPress={() => onPress(post.id)}
               >
                 Collapse
               </Text>

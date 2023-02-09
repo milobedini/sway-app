@@ -1,13 +1,29 @@
+import { StackScreenProps } from "@react-navigation/stack";
 import { StyleSheet, View } from "react-native";
 
 import { Colours } from "../../../../../colours";
+import { LearnNavigatorParamsList } from "../../../LearnNavigatorParamsList";
 import { PostsList } from "../components";
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: Colours.dark.$ },
 });
-export const CommunityFeed = (): JSX.Element => (
+export type CommunityFeedScreenProps = StackScreenProps<
+  LearnNavigatorParamsList,
+  "community"
+>;
+export const CommunityFeedScreen = ({
+  navigation,
+  // eslint-disable-next-line
+  route: { params },
+}: CommunityFeedScreenProps): JSX.Element => (
   <View style={styles.container}>
-    <PostsList />
+    <PostsList
+      onPress={(id) => {
+        navigation.navigate("threadShow", {
+          threadId: id,
+        });
+      }}
+    />
   </View>
 );

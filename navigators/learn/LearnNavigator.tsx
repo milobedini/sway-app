@@ -4,6 +4,8 @@ import { Colours } from "../../colours";
 import { LearnNavigatorParamsList } from "./LearnNavigatorParamsList";
 import { FeedNavigator } from "./screens/feed";
 import { ArticleShowScreen } from "./screens/feed/articles/ArticleShowScreen";
+import { CommunityShowScreen } from "./screens/feed/community/CommunityShowScreen";
+import { NewComment } from "./screens/feed/community/components/NewComment";
 import { LearnHomeScreen } from "./screens/learn-home/LearnHomeScreen";
 import { NotesScreen } from "./screens/notes";
 
@@ -34,7 +36,9 @@ export const LearnNavigator = (): JSX.Element => {
       <Stack.Screen name="notes" component={NotesScreen} />
 
       <Stack.Screen name="feed" component={FeedNavigator} />
-      <Stack.Screen name="show" component={ArticleShowScreen} />
+      <Stack.Screen name="articleShow" component={ArticleShowScreen} />
+      <Stack.Screen name="threadShow" component={CommunityShowScreen} />
+      <Stack.Screen name="newComment" component={NewComment} />
     </Stack.Navigator>
   );
 };

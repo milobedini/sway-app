@@ -4,5 +4,7 @@ export type LearnNavigatorParamsList = {
   feed: undefined;
   community: undefined;
   articles: undefined;
-  show: { articleId: number };
+  articleShow: { articleId: number };
+  threadShow: { threadId: number };
+  newComment: { threadId: number };
 };

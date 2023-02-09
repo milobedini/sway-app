@@ -8,7 +8,7 @@ import { CommunityIcon } from "../../../../components/icons/CommunityIcon";
 import { TabBarButton } from "../../../main/components";
 import { LearnNavigatorParamsList } from "../../LearnNavigatorParamsList";
 import { ArticleFeed } from "./articles/ArticleFeedScreen";
-import { CommunityFeed } from "./community/CommunityFeedScreen";
+import { CommunityFeedScreen } from "./community/CommunityFeedScreen";
 import { Fonts } from "../../../../fonts";
 
 const Tab = createMaterialTopTabNavigator<LearnNavigatorParamsList>();
@@ -57,7 +57,7 @@ export const FeedNavigator = (): JSX.Element => {
       />
       <Tab.Screen
         name="community"
-        component={CommunityFeed}
+        component={CommunityFeedScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabBarButton icon={CommunityIcon} focussed={focused} />
