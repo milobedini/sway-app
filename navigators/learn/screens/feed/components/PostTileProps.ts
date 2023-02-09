@@ -5,5 +5,5 @@ import { PostTileData } from "./PostTileData";
 export type PostTileProps = ViewProps & {
   post: PostTileData;
   article: boolean;
-  onPress?: (id: number) => void;
+  onPress: (id: number) => void;
 };

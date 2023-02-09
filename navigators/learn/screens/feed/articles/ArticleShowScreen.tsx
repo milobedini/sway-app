@@ -11,7 +11,7 @@ import { LearnNavigatorParamsList } from "../../../LearnNavigatorParamsList";
 
 export type ArticleShowScreenProps = StackScreenProps<
   LearnNavigatorParamsList,
-  "show"
+  "articleShow"
 >;
 
 interface ArticleDataObject {

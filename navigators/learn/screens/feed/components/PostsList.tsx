@@ -15,10 +15,14 @@ const styles = StyleSheet.create({
 });
 
 export type PostsListProps = Omit<ScrollViewProps, "children"> & {
-  //
+  onPress: (id: number) => void;
 };
 
-export const PostsList = ({ ...rest }: PostsListProps): JSX.Element => {
+export const PostsList = ({
+  onPress,
+
+  ...rest
+}: PostsListProps): JSX.Element => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -52,6 +56,9 @@ export const PostsList = ({ ...rest }: PostsListProps): JSX.Element => {
             key={post.item.id}
             post={mapPostsTileData(post.item)}
             article={false}
+            onPress={() => {
+              onPress(post.item.id);
+            }}
           />
         )}
         {...rest}

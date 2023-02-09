@@ -8,6 +8,13 @@ export const useToast = (os: string, action: string) => {
       visibilityTime: 1500,
     });
   }
+  if (os !== "web" && action === "addComment") {
+    Toast.show({
+      type: "add",
+      text1: "Comment added",
+      visibilityTime: 1500,
+    });
+  }
   if (os !== "web" && action === "remove") {
     Toast.show({
       type: "remove",

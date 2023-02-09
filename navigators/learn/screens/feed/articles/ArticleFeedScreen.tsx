@@ -44,7 +44,7 @@ export const ArticleFeed = ({
               post={mapPostsTileData(post.item)}
               onPress={
                 (id) => {
-                  navigation.navigate("show", {
+                  navigation.navigate("articleShow", {
                     articleId: id,
                   });
                 }
