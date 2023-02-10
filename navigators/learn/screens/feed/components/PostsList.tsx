@@ -20,7 +20,6 @@ export type PostsListProps = Omit<ScrollViewProps, "children"> & {
 
 export const PostsList = ({
   onPress,
-
   ...rest
 }: PostsListProps): JSX.Element => {
   const [posts, setPosts] = useState([]);

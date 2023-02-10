@@ -14,17 +14,8 @@ import { useAppSelector } from "../../lib/redux/hooks";
 import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
 import { mapMeditationTileData } from "./mapMeditationTileData";
-import imageOne from "../../navigators/meditate/screens/meditation-menu/gallery/one.png";
-import imageTwo from "../../navigators/meditate/screens/meditation-menu/gallery/two.png";
-import imageThree from "../../navigators/meditate/screens/meditation-menu/gallery/three.png";
-import imageFour from "../../navigators/meditate/screens/meditation-menu/gallery/four.png";
-import imageFive from "../../navigators/meditate/screens/meditation-menu/gallery/five.png";
-import imageSix from "../../navigators/meditate/screens/meditation-menu/gallery/six.png";
-import imageSeven from "../../navigators/meditate/screens/meditation-menu/gallery/seven.png";
-import imageEight from "../../navigators/meditate/screens/meditation-menu/gallery/eight.png";
-import imageNine from "../../navigators/meditate/screens/meditation-menu/gallery/nine.png";
-import imageTen from "../../navigators/meditate/screens/meditation-menu/gallery/ten.png";
 import { shuffle } from "../../lib/shuffle";
+import { meditationGallery } from "../../navigators/meditate/screens/meditation-menu/gallery/MeditationGallery";
 
 const styles = StyleSheet.create({
   meditations: {
@@ -52,20 +43,9 @@ export const MeditateList = ({
   ...rest
 }: MeditateListProps): JSX.Element => {
   const { width } = useWindowDimensions();
-  const images = [
-    imageOne,
-    imageTwo,
-    imageThree,
-    imageFour,
-    imageFive,
-    imageSix,
-    imageSeven,
-    imageEight,
-    imageNine,
-    imageTen,
-  ];
+  const images = meditationGallery;
 
-  const randomisedImages = shuffle(images);
+  const randomisedImages = shuffle([...images]);
 
   const meditations = useAppSelector(
     (state) => state.allMeditations.meditations

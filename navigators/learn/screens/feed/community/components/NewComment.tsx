@@ -1,5 +1,4 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   Dimensions,
   Keyboard,
@@ -14,26 +13,27 @@ import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
 
 import { Fonts } from "../../../../../../fonts";
-import { LearnNavigatorParamsList } from "../../../../LearnNavigatorParamsList";
 import { Colours } from "../../../../../../colours";
 import { baseUrl, secureWithBody } from "../../../../../../lib/api/api";
 import { useToast } from "../../../../../../components/toast/useToast";
 
-export type NewCommentProps = StackScreenProps<
-  LearnNavigatorParamsList,
-  "newComment"
->;
+export type NewCommentProps = {
+  threadId: number;
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setCommented: Dispatch<SetStateAction<boolean>>;
+};
 
 const { width } = Dimensions.get("screen");
 const charLimit = 300;
 export const NewComment = ({
-  route: {
-    params: { threadId },
-  },
-  navigation,
+  threadId,
+  visible,
+  setVisible,
+  setCommented,
 }: NewCommentProps): JSX.Element => {
   const [text, setText] = useState("");
-  const [posted, setPosted] = useState(false);
+
   const onSubmit = async () => {
     if (text.trim().length <= 0) return;
 
@@ -51,11 +51,12 @@ export const NewComment = ({
 
   return (
     <ReactNativeModal
-      isVisible={!posted}
+      isVisible={visible}
       animationIn={"zoomInUp"}
       animationInTiming={1500}
       animationOut="slideOutDown"
       animationOutTiming={1000}
+      backdropOpacity={0.9}
       style={{
         flex: 1,
         alignItems: "center",
@@ -70,8 +71,7 @@ export const NewComment = ({
           color={Colours.errorDark.$}
           style={{ alignSelf: "flex-end" }}
           onPress={() => {
-            setPosted(true);
-            navigation.goBack();
+            setVisible(false);
           }}
         />
         <View
@@ -95,7 +95,6 @@ export const NewComment = ({
                 marginVertical: 20,
                 fontFamily: Fonts.OpenSans_500Medium,
                 color: "white",
-                //   backgroundColor: "white",
                 borderRadius: 50,
                 justifyContent: "flex-start",
               },
@@ -136,9 +135,9 @@ export const NewComment = ({
             color={Colours.bright.$}
             style={{ alignSelf: "flex-end" }}
             onPress={() => {
-              setPosted(true);
+              setVisible(false);
               onSubmit();
-              navigation.goBack();
+              setCommented(true);
             }}
           />
         </View>

@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { FontAwesome, Entypo, Ionicons, AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -9,16 +9,18 @@ import { baseUrl } from "../../../../../lib/api/api";
 import { LearnNavigatorParamsList } from "../../../LearnNavigatorParamsList";
 import { Fonts } from "../../../../../fonts";
 import { Colours } from "../../../../../colours";
-import { timeSince } from "../../../../../lib/humanisers/date";
-import { useAppSelector } from "../../../../../lib/redux/hooks";
+import { CommentDataType, Comments } from "./components/Comments";
+import { FeaturedArticles } from "./components/FeaturedArticles";
+import { NewComment } from "./components/NewComment";
+import { ThreadDetails } from "./components/ThreadDetails";
 
 export type CommunityShowScreenProps = StackScreenProps<
   LearnNavigatorParamsList,
   "threadShow"
 >;
-interface ThreadDataObject {
+export interface ThreadDataObject {
   id: number;
-  comments: [];
+  comments: CommentDataType[];
   author: { username: string };
   created_at: string;
   title: string;
@@ -79,20 +81,17 @@ export const CommunityShowScreen = ({
   navigation,
 }: CommunityShowScreenProps): JSX.Element => {
   const [thread, setThread] = useState<ThreadDataObject>();
-  //   BELOW TO BECOME FEATURED ARTICLES
-  const featuredArticles = [
-    ...useAppSelector((state) => state.allArticles.articles),
-  ]
-    .sort((a, b) => (a.created_at < b.created_at ? 1 : -1))
-    .slice(0, 2);
+  const [visible, setVisible] = useState(false);
+  const [commented, setCommented] = useState(false);
 
   useEffect(() => {
     const getThread = async (id: number) => {
       const res = await axios.get(`${baseUrl}/feed/${id}/`);
       setThread(res.data);
+      setCommented(false);
     };
     getThread(threadId);
-  }, []);
+  }, [commented]);
 
   if (thread) {
     return (
@@ -101,99 +100,12 @@ export const CommunityShowScreen = ({
           style={{ flexGrow: 0 }}
           contentContainerStyle={{ padding: 20 }}
         >
-          <Text style={styles.heading}>{thread.title}</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={[styles.paragraph, { color: Colours.bright.$ }]}>
-              {thread.author.username}
-            </Text>
-            <Text style={[styles.paragraph, { color: Colours.bright.$ }]}>
-              {timeSince(new Date(thread.created_at))} ago
-            </Text>
-          </View>
-
+          <ThreadDetails thread={thread} />
           <View>
-            <Text style={styles.paragraph}>{thread.text}</Text>
-            <Text
-              style={[styles.featuredTitle, { marginTop: 50, fontSize: 20 }]}
-            >
-              Comments ({thread.comments.length})
-            </Text>
-
-            {thread.comments.map(
-              (
-                comment: {
-                  id: number;
-                  text: string;
-                  owner: { username: string };
-                  created_at: string;
-                },
-                index
-              ) => (
-                <View
-                  key={`block-${index}`}
-                  style={{
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderBottomColor: "white",
-                  }}
-                >
-                  <Text style={styles.paragraph} key={comment.id}>
-                    {"\n"}
-                    {comment.text} {"\n"}
-                    <View
-                      style={[
-                        {
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        },
-                      ]}
-                    >
-                      <Text
-                        style={[styles.paragraph, { color: Colours.bright.$ }]}
-                      >
-                        {comment.owner.username}
-                      </Text>
-                      <Text
-                        style={[styles.paragraph, { color: Colours.bright.$ }]}
-                      >
-                        {timeSince(new Date(comment.created_at))} ago
-                      </Text>
-                    </View>
-                  </Text>
-                </View>
-              )
-            )}
+            <Comments threadId={threadId} commented={commented} />
           </View>
 
-          <View style={{ marginTop: 20, marginBottom: 40 }}>
-            <Text style={[styles.featuredTitle]}>Featured Articles</Text>
-
-            {featuredArticles.map((article) => (
-              <View
-                key={article.id}
-                style={{
-                  flexDirection: "row",
-                  flex: 1,
-                  marginBottom: 10,
-                }}
-              >
-                <Image
-                  source={{
-                    uri: article.photo,
-                  }}
-                  style={styles.featuredImage}
-                ></Image>
-                <Text style={styles.paragraph} numberOfLines={2}>
-                  {article.title}
-                </Text>
-              </View>
-            ))}
-          </View>
+          <FeaturedArticles />
         </ScrollView>
 
         <View
@@ -238,11 +150,8 @@ export const CommunityShowScreen = ({
                 name="comment-o"
                 size={24}
                 color={Colours.bright.$}
-                //   onPress={() => navigation.navigate('newComment')}
                 onPress={() => {
-                  navigation.navigate("newComment", {
-                    threadId: Number(threadId),
-                  });
+                  setVisible(true);
                 }}
               />
             </View>
@@ -251,6 +160,12 @@ export const CommunityShowScreen = ({
             </View>
           </View>
         </View>
+        <NewComment
+          threadId={threadId}
+          visible={visible}
+          setVisible={setVisible}
+          setCommented={setCommented}
+        />
       </SafeAreaView>
     );
   }

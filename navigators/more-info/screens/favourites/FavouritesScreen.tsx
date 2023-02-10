@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { Colours } from "../../../../colours";
 import { MoreInfoNavigatorParamsList } from "../../MoreInfoNavigatorParamsList";
@@ -28,9 +28,10 @@ export const FavouritesScreen = ({
     <StatusBar style="light" />
     <View style={styles.container}>
       <FavouritesList
-        onPress={(id) =>
+        onPress={(id: number, image: ImageSourcePropType) =>
           navigation.navigate("show", {
             meditationId: id,
+            image: image,
           })
         }
       />

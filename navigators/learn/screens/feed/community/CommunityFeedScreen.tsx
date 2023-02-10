@@ -16,14 +16,16 @@ export const CommunityFeedScreen = ({
   navigation,
   // eslint-disable-next-line
   route: { params },
-}: CommunityFeedScreenProps): JSX.Element => (
-  <View style={styles.container}>
-    <PostsList
-      onPress={(id) => {
-        navigation.navigate("threadShow", {
-          threadId: id,
-        });
-      }}
-    />
-  </View>
-);
+}: CommunityFeedScreenProps): JSX.Element => {
+  return (
+    <View style={styles.container}>
+      <PostsList
+        onPress={(id) => {
+          navigation.navigate("threadShow", {
+            threadId: id,
+          });
+        }}
+      />
+    </View>
+  );
+};
