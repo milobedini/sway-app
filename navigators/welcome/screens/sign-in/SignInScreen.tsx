@@ -19,7 +19,7 @@ import { LoginLogo } from "./components/LoginLogo";
 import { loginConstants } from "./components/loginConstants";
 import { Fonts } from "../../../../fonts";
 import { baseUrl } from "../../../../lib/api/api";
-import { LoginFormValues } from "./components/login-form/LoginFormValues";
+import { LoginFormValues } from "./components/LoginFormValues";
 import { setToken, setUserId, setUsername } from "../../../../lib/auth/auth";
 import { TextField } from "../../../../components/text-field";
 import { nameof } from "../../components/name-of";

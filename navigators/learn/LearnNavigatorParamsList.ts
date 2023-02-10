@@ -6,5 +6,4 @@ export type LearnNavigatorParamsList = {
   articles: undefined;
   articleShow: { articleId: number };
   threadShow: { threadId: number };
-  newComment: { threadId: number };
 };

@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   View,
   TouchableOpacity,
+  ImageSourcePropType,
 } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -17,7 +18,9 @@ import { MeditationTile } from "../../../../../components/meditation-tile";
 import { textStyles } from "../../../../../components/text";
 import { baseUrl, secureGet } from "../../../../../lib/api/api";
 import { getUserId } from "../../../../../lib/auth/auth";
+import { shuffle } from "../../../../../lib/shuffle";
 import { ThenThrow } from "../../../../../lib/then-throw";
+import { meditationGallery } from "../../../../meditate/screens/meditation-menu/gallery/MeditationGallery";
 
 const styles = StyleSheet.create({
   favList: {
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
 });
 
 export type FavouritesListProps = Omit<ScrollViewProps, "children"> & {
-  onPress: (favId: number) => void;
+  onPress: (favId: number, image: ImageSourcePropType) => void;
 };
 
 export const FavouritesList = ({
@@ -43,6 +46,8 @@ export const FavouritesList = ({
   ...rest
 }: FavouritesListProps): JSX.Element => {
   const { width } = useWindowDimensions();
+  const images = meditationGallery;
+  const randomisedImages = shuffle([...images]);
   const [inProgress, setInProgress] = useState(true);
   const [favourites, setFavourites] = useState([]);
 
@@ -125,13 +130,19 @@ export const FavouritesList = ({
               <AnimatedTouchable
                 style={{ opacity, transform: [{ scale }] }}
                 onPress={() =>
-                  onPress(item.id ?? ThenThrow("Missing meditation id!"))
+                  onPress(
+                    item.id,
+                    //@ts-expect-error image type
+                    randomisedImages[index % randomisedImages.length] ??
+                      ThenThrow("Missing meditation id!")
+                  )
                 }
               >
                 <MeditationTile
                   key={item.id}
                   style={[styles.tile]}
                   meditation={mapMeditationTileData(item)}
+                  image={randomisedImages[index % randomisedImages.length]}
                 />
               </AnimatedTouchable>
             );
