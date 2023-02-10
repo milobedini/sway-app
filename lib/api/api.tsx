@@ -36,6 +36,18 @@ export const secureWithBody = async (
 
   return config;
 };
+export const secureNoBody = async (url: string, method: string) => {
+  const config = {
+    method,
+    url,
+    headers: {
+      Authorization: `Bearer ${await getToken()}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  return config;
+};
 
 export const secureDelete = async (url: string, method = "delete") => {
   const config = {

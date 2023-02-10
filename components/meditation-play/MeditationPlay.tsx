@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  ImageSourcePropType,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather as Icon, Ionicons } from "@expo/vector-icons";
@@ -15,25 +16,29 @@ import { RectButton } from "react-native-gesture-handler";
 import { Audio, InterruptionModeIOS } from "expo-av";
 import { useEffect, useState } from "react";
 import { AnimatePresence, View as MView } from "moti";
+import axios from "axios";
 
-import MedTile from "./MedTile.png";
 import { Fonts } from "../../fonts";
 import { MeditationListResponseDataItem } from "../meditate-list/mapMeditationTileData";
 import { Colours } from "../../colours";
 import { getUserId } from "../../lib/auth/auth";
+import { baseUrl, secureNoBody } from "../../lib/api/api";
 
 interface MeditationPlayProps {
   onPress: () => void;
   meditation: MeditationListResponseDataItem;
+  image: ImageSourcePropType;
 }
 
 const colors = {
   primary: Colours.bright.$,
   secondary: Colours.dark.$,
 };
+
 export const MeditationPlay = ({
   onPress,
   meditation,
+  image,
 }: MeditationPlayProps): JSX.Element => {
   const { width } = useWindowDimensions();
   const [playing, setPlaying] = useState(false);
@@ -122,6 +127,19 @@ export const MeditationPlay = ({
     }
   };
 
+  const onHeart = async () => {
+    const config = await secureNoBody(
+      `${baseUrl}/meditations/${meditation.id}/`,
+      "put"
+    );
+
+    try {
+      await axios(config);
+    } catch (err) {
+      return err;
+    }
+  };
+
   const styles = StyleSheet.create({
     root: { flex: 1 },
     container: { margin: 16 },
@@ -134,8 +152,8 @@ export const MeditationPlay = ({
       justifyContent: "space-between",
       alignItems: "center",
     },
-    song: { fontSize: 26, fontFamily: Fonts.OpenSans_700Bold, color: "white" },
-    artist: { color: "white", marginTop: 14 },
+    name: { fontSize: 26, fontFamily: Fonts.OpenSans_700Bold, color: "white" },
+    description: { color: "white", marginTop: 14 },
     slider: {
       backgroundColor: "rgba(255, 255, 255, 0.5)",
       width: width - 32,
@@ -172,22 +190,27 @@ export const MeditationPlay = ({
               <AntDesign name="close" color="white" size={24} />
             </RectButton>
           </View>
-          <Image source={MedTile} style={styles.cover} />
+          <Image source={image} style={styles.cover} />
           <View style={styles.metadata}>
-            <View>
-              <Text style={styles.song}>{meditation.name}</Text>
-              <Text style={styles.artist}>{meditation.description}</Text>
+            <View style={{ maxWidth: width - 80 }}>
+              <Text style={styles.name}>{meditation.name}</Text>
+              <Text style={styles.description}>{meditation.description}</Text>
             </View>
             {!userLiked ? (
               <Pressable
-                onPressIn={() => setButtonState("PRESSED")}
+                onPressIn={() => {
+                  onHeart;
+                  setButtonState("PRESSED");
+                }}
                 onPressOut={() => {
                   setCount((count) => count + 1);
                   // @ts-expect-error liked.
                   setUserLiked(true);
                   setButtonState("ACTIVE");
+                  onHeart;
                 }}
-                style={{ marginLeft: -10 }}
+                onPress={onHeart}
+                style={{ marginLeft: 4 }}
               >
                 <AnimatePresence>
                   <MView
@@ -245,7 +268,7 @@ export const MeditationPlay = ({
                 </AnimatePresence>
                 <MView
                   style={{
-                    padding: 16,
+                    padding: 14,
                     borderRadius: 20,
                     backgroundColor: colors.secondary,
                     borderWidth: 0.17,
@@ -280,14 +303,17 @@ export const MeditationPlay = ({
               </Pressable>
             ) : (
               <Pressable
-                onPressIn={() => setButtonState("PRESSED")}
+                onPressIn={() => {
+                  setButtonState("PRESSED");
+                }}
                 onPressOut={() => {
                   setCount((count) => count - 1);
                   // @ts-expect-error liked.
                   setUserLiked(false);
                   setButtonState("ACTIVE");
                 }}
-                style={{ marginLeft: -10 }}
+                onPress={onHeart}
+                style={{ marginLeft: 4 }}
               >
                 <AnimatePresence>
                   <MView

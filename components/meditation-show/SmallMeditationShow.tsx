@@ -24,11 +24,8 @@ import { PageLoading } from "../page-loading";
 import { textStyles } from "../text";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colours.dark.$,
-  },
-  content: { alignItems: "stretch", marginTop: 50 },
+  container: {},
+  content: { alignItems: "stretch", marginTop: 50, flex: 1 },
   heroImage: {
     width: "100%",
     maxHeight: 250,
@@ -122,6 +119,7 @@ export const SmallMeditationShow = ({
       <MeditationPlay
         onPress={() => setModalVisible(false)}
         meditation={meditation}
+        image={image}
       />
     );
   }
