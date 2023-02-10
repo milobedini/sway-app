@@ -1,7 +1,10 @@
 import { LogBox } from "react-native";
 
 if (__DEV__) {
-  const ignoreWarns = ["ViewPropTypes will be removed from React Native"];
+  const ignoreWarns = [
+    "ViewPropTypes will be removed from React Native",
+    // "VirtualizedLists should never be nested",
+  ];
   /* eslint-disable */
   const warn = console.warn;
   console.warn = (...arg) => {
