@@ -20,6 +20,7 @@ import { HorizontalRule } from "../horizontal-rule";
 import { PlayIcon } from "../icons";
 import { MeditationPlay } from "../meditation-play/MeditationPlay";
 import { MeditationTileTags } from "../meditation-tile-tags";
+import { PageLoading } from "../page-loading";
 import { textStyles } from "../text";
 
 const styles = StyleSheet.create({
@@ -73,6 +74,7 @@ export const SmallMeditationShow = ({
   const [modalVisible, setModalVisible] = useState(false);
   const route = useRoute();
 
+  // @ts-expect-error image.
   const { image }: string | undefined | ImageSourcePropType = route.params;
   // const image = (route.params as { image: string }).image;
 
@@ -123,5 +125,5 @@ export const SmallMeditationShow = ({
       />
     );
   }
-  return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
+  return <PageLoading marginBottom={0} />;
 };

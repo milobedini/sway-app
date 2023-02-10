@@ -17,6 +17,7 @@ import { useAppSelector } from "../../../../lib/redux/hooks";
 import { MeditationListResponseDataItem } from "../../../../components/meditate-list/mapMeditationTileData";
 import { shuffle } from "../../../../lib/shuffle";
 import { meditationGallery } from "../meditation-menu/gallery/MeditationGallery";
+import { PageLoading } from "../../../../components/page-loading";
 
 const IMAGE_SIZE = 80;
 const SPACING = 10;
@@ -109,7 +110,7 @@ export const MeditationCategoriesScreen = (): JSX.Element => {
   };
 
   if (!meditationCategoryGallery || !meditationsWithfilter) {
-    return <></>;
+    return <PageLoading marginBottom={0} />;
   }
   return (
     <View style={styles.container}>
