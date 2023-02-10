@@ -1,11 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
+import { Swipeable } from "react-native-gesture-handler";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 
 import { Colours } from "../../../../../../colours";
 import { Fonts } from "../../../../../../fonts";
-import { baseUrl } from "../../../../../../lib/api/api";
+import { baseUrl, secureDelete } from "../../../../../../lib/api/api";
 import { timeSince } from "../../../../../../lib/humanisers/date";
+import { getUserId } from "../../../../../../lib/auth/auth";
+import { useToast } from "../../../../../../components/toast/useToast";
 
 const styles = StyleSheet.create({
   featuredTitle: {
@@ -41,59 +45,122 @@ export const Comments = ({
   threadId,
 }: CommentsProps): JSX.Element => {
   const [comments, setComments] = useState([]);
+  const [userId, setUserId] = useState(0);
+  const [deleted, setDeleted] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const id = await getUserId();
+      setUserId(Number(id));
+    };
+
+    getUser();
+  }, [userId]);
+
   useEffect(() => {
     const getThreadComments = async () => {
       const res = await axios.get(`${baseUrl}/feed/${threadId}/`);
       setComments(res.data.comments);
     };
-    getThreadComments();
-  }, [commented]);
-  return (
-    <>
-      <Text style={[styles.featuredTitle, { marginTop: 50, fontSize: 20 }]}>
-        Comments ({comments.length})
-      </Text>
 
-      {comments.map(
-        (
-          comment: {
-            id: number;
-            text: string;
-            owner: { username: string };
-            created_at: string;
-          },
-          index
-        ) => (
-          <View
-            key={`block-${index}`}
-            style={{
+    getThreadComments();
+  }, [commented, deleted]);
+
+  // @ts-expect-error swipe.
+  const renderItem = ({ item, index }, onClick) => {
+    // @ts-expect-error swipe.
+    const renderRightActions = (progress, dragX, onClick) => {
+      if (item.owner.id === userId) {
+        return (
+          <AntDesign name="delete" size={24} color="red" onPress={onClick} />
+        );
+      }
+      return;
+    };
+
+    return (
+      <Swipeable
+        renderRightActions={(progress, dragX) =>
+          renderRightActions(progress, dragX, onClick)
+        }
+      >
+        <View
+          key={`block-${index}`}
+          style={[
+            {
               borderBottomWidth: StyleSheet.hairlineWidth,
               borderBottomColor: "white",
-            }}
-          >
-            <Text style={styles.paragraph} key={comment.id}>
-              {"\n"}
-              {comment.text} {"\n"}
-              <View
-                style={[
-                  {
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    width: "100%",
-                  },
-                ]}
-              >
-                <Text style={[styles.paragraph, { color: Colours.bright.$ }]}>
-                  {comment.owner.username}
-                </Text>
-                <Text style={[styles.paragraph, { color: Colours.bright.$ }]}>
-                  {timeSince(new Date(comment.created_at))} ago
-                </Text>
-              </View>
-            </Text>
-          </View>
-        )
-      )}
-    </>
-  );
+              paddingTop: 4,
+            },
+          ]}
+        >
+          {item.owner.id === userId ? (
+            <Entypo
+              name="triangle-left"
+              size={24}
+              color="red"
+              style={{ position: "absolute", right: 0, top: 0 }}
+            />
+          ) : null}
+
+          <Text style={styles.paragraph} key={item.id}>
+            {"\n"}
+            {item.text} {"\n"}
+            <View
+              style={[
+                {
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "100%",
+                },
+              ]}
+            >
+              <Text style={[styles.paragraph, { color: Colours.bright.$ }]}>
+                {item.owner.username}
+              </Text>
+
+              <Text style={[styles.paragraph, { color: Colours.bright.$ }]}>
+                {timeSince(new Date(item.created_at))} ago
+              </Text>
+            </View>
+          </Text>
+        </View>
+      </Swipeable>
+    );
+  };
+
+  // @ts-expect-error swipe.
+  const deleteComment = async ({ item }) => {
+    const config = await secureDelete(`${baseUrl}/comments/${item.id}/`);
+    try {
+      await axios(config);
+      setDeleted(true);
+
+      useToast(Platform.OS, "removeComment");
+      setDeleted(false);
+    } catch (err) {
+      return err;
+    }
+  };
+
+  if (comments.length > 0) {
+    return (
+      <>
+        <Text style={[styles.featuredTitle, { marginTop: 50, fontSize: 20 }]}>
+          Comments ({comments.length})
+        </Text>
+        <FlatList
+          data={comments}
+          renderItem={(v) =>
+            renderItem(v, () => {
+              // console.log("PRESSED", v);
+              deleteComment(v);
+            })
+          }
+          keyExtractor={(item: { id: number }) => String(item.id)}
+        ></FlatList>
+      </>
+    );
+  }
+  return <></>;
 };

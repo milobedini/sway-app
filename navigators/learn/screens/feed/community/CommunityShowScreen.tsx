@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { FontAwesome, Entypo, Ionicons, AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -96,9 +96,25 @@ export const CommunityShowScreen = ({
   if (thread) {
     return (
       <SafeAreaView>
-        <ScrollView
+        <FlatList
           style={{ flexGrow: 0 }}
           contentContainerStyle={{ padding: 20 }}
+          data={[1]}
+          renderItem={() => (
+            <>
+              <ThreadDetails thread={thread} />
+              <View>
+                <Comments threadId={threadId} commented={commented} />
+              </View>
+              <FeaturedArticles
+                onPress={(id: number) =>
+                  navigation.navigate("articleShow", {
+                    articleId: id,
+                  })
+                }
+              />
+            </>
+          )}
         >
           <ThreadDetails thread={thread} />
           <View>
@@ -112,7 +128,7 @@ export const CommunityShowScreen = ({
               })
             }
           />
-        </ScrollView>
+        </FlatList>
 
         <View
           style={[

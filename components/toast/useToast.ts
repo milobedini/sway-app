@@ -22,4 +22,11 @@ export const useToast = (os: string, action: string) => {
       visibilityTime: 1500,
     });
   }
+  if (os !== "web" && action === "removeComment") {
+    Toast.show({
+      type: "remove",
+      text1: "Comment removed",
+      visibilityTime: 1500,
+    });
+  }
 };
