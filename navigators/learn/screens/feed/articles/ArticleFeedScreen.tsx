@@ -37,6 +37,7 @@ export const ArticleFeed = ({
           contentInsetAdjustmentBehavior="automatic"
           numColumns={1}
           contentContainerStyle={styles.tabContainer}
+          showsVerticalScrollIndicator={false}
           renderItem={(post) => (
             <PostTile
               article={true}

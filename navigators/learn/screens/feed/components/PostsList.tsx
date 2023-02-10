@@ -50,6 +50,7 @@ export const PostsList = ({
         contentInsetAdjustmentBehavior="automatic"
         numColumns={1}
         contentContainerStyle={styles.tabContainer}
+        showsVerticalScrollIndicator={false}
         renderItem={(post) => (
           <PostTile
             key={post.item.id}
