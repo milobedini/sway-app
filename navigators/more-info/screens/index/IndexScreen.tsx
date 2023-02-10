@@ -1,12 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "react-native";
+import { MotiView } from "moti";
+import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 
 import { Colours } from "../../../../colours";
 import { HorizontalRule } from "../../../../components/horizontal-rule";
@@ -65,7 +60,12 @@ export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <StatusBar style="light" />
-      <View style={styles.main}>
+      <MotiView
+        style={styles.main}
+        from={{ opacity: 0, translateY: 50 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ delay: 100 }}
+      >
         {/* Profile View */}
         <ProfileScreen />
         <HorizontalRule
@@ -98,7 +98,7 @@ export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
         >
           <Text style={[styles.title, { color: "white" }]}>Sign Out</Text>
         </TouchableOpacity>
-      </View>
+      </MotiView>
     </ScrollView>
   );
 };
