@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Fonts } from "../../../../../../fonts";
 import { useAppSelector } from "../../../../../../lib/redux/hooks";
@@ -26,7 +26,12 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.5,
   },
 });
-export const FeaturedArticles = (): JSX.Element => {
+type FeaturedArticlesProps = {
+  onPress: (id: number) => void;
+};
+export const FeaturedArticles = ({
+  onPress,
+}: FeaturedArticlesProps): JSX.Element => {
   //   BELOW TO BECOME FEATURED ARTICLES
   const featuredArticles = [
     ...useAppSelector((state) => state.allArticles.articles),
@@ -39,13 +44,14 @@ export const FeaturedArticles = (): JSX.Element => {
       <Text style={[styles.featuredTitle]}>Featured Articles</Text>
 
       {featuredArticles.map((article) => (
-        <View
+        <TouchableOpacity
           key={article.id}
           style={{
             flexDirection: "row",
             flex: 1,
             marginBottom: 10,
           }}
+          onPress={() => onPress(article.id)}
         >
           <Image
             source={{
@@ -56,7 +62,7 @@ export const FeaturedArticles = (): JSX.Element => {
           <Text style={styles.paragraph} numberOfLines={2}>
             {article.title}
           </Text>
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );

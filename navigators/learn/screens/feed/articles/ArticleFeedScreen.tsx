@@ -42,17 +42,13 @@ export const ArticleFeed = ({
               article={true}
               key={post.item.id}
               post={mapPostsTileData(post.item)}
-              onPress={
-                (id) => {
-                  navigation.navigate("articleShow", {
-                    articleId: id,
-                  });
-                }
-                // (id) => console.log(id)
-              }
+              onPress={(id) => {
+                navigation.navigate("articleShow", {
+                  articleId: id,
+                });
+              }}
             />
           )}
-          // {...rest}
         ></Animated.FlatList>
       </View>
     );

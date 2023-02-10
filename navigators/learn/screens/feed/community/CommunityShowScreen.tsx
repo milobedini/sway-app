@@ -105,7 +105,13 @@ export const CommunityShowScreen = ({
             <Comments threadId={threadId} commented={commented} />
           </View>
 
-          <FeaturedArticles />
+          <FeaturedArticles
+            onPress={(id: number) =>
+              navigation.navigate("articleShow", {
+                articleId: id,
+              })
+            }
+          />
         </ScrollView>
 
         <View
