@@ -5,17 +5,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
-  View,
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { Colours } from "../../colours";
 import { useAppSelector } from "../../lib/redux/hooks";
 import { ThenThrow } from "../../lib/then-throw";
 import { MeditationTile } from "../meditation-tile";
 import { mapMeditationTileData } from "./mapMeditationTileData";
 import { shuffle } from "../../lib/shuffle";
 import { meditationGallery } from "../../navigators/meditate/screens/meditation-menu/gallery/MeditationGallery";
+import { PageLoading } from "../page-loading";
 
 const styles = StyleSheet.create({
   meditations: {
@@ -127,5 +126,5 @@ export const MeditateList = ({
       </Animated.View>
     );
   }
-  return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
+  return <PageLoading marginBottom={0} />;
 };

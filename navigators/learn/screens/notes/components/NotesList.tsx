@@ -6,11 +6,11 @@ import {
   ScrollViewProps,
   StyleSheet,
   useWindowDimensions,
-  View,
 } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { Colours } from "../../../../../colours";
+import { PageLoading } from "../../../../../components/page-loading";
 import { baseUrl, secureGet } from "../../../../../lib/api/api";
 import { mapNotesTileData } from "./mapNotesTileData";
 import { NoteTile } from "./NoteTile";
@@ -96,5 +96,5 @@ export const NotesList = ({
     );
   }
 
-  return <View style={{ backgroundColor: Colours.dark.$, flex: 1 }}></View>;
+  return <PageLoading marginBottom={0} />;
 };
