@@ -125,10 +125,11 @@ export const RegisterForm = ({
                   style={[styles.field, { width: width - 50 }]}
                   onSubmitEditing={() => handleSubmit()}
                   errorMessage={errors.email ?? undefined}
+                  context="register"
                 />
                 <TextField
                   {...formProps}
-                  autoCapitalize="none"
+                  // autoCapitalize="none"
                   autoCorrect={false}
                   clearButtonMode="while-editing"
                   editable={!inProgress}
@@ -139,6 +140,7 @@ export const RegisterForm = ({
                   style={[styles.field, { width: width - 50 }]}
                   onSubmitEditing={() => handleSubmit()}
                   errorMessage={errors.username ?? undefined}
+                  context="register"
                 />
                 <TextField
                   {...formProps}
@@ -153,6 +155,7 @@ export const RegisterForm = ({
                   onSubmitEditing={() => handleSubmit()}
                   secureTextEntry
                   errorMessage={errors.password ?? undefined}
+                  context="register"
                 />
                 <TextField
                   {...formProps}
@@ -168,6 +171,7 @@ export const RegisterForm = ({
                   onSubmitEditing={() => handleSubmit()}
                   secureTextEntry
                   errorMessage={errors.password_confirmation ?? undefined}
+                  context="register"
                 />
               </View>
             </>

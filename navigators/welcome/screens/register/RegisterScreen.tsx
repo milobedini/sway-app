@@ -260,7 +260,6 @@ export const RegisterScreen = ({
                       clearButtonMode="while-editing"
                       editable={!inProgress}
                       name={nameof<RegisterFormValues>("username")}
-                      normaliser={[Normalisers.trim, Normalisers.lowercase]}
                       placeholder="Username"
                       returnKeyType="send"
                       style={[
