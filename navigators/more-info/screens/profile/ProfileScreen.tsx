@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileScreen = (): JSX.Element => {
+  // @ts-expect-error redux.
   const user = useAppSelector((state) => state.userProfile.profile);
 
   if (user) {

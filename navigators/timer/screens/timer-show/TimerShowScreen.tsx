@@ -33,7 +33,7 @@ export const TimerShowScreen = ({
   route: { params },
 }: TimerShowScreenProps): JSX.Element => {
   const [showSettings, setShowSettings] = useState(false);
-  const [meditationMinutes, setMeditationMinutes] = useState(1);
+  const [meditationMinutes, setMeditationMinutes] = useState(10);
   return (
     <>
       <StatusBar style="light" />
