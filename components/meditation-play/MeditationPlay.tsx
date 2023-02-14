@@ -6,14 +6,11 @@ import {
   useWindowDimensions,
   StyleSheet,
   Image,
-  TouchableOpacity,
   Pressable,
   ImageSourcePropType,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather as Icon, Ionicons } from "@expo/vector-icons";
 import { RectButton } from "react-native-gesture-handler";
-import { Audio, InterruptionModeIOS } from "expo-av";
 import { useEffect, useState } from "react";
 import { AnimatePresence, View as MView } from "moti";
 import axios from "axios";
@@ -23,6 +20,8 @@ import { MeditationListResponseDataItem } from "../meditate-list/mapMeditationTi
 import { Colours } from "../../colours";
 import { getUserId } from "../../lib/auth/auth";
 import { baseUrl, secureNoBody } from "../../lib/api/api";
+import { LinearBackground } from "../linear-background";
+import { MeditationAudio } from "./components/MeditationAudio";
 
 interface MeditationPlayProps {
   onPress: () => void;
@@ -41,21 +40,12 @@ export const MeditationPlay = ({
   image,
 }: MeditationPlayProps): JSX.Element => {
   const { width } = useWindowDimensions();
-  const [playing, setPlaying] = useState(false);
-  const [playbackInstance, setPlaybackInstance] = useState(null);
   const [buttonState, setButtonState] = useState("EMPTY");
-  const [count, setCount] = useState(0);
-  const [userLiked, setUserLiked] = useState(null);
   const [user, setUser] = useState(0);
+  const [userLiked, setUserLiked] = useState(null);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      staysActiveInBackground: true,
-      playsInSilentModeIOS: true,
-      interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-    });
-    loadNewPlaybackInsance();
     if (meditation.favourited_by) {
       setCount(meditation.favourited_by.length);
     }
@@ -79,53 +69,6 @@ export const MeditationPlay = ({
       }
     }
   }, [user]);
-  // @ts-expect-error audio.
-  const onPlaybackStatusUpdate = (status) => {
-    if (status.isLoaded) {
-      setPlaying(status.isPlaying);
-    }
-  };
-  const loadNewPlaybackInsance = async () => {
-    if (playbackInstance !== null) {
-      // @ts-expect-error audio.
-      await playbackInstance.unloadAsync();
-      setPlaybackInstance(null);
-    }
-    const { sound, status } = await Audio.Sound.createAsync({
-      // @ts-expect-error audio.
-      uri: meditation.audio,
-    });
-
-    onPlaybackStatusUpdate(status);
-    // @ts-expect-error audio.
-    setPlaybackInstance(sound);
-  };
-
-  const onPlayPausePressed = () => {
-    if (playbackInstance != null) {
-      if (playing) {
-        // @ts-expect-error audio.
-        playbackInstance.pauseAsync();
-        setPlaying(false);
-      } else {
-        // @ts-expect-error audio.
-        playbackInstance.playAsync();
-        setPlaying(true);
-      }
-    }
-  };
-
-  const onClose = async () => {
-    if (playbackInstance !== null) {
-      setPlaying(false);
-      // @ts-expect-error audio.
-      playbackInstance.pauseAsync();
-      // @ts-expect-error audio.
-      await playbackInstance.unloadAsync();
-      setPlaybackInstance(null);
-      onPress();
-    }
-  };
 
   const onHeart = async () => {
     const config = await secureNoBody(
@@ -171,10 +114,7 @@ export const MeditationPlay = ({
   return (
     <Modal animationType="slide" transparent={true} visible={true}>
       <SafeAreaView style={styles.root}>
-        <LinearGradient
-          colors={["#0b3057", "#051c30"]}
-          style={StyleSheet.absoluteFill}
-        />
+        <LinearBackground />
         <View style={styles.container}>
           <View style={styles.header}>
             <RectButton style={styles.button} {...{ onPress }}>
@@ -183,9 +123,9 @@ export const MeditationPlay = ({
             <Text style={styles.title}>{meditation.name}</Text>
             <RectButton
               style={styles.button}
-              onPress={async () => {
-                await onClose();
-              }}
+              // onPress={async () => {
+              //   await onClose();
+              // }}
             >
               <AntDesign name="close" color="white" size={24} />
             </RectButton>
@@ -196,6 +136,7 @@ export const MeditationPlay = ({
               <Text style={styles.name}>{meditation.name}</Text>
               <Text style={styles.description}>{meditation.description}</Text>
             </View>
+            {/* Start of liking functionality. */}
             {!userLiked ? (
               <Pressable
                 onPressIn={() => {
@@ -410,15 +351,10 @@ export const MeditationPlay = ({
               </Pressable>
             )}
           </View>
-          <View style={styles.slider} />
-          <TouchableOpacity style={styles.controls}>
-            <AntDesign
-              name={playing ? "pause" : "play"}
-              color="white"
-              size={48}
-              onPress={onPlayPausePressed}
-            />
-          </TouchableOpacity>
+          <MeditationAudio
+            audioSource={meditation.audio}
+            minutes={meditation.minutes}
+          />
         </View>
       </SafeAreaView>
     </Modal>

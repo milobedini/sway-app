@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import {
   Image,
   ImageSourcePropType,
@@ -20,6 +19,7 @@ import { MostRecent } from "./components/MostRecent";
 import { MostListened } from "./components/MostListened";
 import { useAppSelector } from "../../../../lib/redux/hooks";
 import { meditationGallery } from "./gallery/MeditationGallery";
+import { LinearBackground } from "../../../../components/linear-background";
 
 export type MeditationMenuScreenProps = StackScreenProps<
   MeditateNavigatorParamsList,
@@ -79,10 +79,7 @@ export const MeditationMenuScreen = ({
 
   return (
     <ScrollView style={styles.container}>
-      <LinearGradient
-        colors={["#0b3057", "#051c30"]}
-        style={StyleSheet.absoluteFill}
-      />
+      <LinearBackground />
 
       {/* Daily Med Button */}
 

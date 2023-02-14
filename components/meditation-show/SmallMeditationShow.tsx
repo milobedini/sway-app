@@ -18,6 +18,7 @@ import { Fonts } from "../../fonts";
 import { baseUrl } from "../../lib/api/api";
 import { HorizontalRule } from "../horizontal-rule";
 import { PlayIcon } from "../icons";
+import { LinearBackground } from "../linear-background";
 import { MeditationPlay } from "../meditation-play/MeditationPlay";
 import { MeditationTileTags } from "../meditation-tile-tags";
 import { PageLoading } from "../page-loading";
@@ -90,6 +91,7 @@ export const SmallMeditationShow = ({
         style={styles.container}
         contentContainerStyle={styles.content}
       >
+        <LinearBackground />
         <StatusBar style="light" />
         <SafeAreaView edges={["top", "bottom"]}>
           {/* Below will launch audio player when pressed */}

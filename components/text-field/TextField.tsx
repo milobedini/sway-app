@@ -32,19 +32,23 @@ const styles = StyleSheet.create({
 });
 
 export const TextField = forwardRef<TextInput, TextFieldProps>(
-  ({
-    errorMessage,
-    hideErrorMessage,
-    name,
-    normaliser = (v) => v,
-    onBlur,
-    onChangeText,
-    onFocus,
+  (
+    {
+      errorMessage,
+      hideErrorMessage,
+      name,
+      normaliser = (v) => v,
+      onBlur,
+      onChangeText,
+      onFocus,
 
-    placeholder,
-    context,
-    ...rest
-  }): JSX.Element => {
+      placeholder,
+      context,
+      ...rest
+    },
+    // eslint-disable-next-line
+    _parentRef
+  ): JSX.Element => {
     // eslint-disable-next-line
     const [focussed, setFocussed] = useState(false);
 
