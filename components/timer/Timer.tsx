@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Audio } from "expo-av";
+import axios from "axios";
 
 import { Colours } from "../../colours";
 import { PauseIcon, PlayIcon, SettingsIcon } from "../icons";
@@ -15,6 +16,10 @@ import { TimerSettingsContent } from "./TimerSettingsContext";
 import bell from "./Bell.mp3";
 import { Fonts } from "../../fonts";
 import { textStyles } from "../text";
+import { baseUrl, secureWithBody } from "../../lib/api/api";
+import { getUserId } from "../../lib/auth/auth";
+import { useAppDispatch, useAppSelector } from "../../lib/redux/hooks";
+import { setProfile } from "../../lib/redux/actions/profileActions";
 
 const styles = StyleSheet.create({
   settings: {
@@ -41,8 +46,14 @@ export const Timer = (): JSX.Element => {
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [playCount, setPlayCount] = useState(0);
+  const [user, setUser] = useState(0);
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
+
+  const dispatch = useAppDispatch();
+  // @ts-expect-error redux.
+  const profile = useAppSelector((state) => state.userProfile.profile);
 
   const totalSeconds = settingsInfo.meditationMinutes * 60;
   const percentage = Math.round((secondsLeft / totalSeconds) * 100);
@@ -60,6 +71,38 @@ export const Timer = (): JSX.Element => {
   const playSound = async (): Promise<void> => {
     const loadedSound = await Audio.Sound.createAsync(bell);
     await loadedSound.sound.playAsync();
+  };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const userId = await getUserId();
+      setUser(Number(userId));
+    };
+    checkUser();
+  }, [user]);
+
+  const addMinutes = async () => {
+    // console.log(minutes);
+    if (playCount === 0) {
+      setPlayCount(1);
+      const config = await secureWithBody(
+        `${baseUrl}/auth/profile/${user}/`,
+        { minutes: profile.minutes + minutes, sessions: profile.sessions + 1 },
+        "put"
+      );
+      try {
+        await axios(config);
+        const updatedProfile = {
+          ...profile,
+          minutes: profile.minutes + minutes,
+          sessions: profile.sessions + 1,
+        };
+        dispatch(setProfile(updatedProfile));
+      } catch (err) {
+        return err;
+      }
+    }
+    return;
   };
   useEffect(() => {
     secondsLeftRef.current = settingsInfo.meditationMinutes * 60;
@@ -121,6 +164,8 @@ export const Timer = (): JSX.Element => {
               onPress={() => {
                 setIsPaused(false);
                 isPausedRef.current = false;
+                finished && setPlayCount(0);
+                addMinutes();
               }}
             />
           </>

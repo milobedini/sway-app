@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { useRef, useState } from "react";
+import { StackScreenProps } from "@react-navigation/stack";
 
 import { Colours } from "../../../../colours";
 import { meditationCategoryGallery } from "./gallery/MeditationCategoryGallery";
@@ -18,12 +19,20 @@ import { MeditationListResponseDataItem } from "../../../../components/meditate-
 import { shuffle } from "../../../../lib/shuffle";
 import { meditationGallery } from "../meditation-menu/gallery/MeditationGallery";
 import { PageLoading } from "../../../../components/page-loading";
+import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
 
 const IMAGE_SIZE = 80;
 const SPACING = 10;
 const randomisedImages = shuffle(meditationGallery.slice());
 
-export const MeditationCategoriesScreen = (): JSX.Element => {
+export type MeditateCategoriesScreenProps = StackScreenProps<
+  MeditateNavigatorParamsList,
+  "categories"
+>;
+
+export const MeditationCategoriesScreen = ({
+  navigation,
+}: MeditateCategoriesScreenProps): JSX.Element => {
   const { width, height } = useWindowDimensions();
   const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: "'rgba(52, 52, 52, 0.0)'" },
@@ -194,21 +203,21 @@ export const MeditationCategoriesScreen = (): JSX.Element => {
         showsHorizontalScrollIndicator={false}
         style={styles.list}
         renderItem={({ item, index }) => {
+          const randomImage = randomisedImages[index % randomisedImages.length];
           return (
             <TouchableOpacity
               style={styles.listItem}
-
-              // onPress={() =>
-              //   onPress(
-              //     Number(item.id),
-              //     //@ts-expect-error image type
-              //     randomisedImages[index % randomisedImages.length]
-              //   )
-              // }
+              onPress={() => {
+                navigation.navigate("show", {
+                  meditationId: item.id,
+                  //@ts-expect-error image type
+                  image: randomImage,
+                });
+              }}
             >
               <Image
                 //@ts-expect-error image type
-                source={randomisedImages[index % randomisedImages.length]}
+                source={randomImage}
                 style={[
                   {
                     width: IMAGE_SIZE,

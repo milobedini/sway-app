@@ -82,7 +82,7 @@ export const FavouritesList = ({
 
   if (favourites.length >= 1) {
     return (
-      <Animated.View>
+      <Animated.View style={{ flex: 1 }}>
         <Animated.FlatList
           style={styles.favList}
           contentContainerStyle={[styles.favs]}

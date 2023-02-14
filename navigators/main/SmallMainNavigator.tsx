@@ -40,8 +40,10 @@ export const SmallMainNavigator = (): JSX.Element => {
     (state) => state.allMeditations.meditations
   );
   const articles = useAppSelector((state) => state.allArticles.articles);
+  // @ts-expect-error redux.
   const user = useAppSelector((state) => state.userProfile.profile);
   const latestMeditation = useAppSelector(
+    // @ts-expect-error redux.
     (state) => state.latestMeditation.latestMeditation
   );
   const dispatch = useAppDispatch();
