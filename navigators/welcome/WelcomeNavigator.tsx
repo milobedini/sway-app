@@ -88,7 +88,7 @@ export const WelcomeNavigator = (): JSX.Element => {
           }}
         >
           <Stack.Screen name="signIn" component={SignInScreen} />
-          <Stack.Screen name="register" component={RegisterScreen} />
+          {/* <Stack.Screen name="register" component={RegisterScreen} /> */}
         </Stack.Group>
       </>
     </Stack.Navigator>
