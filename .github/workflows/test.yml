@@ -28,7 +28,7 @@ jobs:
         env:
           # EXPO_CLI_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
           # EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
-          EXPO_CLI_USERNAME: milose986@gmail.com
+          EXPO_CLI_USERNAME: milobedini64@gmail.com
           EXPO_CLI_PASSWORD: Dolphin64
 
   # semantic_release:
