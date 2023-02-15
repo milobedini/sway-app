@@ -4,6 +4,7 @@
     "slug": "Sway",
     "scheme": "sway",
     "version": "1.0.0",
+    "owner": "Sway_Meditation",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
