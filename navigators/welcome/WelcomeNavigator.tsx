@@ -48,16 +48,6 @@ export const WelcomeNavigator = (): JSX.Element => {
                 headerRight: HeaderSkipButton,
               }}
             >
-              {/* <Stack.Screen
-                name="breathe"
-                component={BreatheScreen}
-                options={{
-                  headerLeftContainerStyle: { display: "none" },
-                  animationEnabled: false,
-                }}
-              />
-              <Stack.Screen name="sit" component={SitScreen} />
-              <Stack.Screen name="grow" component={GrowScreen} /> */}
               <Stack.Screen
                 name="welcomeCarousel"
                 component={WelcomeCarousel}
