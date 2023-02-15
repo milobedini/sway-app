@@ -33,7 +33,6 @@ import { HomeNavigatorParamsList } from "../../HomeNavigatorParamsList";
 import meditationImage from "./logo_black.png";
 import { useAppSelector } from "../../../../lib/redux/hooks";
 import { meditationGallery } from "../../../meditate/screens/meditation-menu/gallery/MeditationGallery";
-import { LinearBackground } from "../../../../components/linear-background";
 export type HomeScreenProps = StackScreenProps<
   HomeNavigatorParamsList,
   "homepage"
@@ -102,7 +101,6 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <LinearBackground />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
