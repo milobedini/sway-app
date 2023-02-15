@@ -211,12 +211,14 @@ export const ArticleShowScreen = ({
                 transition={{ delay: 50 * index }}
                 state={useFadeInDown}
                 style={{
-                  marginBottom: 2,
+                  marginBottom: 16,
                   fontSize: 16,
-                  lineHeight: 24,
+                  lineHeight: 16 * 1.6,
                   color: "white",
-                  maxWidth: width - 20,
+
+                  paddingHorizontal: 8,
                   marginLeft: 16,
+                  fontFamily: Fonts.OpenSans_400Regular,
                 }}
               >
                 {/* @ts-expect-error regex */}

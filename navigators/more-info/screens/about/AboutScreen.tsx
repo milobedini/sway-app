@@ -66,8 +66,6 @@ export const AboutScreen = (): JSX.Element => {
       fontFamily: Fonts.OpenSans_400Regular,
       fontSize: 16,
       marginBottom: 16,
-      // marginBottom: 8,
-      // marginHorizontal: 8,
       lineHeight: 16 * 1.6,
     },
   });
