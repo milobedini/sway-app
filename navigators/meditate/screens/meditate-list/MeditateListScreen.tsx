@@ -14,7 +14,7 @@ export type MeditateListScreenProps = StackScreenProps<
 >;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colours.dark.$, paddingTop: 20 },
+  container: { flex: 1, backgroundColor: Colours.dark.$, paddingTop: 22 },
 });
 
 export const MeditateListScreen = ({

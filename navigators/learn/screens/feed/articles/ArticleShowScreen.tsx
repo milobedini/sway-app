@@ -216,8 +216,8 @@ export const ArticleShowScreen = ({
                   lineHeight: 16 * 1.6,
                   color: "white",
 
-                  paddingHorizontal: 8,
-                  marginLeft: 16,
+                  marginLeft: 22,
+                  marginRight: 22,
                   fontFamily: Fonts.OpenSans_400Regular,
                 }}
               >

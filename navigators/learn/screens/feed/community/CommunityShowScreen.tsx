@@ -98,7 +98,7 @@ export const CommunityShowScreen = ({
       <SafeAreaView>
         <FlatList
           style={{ flexGrow: 0 }}
-          contentContainerStyle={{ padding: 20 }}
+          contentContainerStyle={{ marginHorizontal: 22, marginTop: 22 }}
           data={[1]}
           renderItem={() => (
             <>

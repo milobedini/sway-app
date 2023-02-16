@@ -76,7 +76,7 @@ export const NewComment = ({
         />
         <View
           style={{
-            width: width - 20,
+            width: width - 24,
             borderWidth: 1,
             borderColor: "white",
             borderRadius: 50,
@@ -90,10 +90,10 @@ export const NewComment = ({
             style={[
               {
                 flex: 1,
-                fontSize: 24,
-                paddingHorizontal: 14,
-                marginVertical: 20,
-                fontFamily: Fonts.OpenSans_500Medium,
+                fontSize: 16,
+                paddingHorizontal: 16,
+                marginVertical: 16,
+                fontFamily: Fonts.OpenSans_400Regular,
                 color: "white",
                 borderRadius: 50,
                 justifyContent: "flex-start",

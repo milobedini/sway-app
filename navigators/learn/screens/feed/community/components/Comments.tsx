@@ -16,14 +16,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontFamily: Fonts.OpenSans_700Bold,
-    marginBottom: 20,
+    lineHeight: 24 * 1.2,
   },
 
   paragraph: {
     color: "white",
-    marginBottom: 10,
+    marginBottom: 16,
+    marginTop: 16,
     fontFamily: Fonts.OpenSans_400Regular,
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 16 * 1.5,
   },
 });
@@ -72,7 +73,13 @@ export const Comments = ({
     const renderRightActions = (progress, dragX, onClick) => {
       if (item.owner.id === userId) {
         return (
-          <AntDesign name="delete" size={24} color="red" onPress={onClick} />
+          <AntDesign
+            name="delete"
+            size={24}
+            color="red"
+            onPress={onClick}
+            style={{ paddingTop: 16 }}
+          />
         );
       }
       return;
@@ -99,7 +106,7 @@ export const Comments = ({
               name="triangle-left"
               size={24}
               color="red"
-              style={{ position: "absolute", right: 0, top: 0 }}
+              style={{ position: "absolute", right: 0, top: 16 }}
             />
           ) : null}
 
@@ -146,7 +153,7 @@ export const Comments = ({
   if (comments.length > 0) {
     return (
       <>
-        <Text style={[styles.featuredTitle, { marginTop: 50, fontSize: 20 }]}>
+        <Text style={[styles.featuredTitle, { marginTop: 48, fontSize: 24 }]}>
           Comments ({comments.length})
         </Text>
         <FlatList

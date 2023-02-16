@@ -16,7 +16,7 @@ export const MeditateShowScreen = ({
 }: MeditationShowScreenProps): JSX.Element => {
   const { width } = useWindowDimensions();
 
-  if (width <= 480) {
+  if (width <= 850) {
     return <SmallMeditationShow meditationId={meditationId} />;
   }
   return <></>;

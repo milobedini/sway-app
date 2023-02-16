@@ -6,7 +6,7 @@ import { SmallMainNavigator } from "./SmallMainNavigator";
 export const MainNavigator = (): JSX.Element => {
   const { width } = useWindowDimensions();
 
-  if (width <= 480) {
+  if (width <= 850) {
     return <SmallMainNavigator />;
   }
   return <LargeMainNavigator />;

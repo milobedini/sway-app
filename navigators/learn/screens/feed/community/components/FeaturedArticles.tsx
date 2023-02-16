@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
 
   paragraph: {
     color: "white",
-    marginBottom: 10,
+
     fontFamily: Fonts.OpenSans_400Regular,
-    fontSize: 14,
-    lineHeight: 16 * 1.5,
+    fontSize: 16,
+    lineHeight: 16 * 1.6,
   },
 });
 type FeaturedArticlesProps = {
@@ -49,7 +49,7 @@ export const FeaturedArticles = ({
           style={{
             flexDirection: "row",
             flex: 1,
-            marginBottom: 10,
+            marginBottom: 16,
           }}
           onPress={() => onPress(article.id)}
         >

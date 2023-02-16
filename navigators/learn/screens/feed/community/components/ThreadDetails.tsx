@@ -6,18 +6,20 @@ import { timeSince } from "../../../../../../lib/humanisers/date";
 import { ThreadDataObject } from "../CommunityShowScreen";
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 32,
+    fontSize: 36,
     fontFamily: Fonts.OpenSans_700Bold,
     marginTop: 14,
-    marginBottom: 30,
+    marginBottom: 36,
     color: "white",
+    lineHeight: 1.2 * 36,
   },
   paragraph: {
     color: "white",
-    marginBottom: 10,
+    marginBottom: 8,
+    marginTop: 8,
     fontFamily: Fonts.OpenSans_400Regular,
-    fontSize: 14,
-    lineHeight: 16 * 1.5,
+    fontSize: 16,
+    lineHeight: 16 * 1.6,
   },
 });
 type ThreadDetailsProps = {

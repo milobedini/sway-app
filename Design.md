@@ -13,11 +13,15 @@ Font size: 24-30 pixels
 Font weight: Semi-bold or Regular
 Line height: 1.2-1.4 times the font size
 
+=> 24px, semi-bold, lineHeight 24 \* 1.2, white, 24 margins.
+
 Body text:
 
 Font size: 16-20 pixels
 Font weight: Regular
 Line height: 1.5-1.8 times the font size
+
+=> 16px, 400 regular, 1.6 \* 16 lineHeight, white, 16 margins
 
 Margins between paragraphs, or between title and text is generally the same as the font size (e.g. 16 for body paragraphs.)
 
