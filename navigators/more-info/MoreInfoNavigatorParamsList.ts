@@ -5,5 +5,6 @@ export type MoreInfoNavigatorParamsList = {
   app: undefined;
   favourites: undefined;
   about: undefined;
+  contact: undefined;
   show: { meditationId: number; image: ImageSourcePropType };
 };

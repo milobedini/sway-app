@@ -93,6 +93,13 @@ export const IndexScreen = ({ navigation }: IndexScreenProps): JSX.Element => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.section}
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate("contact")}
+        >
+          <Text style={[styles.title, { color: "white" }]}>Get In Touch</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.section}
           onPress={handleSignOut}
           activeOpacity={0.7}
         >

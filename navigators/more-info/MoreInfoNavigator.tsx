@@ -6,6 +6,7 @@ import { Colours } from "../../colours";
 import { FavouritesScreen } from "./screens/favourites";
 import { MeditateShowScreen } from "../meditate/screens";
 import { AboutScreen } from "./screens/about/AboutScreen";
+import { ContactScreen } from "./screens/contact/ContactScreen";
 
 const Stack = createStackNavigator<MoreInfoNavigatorParamsList>();
 
@@ -42,6 +43,11 @@ export const MoreInfoNavigator = (): JSX.Element => (
     <Stack.Screen
       name="about"
       component={AboutScreen}
+      options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
+    />
+    <Stack.Screen
+      name="contact"
+      component={ContactScreen}
       options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
     />
   </Stack.Navigator>

@@ -225,6 +225,11 @@ export const SignInScreen = ({
                   marginBottom: loginConstants.spacing * 2,
                 },
               ]}
+              onPress={() =>
+                navigation
+                  .getParent()
+                  ?.navigate("main", { screen: "home", params: {} })
+              }
             >
               Welcome Back
             </MotiText>
