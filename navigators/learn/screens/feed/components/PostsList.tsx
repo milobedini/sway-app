@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
 
 export type PostsListProps = Omit<ScrollViewProps, "children"> & {
   onPress: (id: number) => void;
+  posted: boolean;
 };
 
 export const PostsList = ({
   onPress,
+  posted,
   ...rest
 }: PostsListProps): JSX.Element => {
   const [posts, setPosts] = useState([]);
@@ -40,7 +42,7 @@ export const PostsList = ({
     getPosts();
 
     // Note to delete in [] below
-  }, []);
+  }, [posted]);
 
   if (posts.length >= 1) {
     return (

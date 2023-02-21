@@ -1,6 +1,13 @@
-import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { MaterialCommunityIcons, Feather, AntDesign } from "@expo/vector-icons";
+import axios from "axios";
 
 import { Colours } from "../../../../../colours";
 import { textStyles } from "../../../../../components/text";
@@ -8,6 +15,9 @@ import { Fonts } from "../../../../../fonts";
 import { timeSince } from "../../../../../lib/humanisers/date";
 import { ThenThrow } from "../../../../../lib/then-throw";
 import { PostTileProps } from "./PostTileProps";
+import { getUsername } from "../../../../../lib/auth/auth";
+import { baseUrl, secureDelete } from "../../../../../lib/api/api";
+import { useToast } from "../../../../../components/toast/useToast";
 
 const styles = StyleSheet.create({
   postContainer: {
@@ -113,6 +123,28 @@ export const PostTile = ({
   onPress,
 }: PostTileProps): JSX.Element => {
   const [active, setActive] = useState(false);
+  const [username, setUsername] = useState("");
+  const [deleted, setDeleted] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const id = await getUsername();
+      setUsername(String(id));
+    };
+    getUser();
+  }, [username, deleted]);
+
+  const deleteThread = async () => {
+    const config = await secureDelete(`${baseUrl}/feed/${post.id}/`);
+    try {
+      await axios(config);
+      setDeleted(true);
+      useToast(Platform.OS, "removeThread");
+      setDeleted(false);
+    } catch (err) {
+      return err;
+    }
+  };
 
   if (post) {
     return (
@@ -152,6 +184,20 @@ export const PostTile = ({
               </Text>
             </View>
           )}
+          {post.author === username ? (
+            <AntDesign
+              name="delete"
+              size={24}
+              color="red"
+              style={{
+                position: "absolute",
+                zIndex: 999,
+                bottom: -60,
+                right: 0,
+              }}
+              onPress={deleteThread}
+            />
+          ) : null}
         </View>
         {active || !article ? (
           <>
@@ -209,7 +255,6 @@ export const PostTile = ({
                 <Text style={styles.commentText}>{comment.text}</Text>
               </View>
             ))}
-            {/* // Post comment here */}
           </View>
         ) : null}
       </TouchableOpacity>

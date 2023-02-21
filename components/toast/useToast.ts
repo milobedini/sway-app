@@ -15,6 +15,13 @@ export const useToast = (os: string, action: string) => {
       visibilityTime: 1500,
     });
   }
+  if (os !== "web" && action === "addThread") {
+    Toast.show({
+      type: "add",
+      text1: "Thread added",
+      visibilityTime: 1500,
+    });
+  }
   if (os !== "web" && action === "remove") {
     Toast.show({
       type: "remove",
@@ -26,6 +33,13 @@ export const useToast = (os: string, action: string) => {
     Toast.show({
       type: "remove",
       text1: "Comment removed",
+      visibilityTime: 1500,
+    });
+  }
+  if (os !== "web" && action === "removeThread") {
+    Toast.show({
+      type: "remove",
+      text1: "Thread removed",
       visibilityTime: 1500,
     });
   }
