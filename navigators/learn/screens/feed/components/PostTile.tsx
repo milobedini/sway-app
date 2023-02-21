@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSans_700Bold,
     fontSize: 12,
     marginTop: 8,
+    width: "50%",
   },
 
   toggle: {
@@ -121,10 +122,11 @@ export const PostTile = ({
   post,
   article,
   onPress,
+  deleted,
+  setDeleted,
 }: PostTileProps): JSX.Element => {
   const [active, setActive] = useState(false);
   const [username, setUsername] = useState("");
-  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -184,7 +186,7 @@ export const PostTile = ({
               </Text>
             </View>
           )}
-          {post.author === username ? (
+          {post.author === username && !article ? (
             <AntDesign
               name="delete"
               size={24}

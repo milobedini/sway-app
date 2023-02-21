@@ -43,8 +43,10 @@ export const NewThread = ({
       await axios(config);
       setTitle("");
       setText("");
+      setPosted(true);
       Keyboard.dismiss();
       useToast(Platform.OS, "addThread");
+      setPosted(false);
     } catch (err) {
       return err;
     }
@@ -91,10 +93,10 @@ export const NewThread = ({
             style={[
               {
                 flex: 0.2,
-                fontSize: 16,
+                fontSize: 18,
                 paddingHorizontal: 16,
                 marginTop: 16,
-                fontFamily: Fonts.OpenSans_400Regular,
+                fontFamily: Fonts.OpenSans_700Bold,
                 color: "white",
                 borderRadius: 50,
                 justifyContent: "flex-start",
@@ -122,6 +124,7 @@ export const NewThread = ({
                 paddingHorizontal: 16,
                 marginVertical: 16,
                 fontFamily: Fonts.OpenSans_400Regular,
+
                 color: "white",
                 borderRadius: 50,
                 justifyContent: "flex-start",
