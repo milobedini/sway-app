@@ -192,7 +192,7 @@ export const PostTile = ({
               style={{
                 position: "absolute",
                 zIndex: 999,
-                bottom: -60,
+                bottom: -70,
                 right: 0,
               }}
               onPress={deleteThread}
