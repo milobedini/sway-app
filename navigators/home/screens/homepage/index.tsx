@@ -125,11 +125,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
           top: Constants.statusBarHeight + 26,
           right: 22,
         }}
-        onPress={() =>
-          navigation
-            .getParent()
-            ?.navigate("meditate", { screen: "search", params: {} })
-        }
+        onPress={() => navigation.navigate("search")}
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity

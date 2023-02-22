@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { Colours } from "../../colours";
 import { MeditateShowScreen } from "../meditate/screens";
+import { MeditationSearchScreen } from "../meditate/screens/meditation-search/MeditationSearchScreen";
 import { HomeNavigatorParamsList } from "./HomeNavigatorParamsList";
 import { HomeScreen } from "./screens";
 
@@ -34,5 +35,6 @@ export const HomeNavigator = (): JSX.Element => (
       component={MeditateShowScreen}
       options={{ headerTransparent: true, headerTintColor: Colours.bright.$ }}
     />
+    <Stack.Screen name="search" component={MeditationSearchScreen} />
   </Stack.Navigator>
 );
