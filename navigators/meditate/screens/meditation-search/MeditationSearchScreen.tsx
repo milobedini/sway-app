@@ -1,13 +1,24 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import ReactNativeModal from "react-native-modal";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import Constants from "expo-constants";
+import { AntDesign } from "@expo/vector-icons";
 
-import { textStyles } from "../../../../components/text";
+import { designStyles } from "../../../../components/text";
+import { Fonts } from "../../../../fonts";
 import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
+import { Colours } from "../../../../colours";
+import { HorizontalRule } from "../../../../components/horizontal-rule";
+import { TopSearches } from "./components/TopSearches";
+import { SearchResults } from "./components/SearchResults";
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  container: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight + 22,
+    marginHorizontal: 22,
+  },
+  resultsContainer: { flex: 1 },
 });
 
 export type MeditationSearchScreenProps = StackScreenProps<
@@ -21,29 +32,63 @@ export const MeditationSearchScreen = ({
   route: { params },
 }: MeditationSearchScreenProps) => {
   const [searched, setSearched] = useState(false);
+  const [text, setText] = useState("");
   return (
-    <>
-      <ReactNativeModal
-        isVisible={!searched}
-        animationIn={"zoomInUp"}
-        animationInTiming={3000}
-        animationOut="zoomOutDown"
-        animationOutTiming={3000}
-        style={styles.container}
+    <View style={styles.container}>
+      <Text
+        style={[
+          designStyles.subtitle,
+          { textAlign: "center", fontFamily: Fonts.OpenSans_700Bold },
+        ]}
+        onPress={() => {
+          setSearched(false);
+          setSearched(true);
+        }}
       >
-        <View style={styles.container}>
-          <Text style={textStyles.title} onPress={() => setSearched(true)}>
-            Search Term or Category
-            {/* Categories */}
-            {/* Search */}
-          </Text>
-        </View>
-      </ReactNativeModal>
+        Search
+        {/* Categories */}
+        {/* Search */}
+      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <AntDesign
+          name="search1"
+          size={24}
+          color={Colours.bright.$}
+          style={{ marginRight: 8, paddingTop: 0 }}
+        />
+        <TextInput
+          placeholder="Titles, categories or descriptions"
+          onChangeText={(text) => {
+            setSearched(false);
+            setText(text);
+          }}
+          style={[
+            designStyles.body,
+            { marginBottom: 0, alignSelf: "flex-end", lineHeight: 20 },
+          ]}
+          placeholderTextColor={Colours.darkGrey.$}
+          selectionColor="white"
+          returnKeyType="search"
+          onSubmitEditing={() => setSearched(true)}
+        />
+      </View>
+      <HorizontalRule
+        color={"white"}
+        style={{
+          marginTop: 12,
+          marginHorizontal: -22,
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: Colours.darkGrey.$,
+        }}
+      />
+
       {searched ? (
-        <View style={styles.container}>
-          <Text style={textStyles.title}>Results</Text>
+        <View style={styles.resultsContainer}>
+          <SearchResults text={text} searched={searched} />
         </View>
-      ) : null}
-    </>
+      ) : (
+        <TopSearches setText={setText} setSearched={setSearched} />
+      )}
+    </View>
   );
 };

@@ -26,3 +26,28 @@ export const textStyles = StyleSheet.create({
     lineHeight: 24,
   },
 });
+
+export const designStyles = StyleSheet.create({
+  title: {
+    fontFamily: Fonts.OpenSans_700Bold,
+    fontSize: 36,
+    lineHeight: 1.2 * 36,
+    textAlign: "center",
+    color: "white",
+    marginBottom: 36,
+  },
+  subtitle: {
+    fontFamily: Fonts.OpenSans_500Medium,
+    fontSize: 24,
+    lineHeight: 1.2 * 24,
+    color: "white",
+    marginBottom: 24,
+  },
+  body: {
+    fontFamily: Fonts.OpenSans_400Regular,
+    fontSize: 16,
+    lineHeight: 1.6 * 16,
+    color: "white",
+    marginBottom: 16,
+  },
+});
