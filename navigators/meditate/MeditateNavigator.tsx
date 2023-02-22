@@ -45,6 +45,12 @@ export const MeditateNavigator = (): JSX.Element => (
         headerTransparent: true,
       }}
     />
-    <Stack.Screen name="search" component={MeditationSearchScreen} />
+    <Stack.Screen
+      name="search"
+      component={MeditationSearchScreen}
+      options={{
+        headerTransparent: true,
+      }}
+    />
   </Stack.Navigator>
 );
