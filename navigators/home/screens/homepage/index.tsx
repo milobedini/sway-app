@@ -25,7 +25,10 @@ import {
   useLoop,
   vec,
 } from "@shopify/react-native-skia";
+import { AntDesign } from "@expo/vector-icons";
+import Constants from "expo-constants";
 
+import swayText from "./sway-text.png";
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { ThenThrow } from "../../../../lib/then-throw";
@@ -43,9 +46,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colours.dark.$,
   },
+  topContainer: {
+    flexDirection: "row",
+    marginTop: Constants.statusBarHeight + 22,
+    justifyContent: "center",
+    paddingBottom: 22,
+  },
   buttonContainer: {
     flex: 0.5,
-    paddingTop: 80,
+    // paddingTop: 80,
   },
   button: {
     flexDirection: "row",
@@ -53,7 +62,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginTop: "10%",
+    marginTop: 22,
     backgroundColor: "rgba(43, 59, 91, 0.4)",
     borderRadius: 8,
     borderWidth: 1,
@@ -101,6 +110,27 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <Image
+          source={swayText}
+          style={{ aspectRatio: 2000 / 1247, width: 80 }}
+        />
+      </View>
+      <AntDesign
+        name="search1"
+        size={40}
+        color={Colours.darkGrey.$}
+        style={{
+          position: "absolute",
+          top: Constants.statusBarHeight + 26,
+          right: 22,
+        }}
+        onPress={() =>
+          navigation
+            .getParent()
+            ?.navigate("meditate", { screen: "search", params: {} })
+        }
+      />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
