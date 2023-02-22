@@ -8,8 +8,12 @@ import { Fonts } from "../../../../../fonts";
 
 type TopSearchesProps = {
   setText: Dispatch<SetStateAction<string>>;
+  setSearched: Dispatch<SetStateAction<boolean>>;
 };
-export const TopSearches = ({ setText }: TopSearchesProps): JSX.Element => (
+export const TopSearches = ({
+  setText,
+  setSearched,
+}: TopSearchesProps): JSX.Element => (
   <ScrollView showsVerticalScrollIndicator={false}>
     <Text
       style={[
@@ -25,7 +29,8 @@ export const TopSearches = ({ setText }: TopSearchesProps): JSX.Element => (
         style={{ flexDirection: "row", alignItems: "center", marginLeft: 22 }}
         onPress={() => {
           setText(term);
-          // Search using term.
+          setSearched(false);
+          setSearched(true);
         }}
       >
         <AntDesign

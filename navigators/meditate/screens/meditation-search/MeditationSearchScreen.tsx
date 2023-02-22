@@ -10,6 +10,7 @@ import { MeditateNavigatorParamsList } from "../../MeditateNavigatorParamsList";
 import { Colours } from "../../../../colours";
 import { HorizontalRule } from "../../../../components/horizontal-rule";
 import { TopSearches } from "./components/TopSearches";
+import { SearchResults } from "./components/SearchResults";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight + 22,
     marginHorizontal: 22,
   },
-  resultsContainer: {},
+  resultsContainer: { flex: 1 },
 });
 
 export type MeditationSearchScreenProps = StackScreenProps<
@@ -40,8 +41,8 @@ export const MeditationSearchScreen = ({
           { textAlign: "center", fontFamily: Fonts.OpenSans_700Bold },
         ]}
         onPress={() => {
+          setSearched(false);
           setSearched(true);
-          console.log(text);
         }}
       >
         Search
@@ -57,13 +58,18 @@ export const MeditationSearchScreen = ({
         />
         <TextInput
           placeholder="Titles, categories or descriptions"
-          onChangeText={(text) => setText(text)}
+          onChangeText={(text) => {
+            setSearched(false);
+            setText(text);
+          }}
           style={[
             designStyles.body,
             { marginBottom: 0, alignSelf: "flex-end", lineHeight: 20 },
           ]}
           placeholderTextColor={Colours.darkGrey.$}
           selectionColor="white"
+          returnKeyType="search"
+          onSubmitEditing={() => setSearched(true)}
         />
       </View>
       <HorizontalRule
@@ -75,12 +81,14 @@ export const MeditationSearchScreen = ({
           borderBottomColor: Colours.darkGrey.$,
         }}
       />
-      <TopSearches setText={setText} />
+
       {searched ? (
         <View style={styles.resultsContainer}>
-          <Text>Results</Text>
+          <SearchResults text={text} searched={searched} />
         </View>
-      ) : null}
+      ) : (
+        <TopSearches setText={setText} setSearched={setSearched} />
+      )}
     </View>
   );
 };
