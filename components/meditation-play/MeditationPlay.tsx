@@ -9,6 +9,7 @@ import {
   Pressable,
   ImageSourcePropType,
 } from "react-native";
+// eslint-disable-next-line
 import { AntDesign, Feather as Icon, Ionicons } from "@expo/vector-icons";
 import { RectButton } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
@@ -86,8 +87,12 @@ export const MeditationPlay = ({
   const styles = StyleSheet.create({
     root: { flex: 1 },
     container: { margin: 16 },
-    header: { flexDirection: "row", justifyContent: "space-between" },
-    button: { padding: 16 },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    button: { position: "absolute", left: 0 },
     title: { color: "white", padding: 16 },
     cover: { marginVertical: 16, width: width - 32, height: width - 32 },
     metadata: {
@@ -118,17 +123,9 @@ export const MeditationPlay = ({
         <View style={styles.container}>
           <View style={styles.header}>
             <RectButton style={styles.button} {...{ onPress }}>
-              <Icon name="chevron-down" color="white" size={24} />
-            </RectButton>
-            <Text style={styles.title}>{meditation.name}</Text>
-            <RectButton
-              style={styles.button}
-              // onPress={async () => {
-              //   await onClose();
-              // }}
-            >
               <AntDesign name="close" color="white" size={24} />
             </RectButton>
+            <Text style={styles.title}>{meditation.name}</Text>
           </View>
           <Image source={image} style={styles.cover} />
           <View style={styles.metadata}>

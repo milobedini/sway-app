@@ -1,6 +1,12 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import Constants from "expo-constants";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -70,6 +76,7 @@ export const MeditationSearchScreen = ({
           selectionColor="white"
           returnKeyType="search"
           onSubmitEditing={() => setSearched(true)}
+          value={text}
         />
       </View>
       <HorizontalRule
@@ -84,7 +91,16 @@ export const MeditationSearchScreen = ({
 
       {searched ? (
         <View style={styles.resultsContainer}>
-          <SearchResults text={text} searched={searched} />
+          <SearchResults
+            text={text}
+            searched={searched}
+            onPress={(id: number, image: ImageSourcePropType) => {
+              navigation.navigate("show", {
+                meditationId: id,
+                image: image,
+              });
+            }}
+          />
         </View>
       ) : (
         <TopSearches setText={setText} setSearched={setSearched} />
