@@ -42,6 +42,14 @@ export const MeditationAudio = ({
   useEffect(() => {
     (async () => {
       if (audioSource) {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          interruptionModeIOS: 1,
+          interruptionModeAndroid: 1,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          staysActiveInBackground: false,
+        });
         const { sound } = await Audio.Sound.createAsync({
           uri: audioSource,
         });

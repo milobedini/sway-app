@@ -23,6 +23,7 @@ import { getUserId } from "../../lib/auth/auth";
 import { baseUrl, secureNoBody } from "../../lib/api/api";
 import { LinearBackground } from "../linear-background";
 import { MeditationAudio } from "./components/MeditationAudio";
+import { designStyles } from "../text";
 
 interface MeditationPlayProps {
   onPress: () => void;
@@ -101,13 +102,19 @@ export const MeditationPlay = ({
       alignItems: "center",
     },
     name: { fontSize: 26, fontFamily: Fonts.OpenSans_700Bold, color: "white" },
-    description: { color: "white", marginTop: 14 },
+    description: {
+      color: "white",
+      marginTop: 8,
+      fontSize: 14,
+      lineHeight: 14 * 1.3,
+    },
     slider: {
       backgroundColor: "rgba(255, 255, 255, 0.5)",
       width: width - 32,
       borderRadius: 2,
       height: 4,
       marginVertical: 16,
+      marginTop: 8,
     },
     controls: {
       flexDirection: "row",
@@ -131,7 +138,9 @@ export const MeditationPlay = ({
           <View style={styles.metadata}>
             <View style={{ maxWidth: width - 80 }}>
               <Text style={styles.name}>{meditation.name}</Text>
-              <Text style={styles.description}>{meditation.description}</Text>
+              <Text style={[designStyles.body, styles.description]}>
+                {meditation.description}
+              </Text>
             </View>
             {/* Start of liking functionality. */}
             {!userLiked ? (

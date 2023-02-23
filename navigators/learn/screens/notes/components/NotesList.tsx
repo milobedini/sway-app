@@ -17,7 +17,7 @@ import { NoteTile } from "./NoteTile";
 
 const styles = StyleSheet.create({
   noteList: { marginHorizontal: 14 },
-  tile: { backgroundColor: Colours.yellowNote.$, marginBottom: 12 },
+  tile: { backgroundColor: Colours.yellowNote.$, marginBottom: 22 },
   newTile: {
     backgroundColor: "pink",
   },

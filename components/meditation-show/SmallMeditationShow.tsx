@@ -21,7 +21,7 @@ import { PlayIcon } from "../icons";
 import { MeditationPlay } from "../meditation-play/MeditationPlay";
 import { MeditationTileTags } from "../meditation-tile-tags";
 import { PageLoading } from "../page-loading";
-import { textStyles } from "../text";
+import { designStyles } from "../text";
 
 const styles = StyleSheet.create({
   container: {},
@@ -108,7 +108,7 @@ export const SmallMeditationShow = ({
               meditation={meditation}
               colour={Colours.bright.$}
             />
-            <Text style={[textStyles.body]}>{meditation?.description}</Text>
+            <Text style={[designStyles.body]}>{meditation?.description}</Text>
           </View>
         </SafeAreaView>
       </ScrollView>

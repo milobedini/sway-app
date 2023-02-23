@@ -115,7 +115,7 @@ export const ArticleShowScreen = ({
         )}
         showsVerticalScrollIndicator={false}
       >
-        <StatusBar />
+        <StatusBar style="light" />
         <View
           style={{
             width,

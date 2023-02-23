@@ -15,7 +15,7 @@ import Animated from "react-native-reanimated";
 import { Colours } from "../../../../../colours";
 import { mapMeditationTileData } from "../../../../../components/meditate-list/mapMeditationTileData";
 import { MeditationTile } from "../../../../../components/meditation-tile";
-import { textStyles } from "../../../../../components/text";
+import { designStyles } from "../../../../../components/text";
 import { baseUrl, secureGet } from "../../../../../lib/api/api";
 import { getUserId } from "../../../../../lib/auth/auth";
 import { shuffle } from "../../../../../lib/shuffle";
@@ -155,8 +155,13 @@ export const FavouritesList = ({
 
   return (
     <View style={styles.noFavContainer}>
-      <Text style={[textStyles.body, { maxWidth: "75%", textAlign: "center" }]}>
-        You have not favourited any meditations yet!
+      <Text
+        style={[
+          designStyles.subtitle,
+          { maxWidth: "75%", textAlign: "center" },
+        ]}
+      >
+        You have not favourited any meditations yet...
       </Text>
     </View>
   );
