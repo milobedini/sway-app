@@ -2,7 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { FontAwesome, Entypo, Ionicons, AntDesign } from "@expo/vector-icons";
+import { FontAwesome, Entypo, AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { baseUrl } from "../../../../../lib/api/api";
@@ -176,9 +176,6 @@ export const CommunityShowScreen = ({
                   setVisible(true);
                 }}
               />
-            </View>
-            <View style={[styles.icon]}>
-              <Ionicons name="create-outline" size={24} color="white" />
             </View>
           </View>
         </View>

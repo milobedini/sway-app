@@ -1,16 +1,15 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import { Image, StyleSheet, Text, View, Animated } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { Colours } from "../../../../colours";
 import { textStyles } from "../../../../components/text";
 import { WelcomeNavigatorParamsList } from "../../WelcomeNavigatorParamsList";
 import logo from "../../../../assets/logo_black.png";
 import { PrimaryButton } from "../../../../components/primary-button";
-import { Circle } from "../../../../components/circle-animation";
 
 export type ReadyScreenProps = StackScreenProps<
   WelcomeNavigatorParamsList,
@@ -43,25 +42,9 @@ export const ReadyScreen = ({ navigation }: ReadyScreenProps): JSX.Element => {
   const [started, setStarted] = useState(false);
   const onGetStarted = () => {
     setStarted(true);
-    onPress();
-    setTimeout(() => {
-      navigation.push("welcomeCarousel"), [navigation];
-    }, 2000);
+    navigation.push("welcomeCarousel"), [navigation];
   };
 
-  const animatedValue = useRef(new Animated.Value(0)).current;
-  const animation = (toValue: number) =>
-    Animated.timing(animatedValue, {
-      toValue,
-      duration: 2000,
-      useNativeDriver: false,
-    });
-
-  const [index, setIndex] = useState(0);
-  const onPress = () => {
-    setIndex(index === 1 ? 0 : 1);
-    animation(index === 1 ? 0 : 1).start();
-  };
   if (!started) {
     return (
       <SafeAreaView style={styles.container}>
@@ -76,14 +59,12 @@ export const ReadyScreen = ({ navigation }: ReadyScreenProps): JSX.Element => {
           onPress={onGetStarted}
           style={styles.button}
         />
-        {/* <Circle onPress={onPress} animatedValue={animatedValue} /> */}
       </SafeAreaView>
     );
   }
   return (
     <View style={styles.container}>
       <StatusBar style="auto" hidden />
-      <Circle onPress={onPress} animatedValue={animatedValue} />
     </View>
   );
 };
