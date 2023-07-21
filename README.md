@@ -57,8 +57,9 @@ https://github.com/milobedini/sway-app/assets/89992629/1e90e6d9-e429-4d02-b43d-3
 
 https://github.com/milobedini/sway-app/assets/89992629/32028b53-fb16-4933-a241-105996f583ef
 
-### Articles & Community
-- Video to be uploaded.
+### Articles & Community Feed
+
+https://github.com/milobedini/sway-app/assets/89992629/096f1200-5e2a-47a1-a724-45b23ae2161b
 
 ### More
 
