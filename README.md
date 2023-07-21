@@ -4,7 +4,7 @@ React Native (Expo) app code for Sway's mobile application.
 
 # Overview
 
-Sway is a mindfulness web-app that provides numerous features to help a user achieve their goals.
+Sway is a mindfulness mobile application that provides numerous features to help a user achieve their goals.
 
 ## Code Installation:
 
@@ -12,10 +12,6 @@ Clone or download the repository and run the following within the terminal:
 
 - Install dependencies: npm install
 - Launch app: npm run ios/anroid/web
-
-### Existing Web Version
-
-<img width="712" alt="Screenshot 2021-12-28 at 12 01 07" src="https://user-images.githubusercontent.com/89992629/147564313-68ae0ae7-9c23-421b-bb22-b8224bd34129.png">
 
 # Technologies Used
 
@@ -29,7 +25,7 @@ Clone or download the repository and run the following within the terminal:
 
 ### Front-End
 
-- React Native
+- React Native (TypeScript)
 - Expo
 
 ### Development Tools
@@ -42,3 +38,28 @@ Clone or download the repository and run the following within the terminal:
 - NPM
 - Postman
 - VS Code
+
+# Video Walkthrough
+
+### Onboarding
+
+https://github.com/milobedini/sway-app/assets/89992629/e8b99a55-7254-4575-8fb0-b59487136903
+
+### Meditations
+
+https://github.com/milobedini/sway-app/assets/89992629/c285574b-d98d-48b9-9e35-0c99c1c5f641
+
+### Timer
+
+https://github.com/milobedini/sway-app/assets/89992629/1e90e6d9-e429-4d02-b43d-358765343795
+
+### Notes
+
+https://github.com/milobedini/sway-app/assets/89992629/32028b53-fb16-4933-a241-105996f583ef
+
+### Articles & Community
+- Video to be uploaded.
+
+### More
+
+https://github.com/milobedini/sway-app/assets/89992629/ef03e15d-409d-4ea9-ae54-ab3af74715cb
