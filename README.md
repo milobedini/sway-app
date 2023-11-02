@@ -2,6 +2,8 @@
 
 React Native (Expo) app code for Sway's mobile application.
 
+Please note that the app is only currently available to registered members of Sway's organisation on Expo. Please drop me a message if you wish to try it out!
+
 # Overview
 
 Sway is a mindfulness mobile application that provides numerous features to help a user achieve their goals.
